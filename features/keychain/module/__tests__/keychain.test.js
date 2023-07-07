@@ -11,7 +11,7 @@ import { assets } from './fixtures/assets'
 import simpleTx from './fixtures/simple-tx'
 
 import { Keychain } from '../keychain'
-import { KeyIdentifier } from '../key-identifier'
+import { EXODUS_KEY_IDS, KeyIdentifier } from '../key-identifier'
 import createKeychain from './create-keychain'
 import memoizedKeychain from '../memoized-keychain'
 
@@ -83,37 +83,6 @@ describe.each([
       }
     })
 
-    it('should sign solana tx', async () => {
-      const keychain = createKeychain({ seed })
-      const keyId = new KeyIdentifier({
-        assetName: 'solana',
-        derivationAlgorithm: 'BIP32',
-        derivationPath: "m/44'/501'/0'/0/0",
-        keyType: 'nacl',
-      })
-      const asset = assets.solana
-      const unsignedTx = await createUnsignedTx({
-        asset,
-        from: 'nsn7DmCMsKWGUWcL92XfPKXFbUz7KtFDRa4nnkc3RiF',
-        to: '7SmaJ41gFZ1LPsZJfb57npzdCFuqBRmgj3CScjbmkQwA',
-        amount: asset.currency.SOL('5'),
-        fee: asset.currency.SOL('0.000005'),
-        recentBlockhash: '6yWbfvhoDrgzStVnvpRvib2Q1LpuTYc6TtdMPPofCPh8',
-      })
-
-      const result = await keychain.signTx(
-        [keyId],
-        ({ unsignedTx, hdkeys, privateKey }) => {
-          expect(hdkeys[44].privateKey).toEqual(privateKey)
-          return simpleTx(unsignedTx, privateKey)
-        },
-        unsignedTx
-      )
-      expect(result.txId).toBe(
-        'Lj2iFo1MKx3cWTLH1GbvxZjCtNTMBmB2rXR5JV7EFQnPySyxKssAReBJF56e7XzXiAFeYdMCwFvyR3NkFVbh8rS'
-      )
-    })
-
     it('should generate ethereum addresses', async () => {
       const keychain = createKeychain({ seed })
       const fixtures = [
@@ -173,6 +142,59 @@ describe.each([
         const key = await keychain.exportKey(fixture.keyid, { exportPrivate: true })
         expect(getCardanoAddress(key.publicKey)).toBe(fixture.expected)
       }
+    })
+
+    it('should export SLIP10 keys', async () => {
+      const keychain = createKeychain({ seed })
+      const key = await keychain.exportKey(EXODUS_KEY_IDS.TELEMETRY, { exportPrivate: true })
+      expect(key).toEqual({
+        publicKey: Buffer.from(
+          'eeab6c9e861ed9f3a7f7917f6d972032e3e4d7a433eb6bc30f4b488ee13682c7',
+          'hex'
+        ),
+        privateKey: Buffer.from(
+          'e53af1d990800f321a31e5540a1e1f28cad3ff5acfe9a6c8b008dacbd04b7029',
+          'hex'
+        ),
+        xpriv: {
+          chainCode: '7d9f91fc9625449db2f97ecedca89b287f59057c29d51aac0a60d2c1f920475b',
+          key: 'e53af1d990800f321a31e5540a1e1f28cad3ff5acfe9a6c8b008dacbd04b7029',
+        },
+        xpub: undefined,
+      })
+    })
+  })
+
+  describe('sign', () => {
+    it('should sign solana tx', async () => {
+      const keychain = createKeychain({ seed })
+      const keyId = new KeyIdentifier({
+        assetName: 'solana',
+        derivationAlgorithm: 'BIP32',
+        derivationPath: "m/44'/501'/0'/0/0",
+        keyType: 'nacl',
+      })
+      const asset = assets.solana
+      const unsignedTx = await createUnsignedTx({
+        asset,
+        from: 'nsn7DmCMsKWGUWcL92XfPKXFbUz7KtFDRa4nnkc3RiF',
+        to: '7SmaJ41gFZ1LPsZJfb57npzdCFuqBRmgj3CScjbmkQwA',
+        amount: asset.currency.SOL('5'),
+        fee: asset.currency.SOL('0.000005'),
+        recentBlockhash: '6yWbfvhoDrgzStVnvpRvib2Q1LpuTYc6TtdMPPofCPh8',
+      })
+
+      const result = await keychain.signTx(
+        [keyId],
+        ({ unsignedTx, hdkeys, privateKey }) => {
+          expect(hdkeys[44].privateKey).toEqual(privateKey)
+          return simpleTx(unsignedTx, privateKey)
+        },
+        unsignedTx
+      )
+      expect(result.txId).toBe(
+        'Lj2iFo1MKx3cWTLH1GbvxZjCtNTMBmB2rXR5JV7EFQnPySyxKssAReBJF56e7XzXiAFeYdMCwFvyR3NkFVbh8rS'
+      )
     })
   })
 
