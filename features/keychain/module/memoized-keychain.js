@@ -14,8 +14,7 @@ class MemoizedKeychain extends Keychain {
   #storage
   #publicKeys = {}
   #cloneOpts
-  constructor(opts) {
-    const { storage, logger } = opts
+  constructor({ storage, logger }) {
     super({ id: MODULE_ID, logger })
 
     this.#storage = storage
@@ -23,7 +22,7 @@ class MemoizedKeychain extends Keychain {
       this.#publicKeys = data ? BJSON.parse(data) : {}
     })
 
-    this.#cloneOpts = opts
+    this.#cloneOpts = { storage, logger }
   }
 
   #getCachedKey = async (keyId) => {
