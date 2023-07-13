@@ -1,6 +1,6 @@
 import keychainDefinition from '..'
 
-export default ({ seed, ...rest }) => {
+const createKeychain = ({ seed, ...rest }) => {
   const instance = keychainDefinition.factory(rest)
   if (seed) {
     instance.unlock({ seed })
@@ -8,3 +8,5 @@ export default ({ seed, ...rest }) => {
 
   return instance
 }
+
+export default createKeychain

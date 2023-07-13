@@ -51,6 +51,7 @@ class MemoizedKeychain extends Keychain {
   clone = () => new MemoizedKeychain(this.#cloneOpts)
 }
 
+// eslint-disable-next-line @exodus/export-default/named
 export default {
   id: 'keychain',
   type: 'module',

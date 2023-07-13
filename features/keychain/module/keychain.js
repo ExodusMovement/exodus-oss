@@ -130,6 +130,7 @@ export class Keychain extends ExodusModule {
 
 const createKeychain = (args = {}) => new Keychain({ ...args })
 
+// eslint-disable-next-line @exodus/export-default/named
 export default {
   id: MODULE_ID,
   type: 'module',

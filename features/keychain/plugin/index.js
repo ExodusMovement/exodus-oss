@@ -6,6 +6,7 @@ const createKeychainPlugin = ({ storage }) => {
   }
 }
 
+// eslint-disable-next-line @exodus/export-default/named
 export default {
   id: 'keychainPlugin',
   type: 'plugin',
