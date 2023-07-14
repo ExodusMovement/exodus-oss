@@ -3,7 +3,7 @@
   "version": "4.1.1",
   "description": "A module designed to work more securely with private key material",
   "author": "Exodus Movement Inc.",
-  "homepage": "https://github.com/ExodusMovement/exodus-hydra/tree/master/modules/keychain#readme",
+  "homepage": "https://github.com/ExodusMovement/exodus-hydra/tree/master/features/keychain#readme",
   "license": "UNLICENSED",
   "directories": {
     "lib": "src",
