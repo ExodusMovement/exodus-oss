@@ -38,6 +38,7 @@ export const buildBip32Path = ({ asset, purpose, accountIndex, chainIndex, addre
       assert(addressIndex >= 0, 'addressIndex must be positive number')
       break
     }
+
     case 'string': {
       assert(
         regexDigits.test(addressIndex) || regexDigitsApostrophe.test(addressIndex),
@@ -45,11 +46,13 @@ export const buildBip32Path = ({ asset, purpose, accountIndex, chainIndex, addre
       )
       break
     }
+
     case 'undefined': {
       hasAddressIndex = false
       // We allow undefined for when we want to derive xpubs for whole address ranges.
       break
     }
+
     default: {
       assert(
         ['string', 'number'].includes(typeof addressIndex),
@@ -64,6 +67,7 @@ export const buildBip32Path = ({ asset, purpose, accountIndex, chainIndex, addre
       assert(chainIndex >= 0, 'chainIndex must be positive number')
       break
     }
+
     case 'string': {
       assert(
         regexDigits.test(chainIndex) || regexDigitsApostrophe.test(chainIndex),
@@ -71,12 +75,14 @@ export const buildBip32Path = ({ asset, purpose, accountIndex, chainIndex, addre
       )
       break
     }
+
     case 'undefined': {
       assert(!hasAddressIndex, 'can not have addressIndex when chainIndex is undefined')
       hasChainIndex = false
       // We allow undefined for when we want to derive xpubs for whole address ranges.
       break
     }
+
     default: {
       assert(
         ['string', 'number'].includes(typeof addressIndex),
