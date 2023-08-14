@@ -11,13 +11,13 @@ const seed = mnemonicToSeed(
 
 const keyIdentifierEthereum0 = new KeyIdentifier({
   derivationAlgorithm: 'BIP32',
-  derivationPath: `m/44'/60'/0'/0/0`,
+  derivationPath: "m/44'/60'/0'/0/0",
   assetName: 'ethereum',
 })
 
 const keyIdentifierEthereum1 = new KeyIdentifier({
   derivationAlgorithm: 'BIP32',
-  derivationPath: `m/44'/60'/0'/0/1`,
+  derivationPath: "m/44'/60'/0'/0/1",
   assetName: 'ethereum',
 })
 

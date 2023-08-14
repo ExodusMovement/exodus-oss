@@ -42,7 +42,7 @@ export const buildBip32Path = ({ asset, purpose, accountIndex, chainIndex, addre
     case 'string': {
       assert(
         regexDigits.test(addressIndex) || regexDigitsApostrophe.test(addressIndex),
-        `addressIndex must be number or number' e.g 0 or 0'`
+        "addressIndex must be number or number' e.g 0 or 0'"
       )
       break
     }
@@ -71,7 +71,7 @@ export const buildBip32Path = ({ asset, purpose, accountIndex, chainIndex, addre
     case 'string': {
       assert(
         regexDigits.test(chainIndex) || regexDigitsApostrophe.test(chainIndex),
-        `chainIndex must be number or number' e.g 0 or 0'`
+        "chainIndex must be number or number' e.g 0 or 0'"
       )
       break
     }

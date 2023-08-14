@@ -30,13 +30,13 @@ const solanaKeyId = new KeyIdentifier({
 
 const ALICE_KEY = new KeyIdentifier({
   derivationAlgorithm: 'SLIP10',
-  derivationPath: `m/0'/2'/0'`,
+  derivationPath: "m/0'/2'/0'",
   keyType: 'nacl',
 })
 
 const BOB_KEY = new KeyIdentifier({
   derivationAlgorithm: 'SLIP10',
-  derivationPath: `m/0'/2'/1'`,
+  derivationPath: "m/0'/2'/1'",
   keyType: 'nacl',
 })
 
@@ -80,7 +80,7 @@ test('signTx', async () => {
     // e.g. bitcoin needs a keyId per UTXO
     [solanaKeyId],
     function signTx({ unsignedTx, hdkeys, privateKey }) {
-      assert(unsignedTx.txMeta.assetName === 'solana', `expected "solana" tx`)
+      assert(unsignedTx.txMeta.assetName === 'solana', 'expected "solana" tx')
       return signSolanaTx(unsignedTx, privateKey)
     },
     unsignedTx
@@ -173,7 +173,7 @@ test('should encryptSealedBox and decryptSealedBox', async () => {
 test('EcDSA Signer', async () => {
   const keyId = new KeyIdentifier({
     derivationAlgorithm: 'SLIP10',
-    derivationPath: `m/73'/2'/0'`,
+    derivationPath: "m/73'/2'/0'",
     keyType: 'nacl',
   })
 
@@ -188,7 +188,7 @@ test('EcDSA Signer', async () => {
 test('EdDSA Signer', async () => {
   const keyId = new KeyIdentifier({
     derivationAlgorithm: 'SLIP10',
-    derivationPath: `m/73'/2'/0'`,
+    derivationPath: "m/73'/2'/0'",
     keyType: 'nacl',
   })
 

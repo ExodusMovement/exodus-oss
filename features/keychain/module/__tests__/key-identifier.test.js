@@ -14,14 +14,14 @@ describe('KeyIdentifier', () => {
         asset: assets.ethereum,
       },
       {
-        derivationPath: `m/44'/60'/0'/0/0`,
+        derivationPath: "m/44'/60'/0'/0/0",
         asset: assets.ethereum,
       },
       {
         derivationAlgorithm: 'BIP32',
       },
       {
-        derivationPath: `m/44'/60'/0'/0/0`,
+        derivationPath: "m/44'/60'/0'/0/0",
       },
       {
         asset: assets.ethereum,
@@ -30,12 +30,12 @@ describe('KeyIdentifier', () => {
       {
         derivationAlgorithm: 0,
         asset: assets.ethereum,
-        derivationPath: `m/44'/60'/0'/0/0`,
+        derivationPath: "m/44'/60'/0'/0/0",
       },
       {
         derivationAlgorithm: 'BIP32',
         assetName: 0,
-        derivationPath: `m/44'/60'/0'/0/0`,
+        derivationPath: "m/44'/60'/0'/0/0",
       },
       {
         derivationAlgorithm: 'BIP32',
@@ -52,17 +52,17 @@ describe('KeyIdentifier', () => {
       {
         derivationAlgorithm: 'BIP32',
         asset: assets.ethereum,
-        derivationPath: `m/44'/60'/0'/0/0dddd`,
+        derivationPath: "m/44'/60'/0'/0/0dddd",
       },
       {
         derivationAlgorithm: 'BIP32',
         asset: assets.ethereum,
-        derivationPath: `m\\44'/60'/0'/0/0`,
+        derivationPath: "m\\44'/60'/0'/0/0",
       },
       {
         derivationAlgorithm: 'BIP32',
         asset: assets.ethereum,
-        derivationPath: `m44'/60'/0'/0/0`,
+        derivationPath: "m44'/60'/0'/0/0",
       },
     ]
 
@@ -79,12 +79,12 @@ describe('KeyIdentifier', () => {
       new KeyIdentifier({
         derivationAlgorithm: 'BIP32',
         assetName: 'ethereum',
-        derivationPath: `m/44'/60'/0'/0/0`,
+        derivationPath: "m/44'/60'/0'/0/0",
       }),
       {
         derivationAlgorithm: 'BIP32',
         assetName: 'ethereum',
-        derivationPath: `m/44'/60'/0'/0/0`,
+        derivationPath: "m/44'/60'/0'/0/0",
       },
     ]
 

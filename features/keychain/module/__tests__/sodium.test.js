@@ -9,13 +9,13 @@ const seed = mnemonicToSeed(
 
 const ALICE_KEY = new KeyIdentifier({
   derivationAlgorithm: 'SLIP10',
-  derivationPath: `m/0'/2'/0'`,
+  derivationPath: "m/0'/2'/0'",
   keyType: 'nacl',
 })
 
 const BOB_KEY = new KeyIdentifier({
   derivationAlgorithm: 'SLIP10',
-  derivationPath: `m/0'/2'/1'`,
+  derivationPath: "m/0'/2'/1'",
   keyType: 'nacl',
 })
 

@@ -14,19 +14,19 @@ const SUPPORTED_KEY_TYPES = new Set(['legacy', 'nacl', 'secp256k1'])
 
 export class KeyIdentifier {
   constructor({ derivationAlgorithm, derivationPath, assetName, keyType }) {
-    assert(typeof derivationAlgorithm === 'string', `derivationAlgorithm not a string`)
+    assert(typeof derivationAlgorithm === 'string', 'derivationAlgorithm not a string')
     assert(
       SUPPORTED_KDFS.has(derivationAlgorithm),
       `${derivationAlgorithm} is not a valid derivationAlgorithm`
     )
 
-    assert(typeof derivationPath === 'string', `derivationPath was not a string`)
-    assert(isValidBIPPath(derivationPath), `derivationPath not formated properly`)
+    assert(typeof derivationPath === 'string', 'derivationPath was not a string')
+    assert(isValidBIPPath(derivationPath), 'derivationPath not formated properly')
 
-    assert(['string', 'undefined'].includes(typeof assetName), `assetName was not a string`)
+    assert(['string', 'undefined'].includes(typeof assetName), 'assetName was not a string')
 
     keyType = keyType || (derivationAlgorithm === 'SLIP10' ? 'nacl' : 'secp256k1')
-    assert(SUPPORTED_KEY_TYPES.has(keyType), `keyType was not a valid option`)
+    assert(SUPPORTED_KEY_TYPES.has(keyType), 'keyType was not a valid option')
 
     if (derivationAlgorithm === 'SLIP10') {
       // We can't turn secp256k1 into ed25119 keys for now, this is not used

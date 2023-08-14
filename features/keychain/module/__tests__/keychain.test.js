@@ -61,7 +61,7 @@ describe.each([
           keyid: new KeyIdentifier({
             assetName: 'solana',
             derivationAlgorithm: 'BIP32',
-            derivationPath: `m/44'/501'/0'/0/0`,
+            derivationPath: "m/44'/501'/0'/0/0",
             keyType: 'nacl',
           }),
         },
@@ -70,7 +70,7 @@ describe.each([
           keyid: new KeyIdentifier({
             assetName: 'solana',
             derivationAlgorithm: 'BIP32',
-            derivationPath: `m/44'/501'/1'/0/0`,
+            derivationPath: "m/44'/501'/1'/0/0",
             keyType: 'nacl',
           }),
         },
@@ -90,7 +90,7 @@ describe.each([
           expected: '0xF3d46F0De925B28fDa1219BbD60F5ae2a0128F9F',
           keyid: new KeyIdentifier({
             derivationAlgorithm: 'BIP32',
-            derivationPath: `m/44'/60'/0'/0/0`,
+            derivationPath: "m/44'/60'/0'/0/0",
             assetName: 'ethereum',
           }),
         },
@@ -98,7 +98,7 @@ describe.each([
           expected: '0x55e60F7531a5c701F526f224FCC071EFCf3fFF61',
           keyid: new KeyIdentifier({
             derivationAlgorithm: 'BIP32',
-            derivationPath: `m/44'/60'/1'/0/0`,
+            derivationPath: "m/44'/60'/1'/0/0",
             assetName: 'ethereum',
           }),
         },
@@ -106,7 +106,7 @@ describe.each([
           expected: '0x780984e59eDdA8b1f4bB09dc297241f1Ed0Dcc17',
           keyid: new KeyIdentifier({
             derivationAlgorithm: 'BIP32',
-            derivationPath: `m/44'/60'/0'/0/1`,
+            derivationPath: "m/44'/60'/0'/0/1",
             assetName: 'ethereum',
           }),
         },
@@ -131,7 +131,7 @@ describe.each([
             'addr1q8ftlrj30s8f3qks2l5cuv44f5cgflxqym0d0k4q22dusp7jh789zlqwnzpdq4lf3cet2nfssn7vqfk76ld2q55meqrstsxtqg',
           keyid: new KeyIdentifier({
             derivationAlgorithm: 'BIP32',
-            derivationPath: `m/44'/1815'/0'/0/0`,
+            derivationPath: "m/44'/1815'/0'/0/0",
             keyType: 'legacy',
             assetName: 'cardano',
           }),
@@ -206,7 +206,7 @@ describe.each([
       const keyid = new KeyIdentifier({
         assetName: 'solana',
         derivationAlgorithm: 'BIP32',
-        derivationPath: `m/44'/501'/0'/0/0`,
+        derivationPath: "m/44'/501'/0'/0/0",
         keyType: 'nacl',
       })
 
@@ -224,7 +224,7 @@ describe.each([
 
       const keyid = new KeyIdentifier({
         derivationAlgorithm: 'BIP32',
-        derivationPath: `m/44'/1815'/0'/0/0`,
+        derivationPath: "m/44'/1815'/0'/0/0",
         keyType: 'legacy',
         assetName: 'cardano',
       })

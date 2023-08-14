@@ -11,6 +11,6 @@ export class ExpectedKeyIdentifier extends TypeError {
 
 export class NotInitializedError extends Error {
   constructor() {
-    super(`Expected Keychain to be inialized with seed from mnemonic`)
+    super('Expected Keychain to be inialized with seed from mnemonic')
   }
 }

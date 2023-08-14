@@ -5,7 +5,7 @@ import { buildBip32Path, isValidBIPPath, parsePath } from '../key-utils'
 describe('Key Utilities', () => {
   describe('parsePath', () => {
     it('should parse correctly', () => {
-      const parsed = parsePath(`m/44'/501'/0'`)
+      const parsed = parsePath("m/44'/501'/0'")
       expect(parsed).toBeInstanceOf(Object)
       expect(parsed).toEqual({
         purpose: 44,
