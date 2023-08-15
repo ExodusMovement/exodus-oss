@@ -1,4 +1,5 @@
 import ExodusModule from '@exodus/module'
+import { parseDerivationPath } from '@exodus/key-utils'
 import { fromMasterSeed as bip32FromMasterSeed } from '@exodus/bip32'
 import SLIP10 from '@exodus/slip10'
 import { mapValues } from '@exodus/basic-utils'
@@ -7,7 +8,6 @@ import assert from 'minimalistic-assert'
 import { createEd25519Signer } from './crypto/ed25519'
 import { createSecp256k1Signer } from './crypto/secp256k1'
 import * as sodium from './crypto/sodium'
-import { parsePath } from './key-utils'
 import {
   throwIfInvalidKeyIdentifier,
   throwIfInvalidMasters,
@@ -94,7 +94,7 @@ export class Keychain extends ExodusModule {
     const hdkeys = Object.fromEntries(
       keyIds.map((keyId) => {
         const hdkey = this.#getPrivateHDKey(keyId)
-        const { purpose } = parsePath(keyId.derivationPath)
+        const { purpose } = parseDerivationPath(keyId.derivationPath)
         return [String(purpose), hdkey]
       })
     )

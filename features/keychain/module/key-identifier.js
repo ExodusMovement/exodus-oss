@@ -1,6 +1,5 @@
 import assert from 'minimalistic-assert'
-
-import { isValidBIPPath } from './key-utils'
+import { assertValidDerivationPath } from '@exodus/key-utils'
 
 // key identifier example:
 // {
@@ -20,8 +19,7 @@ export class KeyIdentifier {
       `${derivationAlgorithm} is not a valid derivationAlgorithm`
     )
 
-    assert(typeof derivationPath === 'string', 'derivationPath was not a string')
-    assert(isValidBIPPath(derivationPath), 'derivationPath not formated properly')
+    assertValidDerivationPath(derivationPath)
 
     assert(['string', 'undefined'].includes(typeof assetName), 'assetName was not a string')
 
