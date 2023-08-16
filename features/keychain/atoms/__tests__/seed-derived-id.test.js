@@ -35,4 +35,37 @@ describe('Seed Derived Id Atom test', () => {
       expect(locked).toBe(false)
     })
   })
+
+  describe('observe()', () => {
+    it('should emit when ready', async () => {
+      const seedDerivedIdAtom = createSeedDerivedIdAtomFactory({ keychain, lockedAtom })({
+        config: { identifier: EXODUS_KEY_IDS.TELEMETRY },
+      })
+
+      const callback = jest.fn()
+      const observed = new Promise((resolve) => {
+        seedDerivedIdAtom.observe((value) => {
+          callback(value)
+          resolve()
+        })
+      })
+
+      await lockedAtom.set(false)
+      await observed
+      await expect(callback).toHaveBeenCalledWith('7qtsnoYe2fOn95F/bZcgMuPk16Qz62vDD0tIjuE2gsc=')
+    })
+
+    it('should not emit when stopped before unlocked', async () => {
+      const seedDerivedIdAtom = createSeedDerivedIdAtomFactory({ keychain, lockedAtom })({
+        config: { identifier: EXODUS_KEY_IDS.TELEMETRY },
+      })
+
+      const callback = jest.fn()
+      const stop = seedDerivedIdAtom.observe(callback)
+
+      stop()
+      await lockedAtom.set(false)
+      expect(callback).not.toHaveBeenCalled()
+    })
+  })
 })

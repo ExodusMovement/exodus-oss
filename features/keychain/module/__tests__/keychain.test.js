@@ -144,6 +144,26 @@ describe.each([
       }
     })
 
+    it('should fail to generate addresses if assetname is not in legacy priv pub', async () => {
+      const keychain = createKeychain({
+        seed,
+        legacyPrivToPub: {
+          cardano: getCardanoPublicKey,
+        },
+      })
+
+      await expect(
+        keychain.exportKey(
+          new KeyIdentifier({
+            derivationAlgorithm: 'BIP32',
+            derivationPath: "m/44'/1815'/0'/0/0",
+            keyType: 'legacy',
+            assetName: 'UNKNOWN',
+          })
+        )
+      ).rejects.toThrow('legacyPrivToPub')
+    })
+
     it('should export SLIP10 keys', async () => {
       const keychain = createKeychain({ seed })
       const key = await keychain.exportKey(EXODUS_KEY_IDS.TELEMETRY, { exportPrivate: true })
@@ -194,6 +214,36 @@ describe.each([
       )
       expect(result.txId).toBe(
         'Lj2iFo1MKx3cWTLH1GbvxZjCtNTMBmB2rXR5JV7EFQnPySyxKssAReBJF56e7XzXiAFeYdMCwFvyR3NkFVbh8rS'
+      )
+    })
+
+    it('should sign solana tx', async () => {
+      const keychain = createKeychain({ seed })
+      const keyIds = [
+        new KeyIdentifier({
+          assetName: 'solana',
+          derivationAlgorithm: 'BIP32',
+          derivationPath: "m/44'/0'/0'/0/0",
+          keyType: 'secp256k1',
+        }),
+        new KeyIdentifier({
+          assetName: 'solana',
+          derivationAlgorithm: 'BIP32',
+          derivationPath: "m/84'/0'/0'/0/0",
+          keyType: 'secp256k1',
+        }),
+      ]
+      const unsignedTx = {}
+
+      await keychain.signTx(
+        keyIds,
+        ({ hdkeys, privateKey }) => {
+          expect(privateKey).not.toBeDefined()
+          expect(hdkeys[44].privateKey).toBeDefined()
+          expect(hdkeys[84].privateKey).toBeDefined()
+          return null
+        },
+        unsignedTx
       )
     })
   })

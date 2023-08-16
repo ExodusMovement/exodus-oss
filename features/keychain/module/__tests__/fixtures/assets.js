@@ -6,7 +6,6 @@ export const assets = {
     ...solana,
     bip44: 0x80_00_01_f5,
     keys: {
-      encodePrivate: (privateKey) => privateKey.toString('hex'),
       encodePublic: getAddressFromPublicKey,
     },
   },

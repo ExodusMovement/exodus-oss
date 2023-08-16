@@ -1,6 +1,6 @@
 import { assets } from './fixtures/assets'
 
-import { KeyIdentifier } from '../key-identifier'
+import { KeyIdentifier, createKeyIdentifierForExodus } from '../key-identifier'
 
 describe('KeyIdentifier', () => {
   it('should fail on incorrect construction', () => {
@@ -81,6 +81,11 @@ describe('KeyIdentifier', () => {
         assetName: 'ethereum',
         derivationPath: "m/44'/60'/0'/0/0",
       }),
+      new KeyIdentifier({
+        derivationAlgorithm: 'SLIP10',
+        assetName: 'solana',
+        derivationPath: "m/44'/501'/0'",
+      }),
       {
         derivationAlgorithm: 'BIP32',
         assetName: 'ethereum',
@@ -97,5 +102,15 @@ describe('KeyIdentifier', () => {
 
     valid.forEach((item) => expect(KeyIdentifier.validate(item)).toEqual(true))
     invalid.forEach((item) => expect(KeyIdentifier.validate(item)).toEqual(false))
+  })
+})
+
+describe('createKeyIdentifierForExodus', () => {
+  it('should work', () => {
+    expect(() => createKeyIdentifierForExodus({ exoType: 'FUSION' })).not.toThrow()
+  })
+
+  it('should throw when incorrect exoType', async () => {
+    expect(() => createKeyIdentifierForExodus({ exoType: 'INVALID' })).toThrow()
   })
 })
