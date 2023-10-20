@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.0](https://github.com/ExodusMovement/exodus-hydra/compare/@exodus/keychain@4.1.0...@exodus/keychain@4.2.0) (2023-10-20)
+
+### Features
+
+- move keychain to feature dir ([#2374](https://github.com/ExodusMovement/exodus-hydra/issues/2374)) ([c8373a8](https://github.com/ExodusMovement/exodus-hydra/commit/c8373a84190d7861072a1cf5659f1fce227befee))
+
+### Bug Fixes
+
+- import from atoms index ([#4508](https://github.com/ExodusMovement/exodus-hydra/issues/4508)) ([923fb99](https://github.com/ExodusMovement/exodus-hydra/commit/923fb992328b63e45401c78176b5a6ef7b666eee))
+
 ## [4.1.1](https://github.com/ExodusMovement/exodus-hydra/compare/@exodus/keychain@4.1.0...@exodus/keychain@4.1.1) (2023-07-05)
 
 ### Bug Fixes
