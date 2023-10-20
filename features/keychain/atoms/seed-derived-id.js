@@ -1,7 +1,6 @@
 import { memoize } from 'lodash'
 
-import { enforceObservableRules } from '@exodus/atoms'
-import waitUntil from '@exodus/atoms/src/effects/wait-until'
+import { enforceObservableRules, waitUntil } from '@exodus/atoms'
 
 const getSeedDerivedId = async ({ keychain, identifier }) => {
   const sodiumEncryptor = await keychain.createSodiumEncryptor(identifier)
