@@ -52,6 +52,16 @@ export class KeyIdentifier {
       return false
     }
   }
+
+  static compare = (keyIdA, keyIdB) => {
+    if (typeof keyIdA !== 'object' || typeof keyIdB !== 'object') {
+      return false
+    }
+
+    return !['derivationAlgorithm', 'derivationPath', 'assetName', 'keyType'].some(
+      (fieldName) => keyIdA[fieldName] !== keyIdB[fieldName]
+    )
+  }
 }
 
 const EXO = Number.parseInt(Buffer.from('exo').toString('hex'), '16')
