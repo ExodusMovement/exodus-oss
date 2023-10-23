@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.0](https://github.com/ExodusMovement/exodus-hydra/compare/@exodus/keychain@4.2.0...@exodus/keychain@4.3.0) (2023-10-23)
+
+### Features
+
+- **keychain:** add compare function for keyidentifier ([#4540](https://github.com/ExodusMovement/exodus-hydra/issues/4540)) ([71e32cc](https://github.com/ExodusMovement/exodus-hydra/commit/71e32ccb6bbb0989cb9b2d2006cbc0ea8c64f517))
+
 ## [4.2.0](https://github.com/ExodusMovement/exodus-hydra/compare/@exodus/keychain@4.1.0...@exodus/keychain@4.2.0) (2023-10-20)
 
 ### Features
