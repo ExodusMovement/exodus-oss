@@ -1,0 +1,50 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "npmScope": "@exodus",
+  "tasksRunnerOptions": {
+    "default": {
+      "options": {
+        "cacheDirectory": ".cache/nx",
+        "cacheableOperations": ["build", "test", "lint", "lint:fix", "test:integration"]
+      }
+    }
+  },
+  "targetDefaults": {
+    "test": {
+      "dependsOn": ["^build", "^prepack"],
+      "outputs": ["{projectRoot}/coverage"]
+    },
+    "test:integration": {
+      "dependsOn": ["^build", "^prepack"],
+      "outputs": ["{projectRoot}/coverage"]
+    },
+    "coverage:merge": {
+      "outputs": ["{projectRoot}/coverage"],
+      "dependsOn": ["test", "test:integration"]
+    },
+    "build": {
+      "dependsOn": ["^build", "^prepack"],
+      "inputs": ["production", "^production"],
+      "outputs": ["{projectRoot}/dist", "{projectRoot}/lib", "{projectRoot}/build"]
+    },
+    "prepack": {
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "dependsOn": ["build", "^build", "^prepack"]
+    }
+  },
+  "workspaceLayout": {
+    "appsDir": "modules"
+  },
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*"],
+    "production": [
+      "default",
+      "!{projectRoot}/.eslintrc.js",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/tsconfig.(spec|test).json",
+      "!{projectRoot}/jest.(config|setup).[jt]s"
+    ]
+  }
+}
