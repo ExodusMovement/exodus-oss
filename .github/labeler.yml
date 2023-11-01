@@ -1,0 +1,38 @@
+ci:
+  - ".github/**"
+
+feature:
+  - "features/**"
+
+module:
+  - "modules/**"
+
+library:
+  - "libraries/**"
+
+tooling:
+  - "tools/**"
+  - "lerna.json"
+  - "nx.json"
+  - "babel.config.js"
+  - ".husky/**"
+  - ".yarn/**"
+  - ".editorconfig"
+  - ".gitattributes"
+  - ".gitignore"
+  - ".nvmrc"
+  - ".prettierignore"
+  - ".yarnrc.yml"
+
+testing:
+  - "jest.config"
+  - "jest.setup.js"
+
+lint:
+  - ".eslintignore"
+  - ".eslintrc.js"
+  - "tools/packages/eslint-plugin-hydra/**"
+  - "libraries/eslint-*/**"
+
+docs:
+  - "**/*.md"

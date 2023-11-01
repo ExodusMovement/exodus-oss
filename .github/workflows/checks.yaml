@@ -1,0 +1,77 @@
+name: Checks
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+  push:
+    branches:
+      - master # Keeps the action's cache up-to-date to be shared with PRs
+
+env:
+  DISABLE_NX_CACHE: ${{ contains(github.event.pull_request.labels.*.name, 'disable-nx-cache') && 'yes' || 'no' }}
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: hydra-runner
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ExodusMovement/actions/setup/lerna@master
+        with:
+          npm-token: ${{ secrets.NPM_TOKEN }}
+          disable-nx-cache: ${{ env.DISABLE_NX_CACHE }}
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Lint
+        run: yarn lint
+      - name: Format
+        run: yarn format:check
+  test:
+    name: Test
+    runs-on: hydra-runner
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ExodusMovement/actions/setup/lerna@master
+        with:
+          npm-token: ${{ secrets.NPM_TOKEN }}
+          disable-nx-cache: ${{ env.DISABLE_NX_CACHE }}
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Build
+        run: yarn build
+      - name: Test
+        run: yarn test
+      - name: Coverage report
+        uses: ExodusMovement/lerna-coverage-report-action@main
+        with:
+          github-token: ${{ secrets.GH_AUTOMATION_PAT }}
+          gist-id: ${{ secrets.COVERAGE_GIST_ID }}
+          gist-user: exodus-github-robot
+  integration-test:
+    name: Test (Integration)
+    runs-on: hydra-runner
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ExodusMovement/actions/setup/lerna@master
+        with:
+          npm-token: ${{ secrets.NPM_TOKEN }}
+          disable-nx-cache: ${{ env.DISABLE_NX_CACHE }}
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Integration Test
+        run: yarn test:integration -- --runInBand
+      - name: Coverage report
+        uses: ExodusMovement/lerna-coverage-report-action@main
+        with:
+          github-token: ${{ secrets.GH_AUTOMATION_PAT }}
+          gist-id: ${{ secrets.COVERAGE_GIST_ID }}
+          gist-user: exodus-github-robot
