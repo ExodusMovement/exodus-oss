@@ -152,6 +152,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/eslint-parser@npm:^7.22.9":
+  version: 7.22.15
+  resolution: "@babel/eslint-parser@npm:7.22.15"
+  dependencies:
+    "@nicolo-ribaudo/eslint-scope-5-internals": 5.1.1-v1
+    eslint-visitor-keys: ^2.1.0
+    semver: ^6.3.1
+  peerDependencies:
+    "@babel/core": ^7.11.0
+    eslint: ^7.5.0 || ^8.0.0
+  checksum: efdc749164a40de1b68e3ed395f441dfb7864c85d0a2ee3e4bc4f06dd0b7f675acb9be97cdc9025b88b3e80d38749a2b30e392ce7f6a79313c3aaf82ba8ccd68
+  languageName: node
+  linkType: hard
+
 "@babel/generator@npm:^7.23.0, @babel/generator@npm:^7.7.2":
   version: 7.23.0
   resolution: "@babel/generator@npm:7.23.0"
@@ -1650,6 +1664,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@exodus/eslint-plugin-basic-utils@npm:latest":
+  version: 1.0.2
+  resolution: "@exodus/eslint-plugin-basic-utils@npm:1.0.2"
+  checksum: 3e29ca1345b8fcc6e81ddb2f1498229d4ea47bc65c14ebc34b374d76a31b119f2da41e0105eaa67692c72d4a3f5310b7cbc7551e58746f3f2f12e29be451ca63
+  languageName: node
+  linkType: hard
+
 "@exodus/eslint-plugin-export-default@npm:^2.0.0":
   version: 2.0.0
   resolution: "@exodus/eslint-plugin-export-default@npm:2.0.0"
@@ -1663,6 +1684,30 @@ __metadata:
   peerDependencies:
     eslint: ">=6.0.0"
   checksum: b9bd76be1738c6d66bbfa553897e52b7c9f2a7231608c34efd408e2bb38d41fd3c1e9b89e92a030bf3537870b72f682cd78e4bd69a96729845cf46a56e7366b5
+  languageName: node
+  linkType: hard
+
+"@exodus/eslint-plugin-package@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "@exodus/eslint-plugin-package@npm:1.6.0"
+  dependencies:
+    json-estree-ast: ^1.0.1
+    jsonc-eslint-parser: ^2.3.0
+    minimatch: ^9.0.3
+    traverse: ^0.6.7
+  peerDependencies:
+    eslint: ">=6"
+  checksum: 66cccf3728bd350777c8604ae1fe35711e68cbe2498757b8daaa091ad5b1abc1b388ebfa7444edc943f6638be870fa09d5f9457789ac78b0528723f874994433
+  languageName: node
+  linkType: hard
+
+"@exodus/eslint-plugin-restricted-imports@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@exodus/eslint-plugin-restricted-imports@npm:1.1.1"
+  peerDependencies:
+    "@exodus/basic-utils": "*"
+    eslint: "*"
+  checksum: 786f06984195e88a10b118220724fe89edea8f38674be494014d70965444f34b74e2d142c9d7d86a2653967904d38ef89ff5beee6a72dbcacd8478a69173f7cb
   languageName: node
   linkType: hard
 
@@ -1790,6 +1835,15 @@ __metadata:
     node-fetch: ^3.3.1
     nx: ">=14.0.0"
     typescript: ">=4.0.0"
+  languageName: unknown
+  linkType: soft
+
+"@hydra/you-shall-not-pass@workspace:tools/packages/you-shall-not-pass":
+  version: 0.0.0-use.local
+  resolution: "@hydra/you-shall-not-pass@workspace:tools/packages/you-shall-not-pass"
+  dependencies:
+    eslint: ^8.44.0
+    jest: ^29.1.2
   languageName: unknown
   linkType: soft
 
@@ -2212,6 +2266,15 @@ __metadata:
   version: 2.1.8-no-fsevents.3
   resolution: "@nicolo-ribaudo/chokidar-2@npm:2.1.8-no-fsevents.3"
   checksum: ee55cc9241aeea7eb94b8a8551bfa4246c56c53bc71ecda0a2104018fcc328ba5723b33686bdf9cc65d4df4ae65e8016b89e0bbdeb94e0309fe91bb9ced42344
+  languageName: node
+  linkType: hard
+
+"@nicolo-ribaudo/eslint-scope-5-internals@npm:5.1.1-v1":
+  version: 5.1.1-v1
+  resolution: "@nicolo-ribaudo/eslint-scope-5-internals@npm:5.1.1-v1"
+  dependencies:
+    eslint-scope: 5.1.1
+  checksum: f2e3b2d6a6e2d9f163ca22105910c9f850dc4897af0aea3ef0a5886b63d8e1ba6505b71c99cb78a3bba24a09557d601eb21c8dede3f3213753fcfef364eb0e57
   languageName: node
   linkType: hard
 
@@ -3378,7 +3441,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.9.0":
+"acorn@npm:^8.5.0, acorn@npm:^8.9.0":
   version: 8.11.2
   resolution: "acorn@npm:8.11.2"
   bin:
@@ -4382,6 +4445,13 @@ __metadata:
   version: 4.6.0
   resolution: "co@npm:4.6.0"
   checksum: 5210d9223010eb95b29df06a91116f2cf7c8e0748a9013ed853b53f362ea0e822f1e5bb054fb3cefc645239a4cf966af1f6133a3b43f40d591f3b68ed6cf0510
+  languageName: node
+  linkType: hard
+
+"code-error-fragment@npm:0.0.230":
+  version: 0.0.230
+  resolution: "code-error-fragment@npm:0.0.230"
+  checksum: 6c5e800d6d70b30938cc85a2fc2c6069f028eadb58bceb65716b995ce6228c99906302f2c438ba50115fd81a1ee15dd95dc7d317b16a6c590e311ac7e50613f3
   languageName: node
   linkType: hard
 
@@ -5549,7 +5619,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-scope@npm:^5.1.1":
+"eslint-scope@npm:5.1.1, eslint-scope@npm:^5.1.1":
   version: 5.1.1
   resolution: "eslint-scope@npm:5.1.1"
   dependencies:
@@ -5585,7 +5655,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-visitor-keys@npm:^3.3.0, eslint-visitor-keys@npm:^3.4.1, eslint-visitor-keys@npm:^3.4.3":
+"eslint-visitor-keys@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "eslint-visitor-keys@npm:2.1.0"
+  checksum: e3081d7dd2611a35f0388bbdc2f5da60b3a3c5b8b6e928daffff7391146b434d691577aa95064c8b7faad0b8a680266bcda0a42439c18c717b80e6718d7e267d
+  languageName: node
+  linkType: hard
+
+"eslint-visitor-keys@npm:^3.0.0, eslint-visitor-keys@npm:^3.3.0, eslint-visitor-keys@npm:^3.4.1, eslint-visitor-keys@npm:^3.4.3":
   version: 3.4.3
   resolution: "eslint-visitor-keys@npm:3.4.3"
   checksum: 36e9ef87fca698b6fd7ca5ca35d7b2b6eeaaf106572e2f7fd31c12d3bfdaccdb587bba6d3621067e5aece31c8c3a348b93922ab8f7b2cbc6aaab5e1d89040c60
@@ -5640,7 +5717,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"espree@npm:^9.6.0, espree@npm:^9.6.1":
+"espree@npm:^9.0.0, espree@npm:^9.6.0, espree@npm:^9.6.1":
   version: 9.6.1
   resolution: "espree@npm:9.6.1"
   dependencies:
@@ -6560,6 +6637,13 @@ __metadata:
   version: 4.2.11
   resolution: "graceful-fs@npm:4.2.11"
   checksum: ac85f94da92d8eb6b7f5a8b20ce65e43d66761c55ce85ac96df6865308390da45a8d3f0296dd3a663de65d30ba497bd46c696cc1e248c72b13d6d567138a4fc7
+  languageName: node
+  linkType: hard
+
+"grapheme-splitter@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "grapheme-splitter@npm:1.0.4"
+  checksum: 0c22ec54dee1b05cd480f78cf14f732cb5b108edc073572c4ec205df4cd63f30f8db8025afc5debc8835a8ddeacf648a1c7992fe3dcd6ad38f9a476d84906620
   languageName: node
   linkType: hard
 
@@ -8069,6 +8153,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"json-estree-ast@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "json-estree-ast@npm:1.0.1"
+  dependencies:
+    json-to-ast: ^2.1.0
+  checksum: 1005172371170cc6fbdd437f70524b32f35d67cd9b307b7e6c4764a3a57a48aa2a96fc81e69ff2f993de0d86543abe69b0d43b44c883b2b32cf27cdf70502e81
+  languageName: node
+  linkType: hard
+
 "json-parse-better-errors@npm:^1.0.1":
   version: 1.0.2
   resolution: "json-parse-better-errors@npm:1.0.2"
@@ -8125,6 +8218,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"json-to-ast@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "json-to-ast@npm:2.1.0"
+  dependencies:
+    code-error-fragment: 0.0.230
+    grapheme-splitter: ^1.0.4
+  checksum: 1e9b051505b218573b39f3fec9054d75772413aefc2fee3e763d9033276664faa7eec26b945a71f70b9ce29685b2f13259df7dd3243e15eacf4672c62d5ba7ce
+  languageName: node
+  linkType: hard
+
 "json5@npm:^1.0.2":
   version: 1.0.2
   resolution: "json5@npm:1.0.2"
@@ -8142,6 +8245,18 @@ __metadata:
   bin:
     json5: lib/cli.js
   checksum: 2a7436a93393830bce797d4626275152e37e877b265e94ca69c99e3d20c2b9dab021279146a39cdb700e71b2dd32a4cebd1514cd57cee102b1af906ce5040349
+  languageName: node
+  linkType: hard
+
+"jsonc-eslint-parser@npm:^2.3.0":
+  version: 2.4.0
+  resolution: "jsonc-eslint-parser@npm:2.4.0"
+  dependencies:
+    acorn: ^8.5.0
+    eslint-visitor-keys: ^3.0.0
+    espree: ^9.0.0
+    semver: ^7.3.5
+  checksum: 495d8be340b464137db0bb25f8280deda2ad773cca6b8b5605325fddb50e8e317842a07ffdfa692b0adcba2d06e25d127087f2d703a63032923d1e67ee5a9efe
   languageName: node
   linkType: hard
 
@@ -8808,7 +8923,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^9.0.0, minimatch@npm:^9.0.1":
+"minimatch@npm:^9.0.0, minimatch@npm:^9.0.1, minimatch@npm:^9.0.3":
   version: 9.0.3
   resolution: "minimatch@npm:9.0.3"
   dependencies:
@@ -10834,12 +10949,16 @@ __metadata:
   dependencies:
     "@babel/cli": ^7.21.0
     "@babel/core": ^7.21.0
+    "@babel/eslint-parser": ^7.22.9
     "@babel/plugin-proposal-export-default-from": ^7.18.10
     "@babel/preset-env": ^7.20.2
     "@babel/preset-flow": ^7.18.6
     "@babel/preset-react": ^7.18.6
     "@exodus/eslint-config": ^5.15.0
     "@exodus/eslint-plugin-ban-flow": latest
+    "@exodus/eslint-plugin-basic-utils": latest
+    "@exodus/eslint-plugin-package": ^1.6.0
+    "@exodus/eslint-plugin-restricted-imports": ^1.1.1
     "@exodus/lerna-release-action-cli": ^1.3.2
     "@exodus/migrate": ^1.5.3
     "@exodus/prettier": ^0.1.5
@@ -11705,6 +11824,13 @@ __metadata:
   version: 0.0.3
   resolution: "tr46@npm:0.0.3"
   checksum: 726321c5eaf41b5002e17ffbd1fb7245999a073e8979085dacd47c4b4e8068ff5777142fc6726d6ca1fd2ff16921b48788b87225cbc57c72636f6efa8efbffe3
+  languageName: node
+  linkType: hard
+
+"traverse@npm:^0.6.7":
+  version: 0.6.7
+  resolution: "traverse@npm:0.6.7"
+  checksum: 21018085ab72f717991597e12e2b52446962ed59df591502e4d7e1a709bc0a989f7c3d451aa7d882666ad0634f1546d696c5edecda1f2fc228777df7bb529a1e
   languageName: node
   linkType: hard
 
