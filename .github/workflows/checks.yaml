@@ -74,4 +74,4 @@ jobs:
         with:
           github-token: ${{ secrets.GH_AUTOMATION_PAT }}
           gist-id: ${{ secrets.COVERAGE_GIST_ID }}
-          gist-user: exodus-github-robot
+          gist-user: exodus-github-hydra-bot
