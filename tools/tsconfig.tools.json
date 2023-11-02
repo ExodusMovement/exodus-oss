@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../dist/tools",
+    "rootDir": ".",
+    "module": "commonjs",
+    "target": "es2022",
+    "types": ["node"]
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["generators/**/files"]
+}

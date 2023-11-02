@@ -1,0 +1,11 @@
+lib
+dist
+.cache
+.yarn/cache
+tmp
+
+COVERAGE.md
+
+coverage
+__mocks__
+__tests__/**/examples

@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "target": "es2021",
+    "moduleResolution": "node",
+    "declaration": true,
+    "removeComments": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "downlevelIteration": true,
+    "noUncheckedIndexedAccess": true,
+    "esModuleInterop": true,
+    "paths": {
+      "@exodus/networking-common": ["./modules/networking-common/src"],
+      "@exodus/networking-common/*": ["./modules/networking-common/src/*"],
+      "@exodus/networking-spec": ["./modules/networking-spec/src"],
+      "@exodus/networking-spec/*": ["./modules/networking-spec/src/*"],
+      "@exodus/transform-storage": ["./libraries/transform-storage/src"],
+      "@exodus/transform-storage/*": ["./libraries/transform-storage/src/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}

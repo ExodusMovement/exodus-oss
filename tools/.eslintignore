@@ -1,0 +1,5 @@
+lib
+tmp
+generators/**/files
+packages/you-shall-not-pass
+package.json

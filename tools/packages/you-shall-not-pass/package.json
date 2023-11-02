@@ -1,0 +1,10 @@
+{
+  "name": "@hydra/you-shall-not-pass",
+  "private": true,
+  "version": "0.0.0",
+  "main": "object/index.js",
+  "devDependencies": {
+    "eslint": "^8.44.0",
+    "jest": "^29.1.2"
+  }
+}

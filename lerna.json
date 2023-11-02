@@ -1,0 +1,7 @@
+{
+  "packages": ["modules/*", "libraries/*", "features/*"],
+  "version": "independent",
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "changelogPreset": "conventionalcommits"
+}

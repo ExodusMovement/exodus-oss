@@ -1,0 +1,19 @@
+name: Label
+
+on:
+  pull_request:
+
+jobs:
+  label:
+    name: PR
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Package Names
+        uses: ExodusMovement/lerna-package-name-action@main
+        with:
+          github-token: '${{ secrets.GITHUB_TOKEN }}'
+      - name: Categories
+        uses: actions/labeler@v4
