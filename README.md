@@ -219,8 +219,8 @@ folder has to be added. This can be done in the top level `tsconfig.json`:
     // ...
     paths: {
       // ...
-      "@exodus/networking-spec": ["./modules/networking-spec/src"],
-      "@exodus/networking-spec/*": ["./modules/networking-spec/src/*"],
+      '@exodus/networking-spec': ['./modules/networking-spec/src'],
+      '@exodus/networking-spec/*': ['./modules/networking-spec/src/*'],
     },
   },
 }
@@ -232,9 +232,9 @@ that can be created from the paths definitions in our tsconfig to avoid duplicat
 ```js
 module.exports = {
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
-    prefix: "<rootDir>/../../",
+    prefix: '<rootDir>/../../',
   }),
-};
+}
 ```
 
 A full example can be found [here](./modules/networking-node/jest.config.js)
@@ -267,8 +267,8 @@ If your module requires some async initialization, e.g. to load data from storag
 
 ```js
 load = async () => {
-  this.#cache = await fetchival(this.#someServerUrl).get();
-};
+  this.#cache = await fetchival(this.#someServerUrl).get()
+}
 ```
 
 #### Consuming/Producing Data
@@ -286,24 +286,24 @@ If your module accepts some static configuration, e.g. `{ someServerUrl, maxSlip
 If you're using Exodus's `@exodus/dependency-injection` or `@exodus/headless` to wire up the dependency tree, config values will be auto-magically binded for you from the passed global config by module id:
 
 ```js
-import createHeadless from "@exodus/headless";
-import createPreprocessors from "@exodus/dependency-preprocessors";
+import createHeadless from '@exodus/headless'
+import createPreprocessors from '@exodus/dependency-preprocessors'
 
 const config = {
   feri: {
     likesSandwiches: true,
     maxCachacaCapacity: Number.MAX_SAFE_INTEGER + 1,
   },
-};
+}
 
-const exodus = createHeadless({ adapters, config });
+const exodus = createHeadless({ adapters, config })
 exodus.register({
   definition: {
-    id: "feri",
+    id: 'feri',
     factory: createFeri, // will get called as `createFeri({ config: config.feri })`
-    dependencies: ["config"],
+    dependencies: ['config'],
   },
-});
+})
 
-exodus.resolve();
+exodus.resolve()
 ```
