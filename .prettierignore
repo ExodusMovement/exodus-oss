@@ -1,8 +1,5 @@
 lib
 dist
-tools/generators/**/files
-tools/generators/**/tasks/files
-tools/generators/tasks/**/files
 .cache
 .yarn/cache
 tmp
