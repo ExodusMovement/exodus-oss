@@ -31,7 +31,6 @@ testing:
 lint:
   - ".eslintignore"
   - ".eslintrc.js"
-  - "tools/packages/eslint-plugin-hydra/**"
   - "libraries/eslint-*/**"
 
 docs:
