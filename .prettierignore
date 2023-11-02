@@ -1,0 +1,14 @@
+lib
+dist
+tools/generators/**/files
+tools/generators/**/tasks/files
+tools/generators/tasks/**/files
+.cache
+.yarn/cache
+tmp
+
+COVERAGE.md
+
+coverage
+__mocks__
+__tests__/**/examples
