@@ -41,9 +41,7 @@
     "cache:delete": "node ./tools/scripts/cache/delete",
     "postmigrate": "node tools/scripts/postmigrate/index.js",
     "release": "lerna-release-action",
-    "sync": "./tools/scripts/sync.js",
-    "sync:mobile": "DEFAULT_REPOSITORY_PATH=../exodus-mobile ./tools/scripts/sync.js",
-    "sync:browser": "DEFAULT_REPOSITORY_PATH=../exodus-browser ./tools/scripts/sync.js"
+    "sync": "./tools/scripts/sync.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.21.0",

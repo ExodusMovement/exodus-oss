@@ -36,11 +36,11 @@ Examples:
 
 ```sh
 # from a repository URL
-exodus-migrate --url https://github.com/ExodusMovement/exodus-browser --target-dir modules/auto-enable-assets --scope @exodus --rename-tags
+exodus-migrate --url https://github.com/ExodusMovement/some-other-repo --target-dir modules/auto-enable-assets --scope @exodus --rename-tags
 
 
 # from a subdirectory within a repository (can also be from a different branch than master)
-exodus-migrate --url https://github.com/ExodusMovement/exodus-browser/tree/master/src/_local_modules/enabled-assets --target-dir modules/auto-enable-assets --scope @exodus --rename-tags
+exodus-migrate --url https://github.com/ExodusMovement/some-other-repo/tree/master/src/_local_modules/enabled-assets --target-dir modules/auto-enable-assets --scope @exodus --rename-tags
 ```
 
 The script will replace the `repository`, `homepage`, and `bugs.url` properties in `package.json` to point to hydra
@@ -95,7 +95,7 @@ logging pre-configured.
 
 ## Development
 
-While developing a package in this monorepo, you may want to test it in one of the client repos, e.g. exodus-mobile. Unfortunately we can't use `npm link` because mobile's packager `metro` doesn't support symlinks (yet). However, we have a similar tool here to help you sync your changes to the client repos before you publish a new version.
+While developing a package in this monorepo, you may want to test it in an app, e.g. your mobile dapp. Unfortunately we can't use `npm link` because mobile's packager `metro` doesn't support symlinks (yet). However, we have a similar tool here to help you sync your changes to the client repos before you publish a new version.
 
 To link your module to a client repo, run:
 
@@ -108,13 +108,7 @@ This will start a watch process that syncs the specified modules to `src/node_mo
 Examples
 
 ```
-# exodus-mobile
-yarn run -T sync:mobile module-name,other-module-name
-# or: yarn run -T sync:mobile module-name,other-module-name ../exodus-mobile
-
-# exodus-browser
-yarn run -T sync:browser module-name,other-module-name
-# or: yarn run -T sync:browser module-name,other-module-name ../exodus-browser
+yarn run -T sync module-name,other-module-name ../my-app
 ```
 
 ### Test
