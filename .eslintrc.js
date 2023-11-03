@@ -22,7 +22,7 @@ module.exports = {
     'plugin:@exodus/ban-flow/recommended',
     'plugin:@exodus/basic-utils/recommended',
     'plugin:@exodus/restricted-imports/recommended',
-    // 'plugin:hydra/recommended',
+    'plugin:@exodus/hydra/recommended',
     'plugin:@exodus/eslint-plugin-package/recommended',
   ],
   rules: shared,
@@ -39,10 +39,10 @@ module.exports = {
     },
   },
   overrides: [
-    // {
-    //   extends: ['plugin:hydra/features'],
-    //   files: ['{features,modules}/**/*.{ts,js}'],
-    // },
+    {
+      extends: ['plugin:@exodus/hydra/features'],
+      files: ['{features,modules}/**/*.{ts,js}'],
+    },
     {
       files: ['*.{ts,tsx}'],
       extends: ['@exodus/eslint-config/typescript-react'],
