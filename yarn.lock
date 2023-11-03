@@ -1624,7 +1624,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/basic-utils@npm:^2.0.1":
+"@exodus/basic-utils@npm:^2.0.1, @exodus/basic-utils@npm:^2.1.0":
   version: 2.1.1
   resolution: "@exodus/basic-utils@npm:2.1.1"
   dependencies:
@@ -1675,6 +1675,17 @@ __metadata:
   version: 2.0.0
   resolution: "@exodus/eslint-plugin-export-default@npm:2.0.0"
   checksum: aff966a2cf20af31d44937869bf39f09f4e4bcc33f1ac3e1f246739e4ca6bba0d4431e831dd2b32d671bb43a62f56acbbf4450ec66cc83daf98b19216a9bf7c9
+  languageName: node
+  linkType: hard
+
+"@exodus/eslint-plugin-hydra@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@exodus/eslint-plugin-hydra@npm:1.0.0"
+  dependencies:
+    "@exodus/basic-utils": ^2.1.0
+    eslint-module-utils: ^2.8.0
+    lodash: ^4.17.21
+  checksum: bffcc23378e9eaae10826230c5e59bdb987d40bb1c30396840da280f7d09224d514a31c5b4305f11f3627a3b3d5e44ff433c542e1f443434911e139c64f718af
   languageName: node
   linkType: hard
 
@@ -10957,6 +10968,7 @@ __metadata:
     "@exodus/eslint-config": ^5.15.0
     "@exodus/eslint-plugin-ban-flow": latest
     "@exodus/eslint-plugin-basic-utils": latest
+    "@exodus/eslint-plugin-hydra": ^1.0.0
     "@exodus/eslint-plugin-package": ^1.6.0
     "@exodus/eslint-plugin-restricted-imports": ^1.1.1
     "@exodus/lerna-release-action-cli": ^1.3.2
