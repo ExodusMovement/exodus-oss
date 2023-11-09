@@ -4,7 +4,7 @@ const fs = require('fs')
 const buffer = fs.readFileSync(path.join(__dirname, 'lerna.json'))
 const { packages: packageRoots } = JSON.parse(buffer.toString())
 
-const hydraPackages = packageRoots.flatMap((root) => {
+const repoPackages = packageRoots.flatMap((root) => {
   const directory = path.dirname(root)
   return fs
     .readdirSync(path.join(__dirname, directory))
@@ -13,7 +13,7 @@ const hydraPackages = packageRoots.flatMap((root) => {
 })
 
 const untranspiledModulePatterns = [
-  ...hydraPackages,
+  ...repoPackages,
   'react-native',
   '@exodus/solana-*',
   '@exodus/core-selectors',
@@ -29,6 +29,9 @@ const untranspiledModulePatterns = [
   '@exodus/cosmjs-fork',
   '@exodus/osmosis-*',
   '@exodus/key-utils',
+  '@exodus/module',
+  '@exodus/atoms',
+  '@exodus/storage-memory',
   '@exodus/basic-utils',
   '@exodus/timer',
   '@exodus/serialization',
