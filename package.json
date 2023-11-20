@@ -29,7 +29,7 @@
     "yarn": ">=3"
   },
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "command -v husky && (echo 'running husky' && husky install) || (echo 'skipping husky' && true)",
     "lint": "LINTER=true lerna run lint",
     "lint:fix": "LINTER=true lerna run lint -- --fix",
     "test": "lerna run test -- --passWithNoTests",
