@@ -5,7 +5,6 @@ const path = require('path')
 const { execSync } = require('child_process')
 
 const cwd = process.cwd()
-const OUTPUT_PATH = path.resolve(cwd, 'yarn.lock.prod')
 
 const run = (cmd) => execSync(cmd, { encoding: 'utf8' })
 
