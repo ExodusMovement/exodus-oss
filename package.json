@@ -39,7 +39,6 @@
     "format": "prettier --write \"**/*.{json,md,yaml}\" --loglevel warn",
     "format:check": "prettier --check \"**/*.{json,md,yaml}\" --loglevel warn",
     "cache:delete": "node ./tools/scripts/cache/delete",
-    "postmigrate": "node tools/scripts/postmigrate/index.js",
     "release": "lerna-release-action",
     "sync": "./tools/scripts/sync.js"
   },
@@ -90,7 +89,6 @@
   "prettier": "@exodus/prettier",
   "packageManager": "yarn@3.2.2",
   "dependencies": {
-    "delay": "^5.0.0",
     "global": "^4.4.0"
   }
 }
