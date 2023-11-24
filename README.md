@@ -2,6 +2,8 @@
 
 # exodus-oss
 
+**WARNING: this repo still has some private dependencies and links out to private documentation. We're working on making those public, but it will take time. If you have not been explicitly granted access to those, expect tooling and tests not to work.**
+
 This is the mono repo that is home to the open source modules of the Exodus eco-system.
 
 Before you leave your loving aunt and uncle and your comfortable attic on Privet Drive and venture down to fight Voldemort below, we recommend you go to [Hogwarts](https://coda.io/d/Exodus-Wallets-Architecture-and-Best-Practices_dDRDEoXvP_I/Wallets-Architecture_suyd3) and at least learn Lumos.
