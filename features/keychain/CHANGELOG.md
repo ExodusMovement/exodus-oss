@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.1](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@4.4.0...@exodus/keychain@4.4.1) (2023-11-24)
+
+- Add basic types
+
 ## 4.4.0 (2023-11-10)
 
 ### Features
