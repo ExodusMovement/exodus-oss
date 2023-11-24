@@ -2,7 +2,8 @@
 
 # exodus-oss
 
-**WARNING: this repo still has some private dependencies and links out to private documentation. We're working on making those public, but it will take time. If you have not been explicitly granted access to those, expect tooling and tests not to work.**
+> [!WARNING]
+> This repo still has some private dependencies and links out to private documentation. We're working on making those public, but it will take time. If you have not been explicitly granted access to those, expect tooling and tests not to work.
 
 This is the mono repo that is home to the open source modules of the Exodus eco-system.
 
