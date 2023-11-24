@@ -7,12 +7,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **keychain:** add compare function for keyidentifier ([#4540](https://github.com/ExodusMovement/exodus-oss/issues/4540)) ([8c196db](https://github.com/ExodusMovement/exodus-oss/commit/8c196db2cfb66d5229109046891b02e2cda4b9d6))
-- move keychain to feature dir ([#2374](https://github.com/ExodusMovement/exodus-oss/issues/2374)) ([0353822](https://github.com/ExodusMovement/exodus-oss/commit/03538224746ce74192fd44ef811e6918869de6d5))
+- **keychain:** add compare function for keyidentifier ([#4540](https://github.com/ExodusMovement/exodus-hydra/issues/4540)) ([8c196db](https://github.com/ExodusMovement/exodus-hydra/commit/8c196db2cfb66d5229109046891b02e2cda4b9d6))
+- move keychain to feature dir ([#2374](https://github.com/ExodusMovement/exodus-hydra/issues/2374)) ([0353822](https://github.com/ExodusMovement/exodus-hydra/commit/03538224746ce74192fd44ef811e6918869de6d5))
 
 ### Bug Fixes
 
-- import from atoms index ([#4508](https://github.com/ExodusMovement/exodus-oss/issues/4508)) ([e487b19](https://github.com/ExodusMovement/exodus-oss/commit/e487b19dd9ae17a1ab777c7990ff7b9aa00a1ad6))
+- import from atoms index ([#4508](https://github.com/ExodusMovement/exodus-hydra/issues/4508)) ([e487b19](https://github.com/ExodusMovement/exodus-hydra/commit/e487b19dd9ae17a1ab777c7990ff7b9aa00a1ad6))
 
 ## [4.3.0](https://github.com/ExodusMovement/exodus-hydra/compare/@exodus/keychain@4.2.0...@exodus/keychain@4.3.0) (2023-10-23)
 
