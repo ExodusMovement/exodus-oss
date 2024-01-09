@@ -1,34 +1,46 @@
+import { assets } from './fixtures/assets'
+
 import { KeyIdentifier, createKeyIdentifierForExodus } from '../key-identifier'
 
 describe('KeyIdentifier', () => {
   it('should fail on incorrect construction', () => {
     const failures = [
-      null,
-      undefined,
-      {},
-      // Missing parameters
-
       {
         derivationAlgorithm: 'BIP32',
+        asset: assets.ethereum,
       },
       {
         derivationPath: "m/44'/60'/0'/0/0",
+        asset: assets.ethereum,
       },
-
-      // Incorrect types
       {
-        derivationAlgorithm: 'BIP32',
-        assetName: 0,
+        asset: assets.ethereum,
+      },
+      {
+        derivationAlgorithm: 0,
+        asset: assets.ethereum,
         derivationPath: "m/44'/60'/0'/0/0",
       },
-
-      // Non-existing assetNames
-      // {
-      //  derivationAlgorithm: 'BIP32',
-      //  asset: { name: 'i-do-not-exist' },
-      //  derivationPath: `m/44'/60'/0'/0/0`,
-      // },
-      // Incorrect paths
+      {
+        derivationAlgorithm: 'BIP32',
+        asset: assets.ethereum,
+        derivationPath: 0,
+      },
+      {
+        derivationAlgorithm: 'BIP32',
+        asset: assets.ethereum,
+        derivationPath: "m/44'/60'/0'/0/0dddd",
+      },
+      {
+        derivationAlgorithm: 'BIP32',
+        asset: assets.ethereum,
+        derivationPath: "m\\44'/60'/0'/0/0",
+      },
+      {
+        derivationAlgorithm: 'BIP32',
+        asset: assets.ethereum,
+        derivationPath: "m44'/60'/0'/0/0",
+      },
     ]
 
     const failuresAsFunctions = failures.map((failure) => () => {
