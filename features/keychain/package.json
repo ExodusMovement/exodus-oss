@@ -29,7 +29,7 @@
     "todo:reenable:test:integration": "jest --testMatch='**/*.integration-test.js'"
   },
   "dependencies": {
-    "@exodus/atoms": "^6.0.1",
+    "@exodus/atoms": "^7.0.1",
     "@exodus/basic-utils": "^2.0.0",
     "@exodus/bip32": "^1.0.0",
     "@exodus/elliptic": "^6.5.4-precomputed",
