@@ -90,7 +90,6 @@
   "packageManager": "yarn@3.2.2",
   "dependencies": {
     "@exodus/migrate": "^1.5.3",
-    "delay": "^5.0.0",
     "global": "^4.4.0"
   }
 }
