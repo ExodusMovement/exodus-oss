@@ -254,3 +254,17 @@ test('EdDSA Signer', async () => {
     'd28f13d22ef56c7c5b89a68f67a581ecb01358ed4782dca4f5bc672c4e11d669f853d8110c56dec8bcbafd96bf319d27fa8d8a73dabd95d4c18bf65788a9680d'
   expect(signature.toString('hex')).toBe(expected)
 })
+
+test('EdDSA Signer (using ed25519 instance)', async () => {
+  const keyId = new KeyIdentifier({
+    derivationAlgorithm: 'SLIP10',
+    derivationPath: "m/73'/2'/0'",
+    keyType: 'nacl',
+  })
+
+  const plaintext = Buffer.from('I really love keychains')
+  const signature = await keychain.ed25519.signBuffer({ keyId, data: plaintext })
+  const expected =
+    'd28f13d22ef56c7c5b89a68f67a581ecb01358ed4782dca4f5bc672c4e11d669f853d8110c56dec8bcbafd96bf319d27fa8d8a73dabd95d4c18bf65788a9680d'
+  expect(signature.toString('hex')).toBe(expected)
+})

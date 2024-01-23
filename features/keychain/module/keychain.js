@@ -5,7 +5,7 @@ import SLIP10 from '@exodus/slip10'
 import { mapValues } from '@exodus/basic-utils'
 import assert from 'minimalistic-assert'
 
-import { createEd25519Signer } from './crypto/ed25519'
+import * as ed25519 from './crypto/ed25519'
 import { createSecp256k1Signer } from './crypto/secp256k1'
 import * as sodium from './crypto/sodium'
 import {
@@ -39,6 +39,7 @@ export class Keychain extends ExodusModule {
     Object.freeze(this.#legacyPrivToPub)
 
     this.sodium = sodium.create({ getPrivateHDKey: this.#getPrivateHDKey })
+    this.ed25519 = ed25519.create({ getPrivateHDKey: this.#getPrivateHDKey })
   }
 
   unlock({ seed }) {
@@ -108,15 +109,14 @@ export class Keychain extends ExodusModule {
     return signTxWithHD({ unsignedTx, hdkeys, privateKey })
   }
 
-  /** @deprecated */
+  // @deprecated use keychain.sodium instead
   createSodiumEncryptor(keyId) {
     return this.sodium.createEncryptor({ keyId })
   }
 
-  // Ed25519 EdDSA
+  // @deprecated use keychain.ed25519 instead
   createEd25519Signer(keyId) {
-    const { privateKey } = this.#getPrivateHDKey(keyId)
-    return createEd25519Signer(privateKey)
+    return this.ed25519.createSigner({ keyId })
   }
 
   // Secp256k1 EcDSA
