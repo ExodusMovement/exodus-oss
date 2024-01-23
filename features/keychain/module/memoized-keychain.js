@@ -14,6 +14,7 @@ class MemoizedKeychain extends Keychain {
   #storage
   #publicKeys = Object.create(null)
   #cloneOpts
+
   constructor({ storage, logger }) {
     super({ id: MODULE_ID, logger })
 
@@ -49,12 +50,15 @@ class MemoizedKeychain extends Keychain {
   }
 
   clone = () => new MemoizedKeychain(this.#cloneOpts)
+
+  clear = async () => this.#storage.delete(CACHE_KEY)
 }
 
-// eslint-disable-next-line @exodus/export-default/named
-export default {
+const memoizedKeychainDefinition = {
   id: 'keychain',
   type: 'module',
   factory: (opts) => new MemoizedKeychain(opts),
   dependencies: ['storage', 'logger'],
 }
+
+export default memoizedKeychainDefinition
