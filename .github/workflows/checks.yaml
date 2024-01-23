@@ -49,12 +49,6 @@ jobs:
         run: yarn build
       - name: Test
         run: yarn test
-      - name: Coverage report
-        uses: ExodusMovement/lerna-coverage-report-action@main
-        with:
-          github-token: ${{ secrets.GH_AUTOMATION_PAT }}
-          gist-id: ${{ secrets.COVERAGE_GIST_ID }}
-          gist-user: exodus-github-hydra-bot
   integration-test:
     name: Test (Integration)
     runs-on: hydra-runner
@@ -69,9 +63,3 @@ jobs:
         run: yarn install --immutable
       - name: Integration Test
         run: yarn test:integration -- --runInBand
-      - name: Coverage report
-        uses: ExodusMovement/lerna-coverage-report-action@main
-        with:
-          github-token: ${{ secrets.GH_AUTOMATION_PAT }}
-          gist-id: ${{ secrets.COVERAGE_GIST_ID }}
-          gist-user: exodus-github-hydra-bot
