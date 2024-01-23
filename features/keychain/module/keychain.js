@@ -6,7 +6,7 @@ import { mapValues } from '@exodus/basic-utils'
 import assert from 'minimalistic-assert'
 
 import * as ed25519 from './crypto/ed25519'
-import { createSecp256k1Signer } from './crypto/secp256k1'
+import * as secp256k1 from './crypto/secp256k1'
 import * as sodium from './crypto/sodium'
 import {
   throwIfInvalidKeyIdentifier,
@@ -40,6 +40,7 @@ export class Keychain extends ExodusModule {
 
     this.sodium = sodium.create({ getPrivateHDKey: this.#getPrivateHDKey })
     this.ed25519 = ed25519.create({ getPrivateHDKey: this.#getPrivateHDKey })
+    this.secp256k1 = secp256k1.create({ getPrivateHDKey: this.#getPrivateHDKey })
   }
 
   unlock({ seed }) {
@@ -119,10 +120,9 @@ export class Keychain extends ExodusModule {
     return this.ed25519.createSigner({ keyId })
   }
 
-  // Secp256k1 EcDSA
+  // @deprecated use keychain.secp256k1 instead
   createSecp256k1Signer(keyId) {
-    const { privateKey } = this.#getPrivateHDKey(keyId)
-    return createSecp256k1Signer(privateKey)
+    return this.secp256k1.createSigner({ keyId })
   }
 
   clone() {

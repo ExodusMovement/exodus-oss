@@ -240,6 +240,20 @@ test('EcDSA Signer', async () => {
   expect(signature.toString('hex')).toBe(expected)
 })
 
+test('EcDSA Signer (using secp256k1 instance)', async () => {
+  const keyId = new KeyIdentifier({
+    derivationAlgorithm: 'SLIP10',
+    derivationPath: "m/73'/2'/0'",
+    keyType: 'nacl',
+  })
+
+  const plaintext = Buffer.from('I really love keychains')
+  const signature = await keychain.secp256k1.signBuffer({ keyId, data: plaintext })
+  const expected =
+    '304402206102dd19cf16e4d88b5bbc07843dae29fb62b13b65207667898363c90b548bf60220577d77bed19009157593f884bfc8a951dbfc9fe4e4fe99ddaed9ab8b558e208c'
+  expect(signature.toString('hex')).toBe(expected)
+})
+
 test('EdDSA Signer', async () => {
   const keyId = new KeyIdentifier({
     derivationAlgorithm: 'SLIP10',
