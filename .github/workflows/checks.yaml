@@ -17,7 +17,7 @@ env:
 jobs:
   lint:
     name: Lint
-    runs-on: hydra-runner
+    runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
@@ -35,7 +35,7 @@ jobs:
         run: yarn format:check
   test:
     name: Test
-    runs-on: hydra-runner
+    runs-on: ubuntu-latest
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
@@ -51,7 +51,7 @@ jobs:
         run: yarn test
   integration-test:
     name: Test (Integration)
-    runs-on: hydra-runner
+    runs-on: ubuntu-latest
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
