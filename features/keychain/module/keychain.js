@@ -37,6 +37,8 @@ export class Keychain extends ExodusModule {
     // but at this point in time this is the best we can do.
     this.#legacyPrivToPub = Object.assign(Object.create(null), legacyPrivToPub)
     Object.freeze(this.#legacyPrivToPub)
+
+    this.sodium = sodium.create({ getPrivateHDKey: this.#getPrivateHDKey })
   }
 
   unlock({ seed }) {
@@ -106,9 +108,9 @@ export class Keychain extends ExodusModule {
     return signTxWithHD({ unsignedTx, hdkeys, privateKey })
   }
 
+  /** @deprecated */
   createSodiumEncryptor(keyId) {
-    const { privateKey: sodiumSeed } = this.#getPrivateHDKey(keyId)
-    return sodium.createSodiumEncryptor(sodiumSeed)
+    return this.sodium.createEncryptor({ keyId })
   }
 
   // Ed25519 EdDSA

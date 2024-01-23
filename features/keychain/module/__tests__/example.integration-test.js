@@ -130,6 +130,14 @@ test('encryptSecretBox/decryptSecretBox', async () => {
   expect(decrypted.toString()).toBe(plaintext)
 })
 
+test('encryptSecretBox/decryptSecretBox (using sodium instance)', async () => {
+  const plaintext = 'I really love keychains'
+  const ciphertext = await keychain.sodium.encryptSecretBox({ keyId: ALICE_KEY, data: plaintext })
+  const decrypted = await keychain.sodium.decryptSecretBox({ keyId: ALICE_KEY, data: ciphertext })
+
+  expect(decrypted.toString()).toBe(plaintext)
+})
+
 test('encryptBox/decryptBox', async () => {
   const aliceSodiumEncryptor = await keychain.createSodiumEncryptor(ALICE_KEY)
   const bobSodiumEncryptor = await keychain.createSodiumEncryptor(BOB_KEY)
@@ -153,6 +161,32 @@ test('encryptBox/decryptBox', async () => {
   expect(decrypted.toString()).toBe(plaintext)
 })
 
+test('encryptBox/decryptBox (using sodium instance)', async () => {
+  const plaintext = 'I really love keychains'
+
+  const {
+    box: { publicKey: bobPublicKey }
+  } = await keychain.sodium.getSodiumKeysFromSeed({ keyId: BOB_KEY })
+
+  const ciphertext = await keychain.sodium.encryptBox({
+    keyId: ALICE_KEY,
+    data: plaintext,
+    toPublicKey: bobPublicKey,
+  })
+
+  const {
+    box: { publicKey: alicePublicKey },
+  } = await keychain.sodium.getSodiumKeysFromSeed({ keyId: ALICE_KEY })
+
+  const decrypted = await keychain.sodium.decryptBox({
+    keyId: BOB_KEY,
+    data: ciphertext,
+    fromPublicKey: alicePublicKey,
+  })
+
+  expect(decrypted.toString()).toBe(plaintext)
+})
+
 test('should encryptSealedBox and decryptSealedBox', async () => {
   const aliceSodiumEncryptor = await keychain.createSodiumEncryptor(ALICE_KEY)
   const bobSodiumEncryptor = await keychain.createSodiumEncryptor(BOB_KEY)
@@ -167,6 +201,27 @@ test('should encryptSealedBox and decryptSealedBox', async () => {
   const decrypted = await bobSodiumEncryptor.decryptSealedBox({
     data: ciphertext,
   })
+  expect(decrypted.toString()).toBe(plaintext)
+})
+
+test('should encryptSealedBox and decryptSealedBox (using sodium instance)', async () => {
+  const plaintext = 'I really love keychains'
+
+  const {
+    box: { publicKey: bobPublicKey },
+  } = await keychain.sodium.getSodiumKeysFromSeed({ keyId: BOB_KEY })
+
+  const ciphertext = await await keychain.sodium.encryptSealedBox({
+    keyId: ALICE_KEY,
+    data: plaintext,
+    toPublicKey: bobPublicKey,
+  })
+
+  const decrypted = await await keychain.sodium.decryptSealedBox({
+    keyId: BOB_KEY,
+    data: ciphertext,
+  })
+
   expect(decrypted.toString()).toBe(plaintext)
 })
 
