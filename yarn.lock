@@ -2019,17 +2019,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/migrate@npm:^1.5.3":
-  version: 1.5.3
-  resolution: "@exodus/migrate@npm:1.5.3"
-  dependencies:
-    commander: ^9.4.0
-  bin:
-    exodus-migrate: lib/index.js
-  checksum: 81202b5fec79235125f3c4f4b2c42e1bc39a6ebf5ff39605806e70bed20c0664529cb2c9526df36c1c587bd5997618c2e29cc2d39e5d547b3b030df1b4dbb0e2
-  languageName: node
-  linkType: hard
-
 "@exodus/module@npm:^1.2.0":
   version: 1.2.1
   resolution: "@exodus/module@npm:1.2.1"
@@ -4987,13 +4976,6 @@ __metadata:
   version: 4.1.1
   resolution: "commander@npm:4.1.1"
   checksum: d7b9913ff92cae20cb577a4ac6fcc121bd6223319e54a40f51a14740a681ad5c574fd29a57da478a5f234a6fa6c52cbf0b7c641353e03c648b1ae85ba670b977
-  languageName: node
-  linkType: hard
-
-"commander@npm:^9.4.0":
-  version: 9.5.0
-  resolution: "commander@npm:9.5.0"
-  checksum: c7a3e27aa59e913b54a1bafd366b88650bc41d6651f0cbe258d4ff09d43d6a7394232a4dadd0bf518b3e696fdf595db1028a0d82c785b88bd61f8a440cecfade
   languageName: node
   linkType: hard
 
@@ -11388,7 +11370,6 @@ __metadata:
     "@exodus/eslint-plugin-hydra": ^1.0.0
     "@exodus/eslint-plugin-package": ^1.6.0
     "@exodus/eslint-plugin-restricted-imports": ^1.1.1
-    "@exodus/migrate": ^1.5.3
     "@exodus/prettier": ^1.0.0
     "@nrwl/devkit": ^15.8.5
     "@nrwl/workspace": ^15.8.5
