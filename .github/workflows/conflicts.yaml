@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Label PRs
-        uses: ExodusMovement/actions-label-merge-conflict@main
+        uses: ExodusMovement/actions-label-merge-conflict@71abef2871620db9447045b06bcd150ed607dc13
         with:
           dirtyLabel: 'blocked/needs-rebase'
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
