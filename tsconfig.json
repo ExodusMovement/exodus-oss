@@ -16,8 +16,8 @@
       "@exodus/networking-spec": ["./modules/networking-spec/src"],
       "@exodus/networking-spec/*": ["./modules/networking-spec/src/*"],
       "@exodus/transform-storage": ["./libraries/transform-storage/src"],
-      "@exodus/transform-storage/*": ["./libraries/transform-storage/src/*"]
-    }
+      "@exodus/transform-storage/*": ["./libraries/transform-storage/src/*"],
+    },
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }
