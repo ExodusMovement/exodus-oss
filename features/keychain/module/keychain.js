@@ -26,7 +26,7 @@ export class Keychain extends ExodusModule {
   #legacyPrivToPub = null
 
   // TODO: remove default param. Use it temporarily for backward compatibility.
-  constructor({ legacyPrivToPub = {}, logger }) {
+  constructor({ legacyPrivToPub = Object.create(null), logger }) {
     super({ name: MODULE_ID, logger })
 
     throwIfInvalidLegacyPrivToPub(legacyPrivToPub)
@@ -62,7 +62,7 @@ export class Keychain extends ExodusModule {
     return this.#masters[derivationAlgorithm].derive(derivationPath)
   }
 
-  async exportKey(keyId, { exportPrivate } = {}) {
+  async exportKey(keyId, { exportPrivate } = Object.create(null)) {
     const hdkey = this.#getPrivateHDKey(keyId)
     const privateKey = hdkey.privateKey
     let publicKey = hdkey.publicKey
@@ -128,7 +128,7 @@ export class Keychain extends ExodusModule {
   }
 }
 
-const createKeychain = (args = {}) => new Keychain({ ...args })
+const createKeychain = (args = Object.create(null)) => new Keychain({ ...args })
 
 // eslint-disable-next-line @exodus/export-default/named
 export default {
