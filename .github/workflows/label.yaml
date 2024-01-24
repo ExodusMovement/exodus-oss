@@ -3,6 +3,9 @@ name: Label
 on:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   label:
     name: PR
