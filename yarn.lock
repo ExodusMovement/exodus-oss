@@ -1801,18 +1801,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/atoms@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "@exodus/atoms@npm:6.0.1"
+"@exodus/atoms@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "@exodus/atoms@npm:7.0.1"
   dependencies:
     "@exodus/storage-interface": ^1.0.0
+    delay: ^5.0.0
     events: ^3.3.0
     lodash: ^4.17.21
     make-concurrent: ">=4 <6"
     minimalistic-assert: ^1.0.1
     p-defer: ^4.0.0
     proxy-freeze: ^1.0.0
-  checksum: 8b9ce5836818b5a5d7d553acdf60af55a150523c752bec924699d977c3f92cc69ac099afd6d23bef39087dcc36a46027c3a6156f5257abe3d35148807943cf2c
+  checksum: 2d8cd009e48d00ca811795d58334f932c30d25c9bdc533a38808cd9344f28c4e92aa569ec6056754fffebb5be6b7b7a7cc596db3a7eaaa05a55e0040467db1de
   languageName: node
   linkType: hard
 
@@ -1979,7 +1980,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@exodus/keychain@workspace:features/keychain"
   dependencies:
-    "@exodus/atoms": ^6.0.1
+    "@exodus/atoms": ^7.0.1
     "@exodus/basic-utils": ^2.0.0
     "@exodus/bip32": ^1.0.0
     "@exodus/elliptic": ^6.5.4-precomputed
@@ -11718,7 +11719,6 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.49.0
     "@typescript-eslint/parser": ^5.49.0
     conventional-changelog-conventionalcommits: ^5.0.0
-    delay: ^5.0.0
     eslint: ^8.44.0
     eslint-import-resolver-typescript: ^3.5.3
     eslint-plugin-react: ^7.32.1
