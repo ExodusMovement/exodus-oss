@@ -16,7 +16,7 @@ const { solana: asset } = connectAssetsList(solanaAssets)
 
 const keychain = keychainDefinition.factory({
   logger: console,
-  legacyPrivToPub: {},
+  legacyPrivToPub: Object.create(null),
 })
 
 keychain.unlock({ seed })
@@ -43,7 +43,7 @@ const BOB_KEY = new KeyIdentifier({
 test('unlock', async () => {
   const keychain = keychainDefinition.factory({
     logger: console,
-    legacyPrivToPub: {},
+    legacyPrivToPub: Object.create(null),
   })
 
   await expect(keychain.exportKey(solanaKeyId)).rejects.toThrow()
@@ -56,7 +56,7 @@ test('unlock', async () => {
 test('lock', async () => {
   const keychain = keychainDefinition.factory({
     logger: console,
-    legacyPrivToPub: {},
+    legacyPrivToPub: Object.create(null),
   })
 
   keychain.unlock({ seed })

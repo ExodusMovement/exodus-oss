@@ -5,7 +5,7 @@ describe('KeyIdentifier', () => {
     const failures = [
       null,
       undefined,
-      {},
+      Object.create(null),
       // Missing parameters
 
       {
