@@ -233,7 +233,7 @@ describe.each([
           keyType: 'secp256k1',
         }),
       ]
-      const unsignedTx = {}
+      const unsignedTx = Object.create(null)
 
       await keychain.signTx(
         keyIds,
