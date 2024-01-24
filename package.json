@@ -55,7 +55,6 @@
     "@exodus/eslint-plugin-hydra": "^1.0.0",
     "@exodus/eslint-plugin-package": "^1.6.0",
     "@exodus/eslint-plugin-restricted-imports": "^1.1.1",
-    "@exodus/migrate": "^1.5.3",
     "@exodus/prettier": "^1.0.0",
     "@nrwl/devkit": "^15.8.5",
     "@nrwl/workspace": "^15.8.5",
