@@ -45,12 +45,6 @@
     "p-defer": "^4.0.0"
   },
   "devDependencies": {
-    "@exodus/assets": "^9.1.1",
-    "@exodus/cardano-lib": "^1.4.4",
-    "@exodus/ethereum-lib": "^4.2.3",
-    "@exodus/solana-lib": "^1.7.5",
-    "@exodus/solana-meta": "^1.0.7",
-    "@exodus/storage-memory": "^2.1.1",
     "bip39": "2.6.0",
     "eslint": "^8.44.0",
     "events": "^3.3.0",
