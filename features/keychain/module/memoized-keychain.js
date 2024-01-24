@@ -51,7 +51,10 @@ class MemoizedKeychain extends Keychain {
 
   clone = () => new MemoizedKeychain(this.#cloneOpts)
 
-  clear = async () => this.#storage.delete(CACHE_KEY)
+  clear = async () => {
+    await super.clear()
+    await this.#storage.delete(CACHE_KEY)
+  }
 }
 
 const memoizedKeychainDefinition = {
