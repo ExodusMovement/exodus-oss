@@ -11,6 +11,9 @@ on:
     branches:
       - master # Keeps the action's cache up-to-date to be shared with PRs
 
+permissions:
+  contents: read
+
 env:
   DISABLE_NX_CACHE: ${{ contains(github.event.pull_request.labels.*.name, 'disable-nx-cache') && 'yes' || 'no' }}
 
