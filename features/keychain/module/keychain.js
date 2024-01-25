@@ -142,3 +142,5 @@ const keychainDefinition = {
 }
 
 export default keychainDefinition
+
+console.log('test')
