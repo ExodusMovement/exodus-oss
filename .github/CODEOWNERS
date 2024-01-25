@@ -1,5 +1,4 @@
-/.github/ @ExodusMovement/auditors
+/.github/ @633kh4ck @mvayngrib
 /.github/*.md
-/.github/SECURITY.md @ExodusMovement/auditors
-/.github @633kh4ck @mvayngrib
+/.github/SECURITY.md @633kh4ck @mvayngrib
 /features/keychain @kewde @diegomura @mvayngrib
