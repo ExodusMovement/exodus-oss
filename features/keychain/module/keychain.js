@@ -126,14 +126,19 @@ export class Keychain extends ExodusModule {
   clone() {
     return new Keychain({ legacyPrivToPub: this.#legacyPrivToPub })
   }
+
+  clear = async () => {
+    // noop
+  }
 }
 
 const createKeychain = (args = Object.create(null)) => new Keychain({ ...args })
 
-// eslint-disable-next-line @exodus/export-default/named
-export default {
+const keychainDefinition = {
   id: MODULE_ID,
   type: 'module',
   factory: createKeychain,
   dependencies: ['legacyPrivToPub', 'logger'],
 }
+
+export default keychainDefinition

@@ -13,7 +13,6 @@
     "index.js",
     "atoms",
     "module",
-    "plugin",
     "README.md",
     "CHANGELOG.md",
     "!**/__tests__/**"
