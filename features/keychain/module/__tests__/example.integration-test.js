@@ -165,7 +165,7 @@ test('encryptBox/decryptBox (using sodium instance)', async () => {
   const plaintext = 'I really love keychains'
 
   const {
-    box: { publicKey: bobPublicKey }
+    box: { publicKey: bobPublicKey },
   } = await keychain.sodium.getSodiumKeysFromSeed({ keyId: BOB_KEY })
 
   const ciphertext = await keychain.sodium.encryptBox({
@@ -211,13 +211,13 @@ test('should encryptSealedBox and decryptSealedBox (using sodium instance)', asy
     box: { publicKey: bobPublicKey },
   } = await keychain.sodium.getSodiumKeysFromSeed({ keyId: BOB_KEY })
 
-  const ciphertext = await await keychain.sodium.encryptSealedBox({
+  const ciphertext = await keychain.sodium.encryptSealedBox({
     keyId: ALICE_KEY,
     data: plaintext,
     toPublicKey: bobPublicKey,
   })
 
-  const decrypted = await await keychain.sodium.decryptSealedBox({
+  const decrypted = await keychain.sodium.decryptSealedBox({
     keyId: BOB_KEY,
     data: ciphertext,
   })
