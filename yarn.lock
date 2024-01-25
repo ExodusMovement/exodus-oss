@@ -1801,22 +1801,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/atoms@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "@exodus/atoms@npm:7.0.1"
-  dependencies:
-    "@exodus/storage-interface": ^1.0.0
-    delay: ^5.0.0
-    events: ^3.3.0
-    lodash: ^4.17.21
-    make-concurrent: ">=4 <6"
-    minimalistic-assert: ^1.0.1
-    p-defer: ^4.0.0
-    proxy-freeze: ^1.0.0
-  checksum: 2d8cd009e48d00ca811795d58334f932c30d25c9bdc533a38808cd9344f28c4e92aa569ec6056754fffebb5be6b7b7a7cc596db3a7eaaa05a55e0040467db1de
-  languageName: node
-  linkType: hard
-
 "@exodus/basic-utils@npm:^2.0.0, @exodus/basic-utils@npm:^2.0.1, @exodus/basic-utils@npm:^2.1.0":
   version: 2.1.1
   resolution: "@exodus/basic-utils@npm:2.1.1"
@@ -1980,7 +1964,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@exodus/keychain@workspace:features/keychain"
   dependencies:
-    "@exodus/atoms": ^7.0.1
     "@exodus/basic-utils": ^2.0.0
     "@exodus/bip32": ^1.0.0
     "@exodus/elliptic": ^6.5.4-precomputed
@@ -1990,14 +1973,12 @@ __metadata:
     "@exodus/sodium-crypto": ^3.1.0
     bip39: 2.6.0
     buffer-json: ^2.0.0
-    create-hash: ^1.2.0
     eslint: ^8.44.0
     events: ^3.3.0
     jest: ^29.1.2
     json-stable-stringify: ^1.0.1
     lodash: ^4.17.21
     minimalistic-assert: ^1.0.1
-    p-defer: ^4.0.0
   languageName: unknown
   linkType: soft
 
@@ -2074,13 +2055,6 @@ __metadata:
   dependencies:
     "@exodus/libsodium-wrappers": 1.0.8
   checksum: 2fab59b40e1ee74bc0eb2dda2e63d9f149b45a328a89b90b3f599d13572c66b19abf3400e6e61eaa9e79c091d6df355aca9a6b2972dbc1ba594b9e030b387592
-  languageName: node
-  linkType: hard
-
-"@exodus/storage-interface@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@exodus/storage-interface@npm:1.0.0"
-  checksum: d5cf781a60a204302fa81ad0d973d5faeeca511122105105dac36ca468849645034dc28b89d3a10ca2a4c41b5437b756271872ba48337a7a67da8a8122437b29
   languageName: node
   linkType: hard
 
@@ -5388,13 +5362,6 @@ __metadata:
     rimraf: ^3.0.2
     slash: ^3.0.0
   checksum: 563288b73b8b19a7261c47fd21a330eeab6e2acd7c6208c49790dfd369127120dd7836cdf0c1eca216b77c94782a81507eac6b4734252d3bef2795cb366996b6
-  languageName: node
-  linkType: hard
-
-"delay@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "delay@npm:5.0.0"
-  checksum: 62f151151ecfde0d9afbb8a6be37a6d103c4cb24f35a20ef3fe56f920b0d0d0bb02bc9c0a3084d0179ef669ca332b91155f2ee4d9854622cd2cdba5fc95285f9
   languageName: node
   linkType: hard
 
@@ -9083,13 +9050,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"make-concurrent@npm:>=4 <6":
-  version: 5.4.0
-  resolution: "make-concurrent@npm:5.4.0"
-  checksum: 59485c2dfadd8336c7aa5fbca09409b1186b601fc4a4465d661ee65a67237ee48bd8d044c9ebbe8edf291a4f725e8cc60cb7dc0c3b5cb01e8b79810d0e6021d1
-  languageName: node
-  linkType: hard
-
 "make-dir@npm:3.1.0":
   version: 3.1.0
   resolution: "make-dir@npm:3.1.0"
@@ -10277,13 +10237,6 @@ __metadata:
   version: 1.0.2
   resolution: "os-tmpdir@npm:1.0.2"
   checksum: 5666560f7b9f10182548bf7013883265be33620b1c1b4a4d405c25be2636f970c5488ff3e6c48de75b55d02bde037249fe5dbfbb4c0fb7714953d56aed062e6d
-  languageName: node
-  linkType: hard
-
-"p-defer@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "p-defer@npm:4.0.0"
-  checksum: 646c9e86e62d2299ee9e8722b9857c9a2918afb8626c4eaf072d956de0d5b33c1cb132e5754516c923fc691eb33aa216755e168f848b045c1279186c8e2d852f
   languageName: node
   linkType: hard
 
