@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.1](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@5.0.0...@exodus/keychain@5.0.1) (2024-01-26)
+
+### Bug Fixes
+
+- super.clear() call ([#44](https://github.com/ExodusMovement/exodus-oss/issues/44)) ([b8e0475](https://github.com/ExodusMovement/exodus-oss/commit/b8e0475f72f9fb156f1eb42a10c44b50fea6a2e0))
+
 ## [5.0.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@4.4.1...@exodus/keychain@5.0.0) (2024-01-26)
 
 ### ⚠ BREAKING CHANGES
