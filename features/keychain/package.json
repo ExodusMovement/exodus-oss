@@ -4,7 +4,7 @@
   "description": "A module designed to work more securely with private key material",
   "author": "Exodus Movement Inc.",
   "homepage": "https://github.com/ExodusMovement/exodus-oss/tree/master/features/keychain",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "directories": {
     "lib": "src",
     "test": "__tests__"
