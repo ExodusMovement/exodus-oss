@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@4.4.1...@exodus/keychain@5.0.0) (2024-01-26)
+
+
+### ⚠ BREAKING CHANGES
+
+- Expose clear method instead of clearing in plugin ([#20](https://github.com/ExodusMovement/exodus-oss/issues/20)) ([0db45ce6](https://github.com/ExodusMovement/exodus-oss/commits/0db45ce6c7f4848a48cf34ca4a12079169801de5))
+- Remove atom factory ([#23](https://github.com/ExodusMovement/exodus-oss/issues/23)) ([99570d0](https://github.com/ExodusMovement/exodus-oss/commits/99570d039809b3bfdd3974a1153904f8a6f5d4d6))
+- Deprecate create methods ([#21](https://github.com/ExodusMovement/exodus-oss/issues/21)) ([6fc00a81](https://github.com/ExodusMovement/exodus-oss/commit/6fc00a81255480de6e8a083c81b24390dd5a1282))
+- Relicense under MIT license ([#38](https://github.com/ExodusMovement/exodus-oss/issues/38)) ([2512b75](https://github.com/ExodusMovement/exodus-oss/commit/2512b75330a4be507ef6675a03c2fe994cf4b0e3))
+
 ## [4.4.1](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@4.4.0...@exodus/keychain@4.4.1) (2023-11-24)
 
 - Add basic types
