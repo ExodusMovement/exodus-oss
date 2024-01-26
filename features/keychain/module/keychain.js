@@ -129,7 +129,7 @@ export class Keychain extends ExodusModule {
     return new Keychain({ legacyPrivToPub: this.#legacyPrivToPub })
   }
 
-  clear = async () => {
+  async clear() {
     // noop
   }
 }
