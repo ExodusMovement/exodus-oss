@@ -5,7 +5,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [5.0.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@4.4.1...@exodus/keychain@5.0.0) (2024-01-26)
 
-
 ### ⚠ BREAKING CHANGES
 
 - Expose clear method instead of clearing in plugin ([#20](https://github.com/ExodusMovement/exodus-oss/issues/20)) ([0db45ce6](https://github.com/ExodusMovement/exodus-oss/commits/0db45ce6c7f4848a48cf34ca4a12079169801de5))
