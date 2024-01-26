@@ -130,6 +130,14 @@ test('encryptSecretBox/decryptSecretBox', async () => {
   expect(decrypted.toString()).toBe(plaintext)
 })
 
+test('encryptSecretBox/decryptSecretBox (using sodium instance)', async () => {
+  const plaintext = 'I really love keychains'
+  const ciphertext = await keychain.sodium.encryptSecretBox({ keyId: ALICE_KEY, data: plaintext })
+  const decrypted = await keychain.sodium.decryptSecretBox({ keyId: ALICE_KEY, data: ciphertext })
+
+  expect(decrypted.toString()).toBe(plaintext)
+})
+
 test('encryptBox/decryptBox', async () => {
   const aliceSodiumEncryptor = await keychain.createSodiumEncryptor(ALICE_KEY)
   const bobSodiumEncryptor = await keychain.createSodiumEncryptor(BOB_KEY)
@@ -146,6 +154,32 @@ test('encryptBox/decryptBox', async () => {
   } = await aliceSodiumEncryptor.getSodiumKeysFromSeed()
 
   const decrypted = await bobSodiumEncryptor.decryptBox({
+    data: ciphertext,
+    fromPublicKey: alicePublicKey,
+  })
+
+  expect(decrypted.toString()).toBe(plaintext)
+})
+
+test('encryptBox/decryptBox (using sodium instance)', async () => {
+  const plaintext = 'I really love keychains'
+
+  const {
+    box: { publicKey: bobPublicKey },
+  } = await keychain.sodium.getSodiumKeysFromSeed({ keyId: BOB_KEY })
+
+  const ciphertext = await keychain.sodium.encryptBox({
+    keyId: ALICE_KEY,
+    data: plaintext,
+    toPublicKey: bobPublicKey,
+  })
+
+  const {
+    box: { publicKey: alicePublicKey },
+  } = await keychain.sodium.getSodiumKeysFromSeed({ keyId: ALICE_KEY })
+
+  const decrypted = await keychain.sodium.decryptBox({
+    keyId: BOB_KEY,
     data: ciphertext,
     fromPublicKey: alicePublicKey,
   })
@@ -170,6 +204,27 @@ test('should encryptSealedBox and decryptSealedBox', async () => {
   expect(decrypted.toString()).toBe(plaintext)
 })
 
+test('should encryptSealedBox and decryptSealedBox (using sodium instance)', async () => {
+  const plaintext = 'I really love keychains'
+
+  const {
+    box: { publicKey: bobPublicKey },
+  } = await keychain.sodium.getSodiumKeysFromSeed({ keyId: BOB_KEY })
+
+  const ciphertext = await keychain.sodium.encryptSealedBox({
+    keyId: ALICE_KEY,
+    data: plaintext,
+    toPublicKey: bobPublicKey,
+  })
+
+  const decrypted = await keychain.sodium.decryptSealedBox({
+    keyId: BOB_KEY,
+    data: ciphertext,
+  })
+
+  expect(decrypted.toString()).toBe(plaintext)
+})
+
 test('EcDSA Signer', async () => {
   const keyId = new KeyIdentifier({
     derivationAlgorithm: 'SLIP10',
@@ -185,6 +240,20 @@ test('EcDSA Signer', async () => {
   expect(signature.toString('hex')).toBe(expected)
 })
 
+test('EcDSA Signer (using secp256k1 instance)', async () => {
+  const keyId = new KeyIdentifier({
+    derivationAlgorithm: 'SLIP10',
+    derivationPath: "m/73'/2'/0'",
+    keyType: 'nacl',
+  })
+
+  const plaintext = Buffer.from('I really love keychains')
+  const signature = await keychain.secp256k1.signBuffer({ keyId, data: plaintext })
+  const expected =
+    '304402206102dd19cf16e4d88b5bbc07843dae29fb62b13b65207667898363c90b548bf60220577d77bed19009157593f884bfc8a951dbfc9fe4e4fe99ddaed9ab8b558e208c'
+  expect(signature.toString('hex')).toBe(expected)
+})
+
 test('EdDSA Signer', async () => {
   const keyId = new KeyIdentifier({
     derivationAlgorithm: 'SLIP10',
@@ -195,6 +264,20 @@ test('EdDSA Signer', async () => {
   const signer = keychain.createEd25519Signer(keyId)
   const plaintext = Buffer.from('I really love keychains')
   const signature = await signer.signBuffer({ data: plaintext })
+  const expected =
+    'd28f13d22ef56c7c5b89a68f67a581ecb01358ed4782dca4f5bc672c4e11d669f853d8110c56dec8bcbafd96bf319d27fa8d8a73dabd95d4c18bf65788a9680d'
+  expect(signature.toString('hex')).toBe(expected)
+})
+
+test('EdDSA Signer (using ed25519 instance)', async () => {
+  const keyId = new KeyIdentifier({
+    derivationAlgorithm: 'SLIP10',
+    derivationPath: "m/73'/2'/0'",
+    keyType: 'nacl',
+  })
+
+  const plaintext = Buffer.from('I really love keychains')
+  const signature = await keychain.ed25519.signBuffer({ keyId, data: plaintext })
   const expected =
     'd28f13d22ef56c7c5b89a68f67a581ecb01358ed4782dca4f5bc672c4e11d669f853d8110c56dec8bcbafd96bf319d27fa8d8a73dabd95d4c18bf65788a9680d'
   expect(signature.toString('hex')).toBe(expected)

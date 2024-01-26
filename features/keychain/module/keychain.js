@@ -5,8 +5,8 @@ import SLIP10 from '@exodus/slip10'
 import { mapValues } from '@exodus/basic-utils'
 import assert from 'minimalistic-assert'
 
-import { createEd25519Signer } from './crypto/ed25519'
-import { createSecp256k1Signer } from './crypto/secp256k1'
+import * as ed25519 from './crypto/ed25519'
+import * as secp256k1 from './crypto/secp256k1'
 import * as sodium from './crypto/sodium'
 import {
   throwIfInvalidKeyIdentifier,
@@ -37,6 +37,10 @@ export class Keychain extends ExodusModule {
     // but at this point in time this is the best we can do.
     this.#legacyPrivToPub = Object.assign(Object.create(null), legacyPrivToPub)
     Object.freeze(this.#legacyPrivToPub)
+
+    this.sodium = sodium.create({ getPrivateHDKey: this.#getPrivateHDKey })
+    this.ed25519 = ed25519.create({ getPrivateHDKey: this.#getPrivateHDKey })
+    this.secp256k1 = secp256k1.create({ getPrivateHDKey: this.#getPrivateHDKey })
   }
 
   unlock({ seed }) {
@@ -106,21 +110,19 @@ export class Keychain extends ExodusModule {
     return signTxWithHD({ unsignedTx, hdkeys, privateKey })
   }
 
+  // @deprecated use keychain.sodium instead
   createSodiumEncryptor(keyId) {
-    const { privateKey: sodiumSeed } = this.#getPrivateHDKey(keyId)
-    return sodium.createSodiumEncryptor(sodiumSeed)
+    return this.sodium.createEncryptor({ keyId })
   }
 
-  // Ed25519 EdDSA
+  // @deprecated use keychain.ed25519 instead
   createEd25519Signer(keyId) {
-    const { privateKey } = this.#getPrivateHDKey(keyId)
-    return createEd25519Signer(privateKey)
+    return this.ed25519.createSigner({ keyId })
   }
 
-  // Secp256k1 EcDSA
+  // @deprecated use keychain.secp256k1 instead
   createSecp256k1Signer(keyId) {
-    const { privateKey } = this.#getPrivateHDKey(keyId)
-    return createSecp256k1Signer(privateKey)
+    return this.secp256k1.createSigner({ keyId })
   }
 
   clone() {
