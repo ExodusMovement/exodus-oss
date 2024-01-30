@@ -36,8 +36,8 @@
     "test:integration": "lerna run test:integration",
     "coverage:merge": "lerna run coverage:merge",
     "build": "lerna run build",
-    "format": "prettier --write \"**/*.{json,md,yaml}\" --loglevel warn",
-    "format:check": "prettier --check \"**/*.{json,md,yaml}\" --loglevel warn",
+    "format": "prettier --write \"**/*.{json,md,yaml}\" --log-level warn",
+    "format:check": "prettier --check \"**/*.{json,md,yaml}\" --log-level warn",
     "cache:delete": "node ./tools/scripts/cache/delete",
     "sync": "./tools/scripts/sync.js"
   },
