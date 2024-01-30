@@ -3,8 +3,9 @@
 The keychain is a module designed to work more securely with private key material. It can be compared with a walled garden from which private keys should not escape. All operations using private keys, such as signing and encryption data should be executed within the module, with `KeyIdentifier`s used to specify which key to use for which operation. Notice the "should," as we're not quite there yet.
 
 In its current state, this library aims to provide a good interface for working with cryptographic material. However, it has some security limitations, which are on our roadmap to address:
+
 - Private key material IS passed directly to asset libraries which can contain code by third party developers. This is on our roadmap to eliminate by refactoring asset libraries to accept signing functions instead of keys.
-- Private keys *can* be exported, via `keychain.exportKey`
+- Private keys _can_ be exported, via `keychain.exportKey`
 - `keychain.lock()` does not guarantee that private keys get completely cleared from memory
 
 ## Install
