@@ -7,6 +7,9 @@ concurrency:
 on:
   pull_request:
     types: [opened, synchronize]
+  merge_group:
+    branches:
+      - master
   push:
     branches:
       - master # Keeps the action's cache up-to-date to be shared with PRs
