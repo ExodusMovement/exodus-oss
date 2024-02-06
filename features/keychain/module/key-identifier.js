@@ -43,6 +43,10 @@ export class KeyIdentifier {
     Object.freeze(this)
   }
 
+  toString() {
+    return `${this.derivationPath} (${this.derivationAlgorithm})`
+  }
+
   static validate = (potentialKeyIdentifier) => {
     try {
       // eslint-disable-next-line no-new
