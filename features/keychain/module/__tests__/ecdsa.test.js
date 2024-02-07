@@ -12,6 +12,10 @@ const seed = mnemonicToSeed(
   'menu memory fury language physical wonder dog valid smart edge decrease worth'
 )
 
+const secondSeed = mnemonicToSeed(
+  'wine system mean beyond filter human meat rubber episode wash stomach aunt'
+)
+
 const fusionKeyId = createKeyIdentifierForExodus({ exoType: 'FUSION' })
 
 describe('EcDSA Signer', () => {
@@ -36,18 +40,31 @@ describe('EcDSA Signer', () => {
   })
 })
 
-describe('multi-seed keychain EcDSA Signer', () => {
+describe.each([
+  // reduce fixtures by switching seeds
+  {
+    primarySeed: seed,
+    secondarySeed: secondSeed,
+    walletAccount: WalletAccount.DEFAULT,
+  },
+  {
+    primarySeed: secondSeed,
+    secondarySeed: seed,
+    walletAccount: new WalletAccount({
+      id: getSeedId(seed),
+      index: 0,
+      source: 'seed',
+    }),
+  },
+])('EcDSA Signer (multi-seed-keychain)', ({ primarySeed, secondarySeed, walletAccount }) => {
   it('should signBuffer (using secp256k1 instance)', async () => {
     const multiSeedKeychain = createMultiSeedKeychain()
-    multiSeedKeychain.setDefaultSeed(seed)
+    multiSeedKeychain.setPrimarySeed(primarySeed)
+    multiSeedKeychain.addSeed(secondarySeed)
 
     const plaintext = Buffer.from('I really love keychains')
     const signature = await multiSeedKeychain.secp256k1.signBuffer({
-      walletAccount: new WalletAccount({
-        index: 0,
-        source: 'seed',
-        id: getSeedId(seed),
-      }),
+      walletAccount,
       keyId: fusionKeyId,
       data: plaintext,
     })

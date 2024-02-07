@@ -6,7 +6,7 @@ const MODULE_ID = 'multiSeedKeychain'
 
 class MultiSeedKeychain {
   #keychains = Object.create(null)
-  #defaultSeedId
+  #primarySeedId
   #legacyPrivToPub
   #logger
   constructor({ legacyPrivToPub = Object.create(null), logger }) {
@@ -46,7 +46,7 @@ class MultiSeedKeychain {
   #getKeychainForWalletAccount = (walletAccount) => {
     assert(this.#keychains, 'keychain is locked')
 
-    const seedId = walletAccount.source === 'exodus' ? this.#defaultSeedId : walletAccount.id
+    const seedId = walletAccount.source === 'exodus' ? this.#primarySeedId : walletAccount.id
     assert(seedId, `walletAccount has no seed id: ${seedId}`)
     assert(this.#keychains[seedId], `keychain not found for seed id: ${seedId}`)
     return this.#keychains[seedId]
@@ -54,7 +54,7 @@ class MultiSeedKeychain {
 
   lock = () => {
     this.#keychains = null
-    this.#defaultSeedId = null
+    this.#primarySeedId = null
   }
 
   #initKeychain = (seed) => {
@@ -76,24 +76,24 @@ class MultiSeedKeychain {
     return seedId
   }
 
-  setDefaultSeed = (seed) => {
-    this.#defaultSeedId = this.#initKeychain(seed)
-    return this.#defaultSeedId
+  setPrimarySeed = (seed) => {
+    this.#primarySeedId = this.#initKeychain(seed)
+    return this.#primarySeedId
   }
 
   addSeed = (seed) => {
     assert(this.#keychains, 'keychain is locked')
-    assert(this.#defaultSeedId, 'default seed not set')
+    assert(this.#primarySeedId, 'default seed not set')
     return this.#initKeychain(seed)
   }
 
-  // unlock({ seeds, defaultSeed }) {
+  // unlock({ seeds, primarySeed }) {
   //   assert(
-  //     seeds.find((seed) => seed.equals(defaultSeed)),
+  //     seeds.find((seed) => seed.equals(primarySeed)),
   //     'default seed not found'
   //   )
 
-  //   this.#defaultSeedId = getSeedId(defaultSeed)
+  //   this.#primarySeedId = getSeedId(primarySeed)
   //   this.#keychains = Object.fromEntries(
   //     seeds.map((seed) => {
   //       const keychain = new Keychain({
@@ -121,6 +121,13 @@ class MultiSeedKeychain {
     if (!this.#keychains) return
 
     await Promise.all(Object.values(this.#keychains).map((keychain) => keychain.clear()))
+  }
+
+  clone() {
+    return new MultiSeedKeychain({
+      legacyPrivToPub: this.#legacyPrivToPub,
+      logger: this.#logger,
+    })
   }
 }
 
