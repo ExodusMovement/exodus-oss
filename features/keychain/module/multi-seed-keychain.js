@@ -78,12 +78,13 @@ class MultiSeedKeychain {
 
   setDefaultSeed = (seed) => {
     this.#defaultSeedId = this.#initKeychain(seed)
+    return this.#defaultSeedId
   }
 
   addSeed = (seed) => {
     assert(this.#keychains, 'keychain is locked')
     assert(this.#defaultSeedId, 'default seed not set')
-    this.#initKeychain(seed)
+    return this.#initKeychain(seed)
   }
 
   // unlock({ seeds, defaultSeed }) {
