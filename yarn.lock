@@ -1988,7 +1988,7 @@ __metadata:
     "@exodus/elliptic": ^6.5.4-precomputed
     "@exodus/key-ids": ^1.0.0
     "@exodus/key-utils": ^3.0.0
-    "@exodus/models": /Users/mv/code/exodus-core/packages/models
+    "@exodus/models": ^11.5.0
     "@exodus/module": ^1.2.0
     "@exodus/slip10": ^1.0.0
     "@exodus/sodium-crypto": ^3.1.0
@@ -2022,9 +2022,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/models@file:/Users/mv/code/exodus-core/packages/models::locator=%40exodus%2Fkeychain%40workspace%3Afeatures%2Fkeychain":
-  version: 11.4.0
-  resolution: "@exodus/models@file:/Users/mv/code/exodus-core/packages/models#/Users/mv/code/exodus-core/packages/models::hash=fdfc98&locator=%40exodus%2Fkeychain%40workspace%3Afeatures%2Fkeychain"
+"@exodus/models@npm:^11.5.0":
+  version: 11.5.0
+  resolution: "@exodus/models@npm:11.5.0"
   dependencies:
     "@exodus/currency": ^2.1.2
     "@exodus/serialization": ^1.0.0
@@ -2032,7 +2032,7 @@ __metadata:
     lodash: ^4.17.11
     minimalistic-assert: ^1.0.1
     proxy-freeze: ^1.0.0
-  checksum: 798931f320807cd2e0d07415f169e786b1bbe3037b7cdee1b36e90dd89b39d299a593c058066e57c84d031f8ceb521dd29e6ccec559aab2575450195f11715bc
+  checksum: 80463820aabe7502f6d22aeecb0d534be28854f3224aa092637666b452df1959202ee32e28e036d02f457047646a9285c4cdcb568abb94a64e99b6c3e714210f
   languageName: node
   linkType: hard
 
