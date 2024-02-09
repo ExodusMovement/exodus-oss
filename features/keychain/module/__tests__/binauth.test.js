@@ -1,6 +1,6 @@
 import { mnemonicToSeed } from 'bip39'
 
-import { EXODUS_KEY_IDS } from '../key-identifier'
+import { EXODUS_KEY_IDS } from '@exodus/key-ids'
 import createKeychain from './create-keychain'
 
 const seed = mnemonicToSeed(

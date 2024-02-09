@@ -11,7 +11,8 @@ import { assets } from './fixtures/assets'
 import simpleTx from './fixtures/simple-tx'
 
 import { Keychain } from '../keychain'
-import { EXODUS_KEY_IDS, KeyIdentifier } from '../key-identifier'
+import { EXODUS_KEY_IDS } from '@exodus/key-ids'
+import { KeyIdentifier } from '../key-identifier'
 import createKeychain from './create-keychain'
 import memoizedKeychain from '../memoized-keychain'
 

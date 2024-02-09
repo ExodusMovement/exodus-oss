@@ -39,6 +39,7 @@ const untranspiledModulePatterns = [
   '@exodus/web3-solana-utils',
   '@exodus/feature-control',
   '@exodus/nfts-proxy',
+  '@exodus/key-ids',
   '@exodus/wild-emitter',
   '@exodus/solidity-contract',
   '@exodus/fiat-client',
