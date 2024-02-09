@@ -69,6 +69,10 @@ export class KeyIdentifier {
 }
 
 const EXO = Number.parseInt(Buffer.from('exo').toString('hex'), '16')
+
+/**
+ * @deprecated These are use-case dependant and therefore moved to @exodus/key-ids, please import from there.
+ */
 export const EXODUS_KEY_IDS = Object.freeze({
   WALLET_INFO: new KeyIdentifier({
     derivationAlgorithm: 'BIP32',
@@ -102,6 +106,9 @@ export const EXODUS_KEY_IDS = Object.freeze({
   }),
 })
 
+/**
+ * @deprecated This function moved to @exodus/key-ids
+ */
 export const createKeyIdentifierForExodus = ({ exoType }) => {
   assert(typeof exoType === 'string', 'exotype must be of type string')
   const keyId = EXODUS_KEY_IDS[exoType]
