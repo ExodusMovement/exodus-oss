@@ -107,8 +107,12 @@ class MultiSeedKeychain {
   //   )
   // }
 
-  async signTx({ walletAccount, keyIds, signTxWithHD, unsignedTx }) {
-    return this.#getKeychainForWalletAccount(walletAccount).signTx(keyIds, signTxWithHD, unsignedTx)
+  async signTx({ walletAccount, keyIds, signTxCallback, unsignedTx }) {
+    return this.#getKeychainForWalletAccount(walletAccount).signTx(
+      keyIds,
+      signTxCallback,
+      unsignedTx
+    )
   }
 
   async exportKey({ walletAccount, keyId, exportPrivate }) {
