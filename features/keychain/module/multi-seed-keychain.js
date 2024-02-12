@@ -9,6 +9,7 @@ class MultiSeedKeychain {
   #primarySeedId
   #legacyPrivToPub
   #logger
+
   constructor({ legacyPrivToPub = Object.create(null), logger }) {
     this.#legacyPrivToPub = legacyPrivToPub
     this.#logger = logger
