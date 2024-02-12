@@ -1,4 +1,3 @@
-import { WalletAccount } from '@exodus/models'
 import { mnemonicToSeed } from 'bip39'
 
 import { createKeyIdentifierForExodus } from '@exodus/key-ids'
@@ -45,18 +44,14 @@ describe.each([
   {
     primarySeed: seed,
     secondarySeed: secondSeed,
-    walletAccount: WalletAccount.DEFAULT,
+    seedIdentifier: getSeedId(seed),
   },
   {
     primarySeed: secondSeed,
     secondarySeed: seed,
-    walletAccount: new WalletAccount({
-      id: getSeedId(seed),
-      index: 0,
-      source: 'seed',
-    }),
+    seedIdentifier: getSeedId(seed),
   },
-])('EcDSA Signer (multi-seed-keychain)', ({ primarySeed, secondarySeed, walletAccount }) => {
+])('EcDSA Signer (multi-seed-keychain)', ({ primarySeed, secondarySeed, seedIdentifier }) => {
   it('should signBuffer (using secp256k1 instance)', async () => {
     const multiSeedKeychain = createMultiSeedKeychain()
     multiSeedKeychain.setPrimarySeed(primarySeed)
@@ -64,7 +59,7 @@ describe.each([
 
     const plaintext = Buffer.from('I really love keychains')
     const signature = await multiSeedKeychain.secp256k1.signBuffer({
-      walletAccount,
+      seedIdentifier,
       keyId: fusionKeyId,
       data: plaintext,
     })

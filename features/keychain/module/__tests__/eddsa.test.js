@@ -4,7 +4,6 @@ import { KeyIdentifier } from '../key-identifier'
 import createKeychain from './create-keychain'
 import multiSeedKeychainDefinition from '../multi-seed-keychain'
 import { getSeedId } from '../crypto/seed-id'
-import { WalletAccount } from '@exodus/models'
 
 const { factory: createMultiSeedKeychain } = multiSeedKeychainDefinition
 
@@ -77,18 +76,14 @@ describe.each([
   {
     primarySeed: seed,
     secondarySeed: secondSeed,
-    walletAccount: WalletAccount.DEFAULT,
+    seedIdentifier: getSeedId(seed),
   },
   {
     primarySeed: secondSeed,
     secondarySeed: seed,
-    walletAccount: new WalletAccount({
-      id: getSeedId(seed),
-      index: 0,
-      source: 'seed',
-    }),
+    seedIdentifier: getSeedId(seed),
   },
-])('EdDSA Signer (multi-seed-keychain)', ({ primarySeed, secondarySeed, walletAccount }) => {
+])('EdDSA Signer (multi-seed-keychain)', ({ primarySeed, secondarySeed, seedIdentifier }) => {
   const solanaKeyId = new KeyIdentifier({
     assetName: 'solana',
     derivationAlgorithm: 'BIP32',
@@ -103,7 +98,7 @@ describe.each([
     const signature = await multiSeedKeychain.ed25519.signBuffer({
       keyId: fusionKeyId,
       data: plaintextMessage,
-      walletAccount,
+      seedIdentifier,
     })
     const expected =
       'a929fd6e7e37524320e9f422caef1fefa14d9a70740626116b3570eac7e992893bea708c1b9004e222a779400c7ccabbd344c2399a2e4508f1de1cc602b0590a'
@@ -114,7 +109,7 @@ describe.each([
     const signature = await multiSeedKeychain.ed25519.signBuffer({
       keyId: solanaKeyId,
       data: plaintextTx,
-      walletAccount,
+      seedIdentifier,
     })
 
     const expected =
