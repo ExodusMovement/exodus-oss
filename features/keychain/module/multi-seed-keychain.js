@@ -17,8 +17,8 @@ class MultiSeedKeychain {
       {
         get:
           (target, key) =>
-          async ({ walletAccount, ...rest }) =>
-            this.#getKeychainForWalletAccount(walletAccount).sodium[key](rest),
+          async ({ seedIdentifier, ...rest }) =>
+            this.#getKeychainForSeed(seedIdentifier).sodium[key](rest),
       }
     )
 
@@ -27,8 +27,8 @@ class MultiSeedKeychain {
       {
         get:
           (target, key) =>
-          async ({ walletAccount, ...rest }) =>
-            this.#getKeychainForWalletAccount(walletAccount).secp256k1[key](rest),
+          async ({ seedIdentifier, ...rest }) =>
+            this.#getKeychainForSeed(seedIdentifier).secp256k1[key](rest),
       }
     )
 
@@ -37,19 +37,20 @@ class MultiSeedKeychain {
       {
         get:
           (target, key) =>
-          async ({ walletAccount, ...rest }) =>
-            this.#getKeychainForWalletAccount(walletAccount).ed25519[key](rest),
+          async ({ seedIdentifier, ...rest }) =>
+            this.#getKeychainForSeed(seedIdentifier).ed25519[key](rest),
       }
     )
   }
 
-  #getKeychainForWalletAccount = (walletAccount) => {
+  #getKeychainForSeed = (seedIdentifier) => {
     assert(this.#keychains, 'keychain is locked')
+    assert(typeof seedIdentifier === 'string', 'expected seedIdentifier')
 
-    const seedId = walletAccount.source === 'exodus' ? this.#primarySeedId : walletAccount.id
-    assert(seedId, `walletAccount has no seed id: ${seedId}`)
-    assert(this.#keychains[seedId], `keychain not found for seed id: ${seedId}`)
-    return this.#keychains[seedId]
+    const seedIdentifierHex = seedIdentifier.toString('hex')
+    const keychain = this.#keychains[seedIdentifierHex]
+    assert(keychain, `keychain not found for seed id: ${seedIdentifierHex}`)
+    return keychain
   }
 
   lock = () => {
@@ -107,16 +108,12 @@ class MultiSeedKeychain {
   //   )
   // }
 
-  async signTx({ walletAccount, keyIds, signTxCallback, unsignedTx }) {
-    return this.#getKeychainForWalletAccount(walletAccount).signTx(
-      keyIds,
-      signTxCallback,
-      unsignedTx
-    )
+  async signTx({ seedIdentifier, keyIds, signTxCallback, unsignedTx }) {
+    return this.#getKeychainForSeed(seedIdentifier).signTx(keyIds, signTxCallback, unsignedTx)
   }
 
-  async exportKey({ walletAccount, keyId, exportPrivate }) {
-    return this.#getKeychainForWalletAccount(walletAccount).exportKey(keyId, {
+  async exportKey({ seedIdentifier, keyId, exportPrivate }) {
+    return this.#getKeychainForSeed(seedIdentifier).exportKey(keyId, {
       exportPrivate,
     })
   }
