@@ -12,7 +12,6 @@ import simpleTx from './fixtures/simple-tx'
 import { EXODUS_KEY_IDS, KeyIdentifier } from '../key-identifier'
 import keychainDefinition from '../multi-seed-keychain'
 import { getSeedId } from '../crypto/seed-id'
-import { WalletAccount } from '@exodus/models'
 
 const { factory: createMultiSeedKeychain } = keychainDefinition
 
@@ -29,18 +28,14 @@ describe.each([
   {
     primarySeed: seed,
     secondarySeed: secondSeed,
-    walletAccount: WalletAccount.DEFAULT,
+    seedIdentifier: getSeedId(seed),
   },
   {
     primarySeed: secondSeed,
     secondarySeed: seed,
-    walletAccount: new WalletAccount({
-      id: getSeedId(seed),
-      index: 0,
-      source: 'seed',
-    }),
+    seedIdentifier: getSeedId(seed),
   },
-])('multi-seed-keychain', ({ primarySeed, secondarySeed, walletAccount }) => {
+])('multi-seed-keychain', ({ primarySeed, secondarySeed, seedIdentifier }) => {
   let keychain
 
   beforeEach(() => {
@@ -67,7 +62,7 @@ describe.each([
         {
           expected: 'nsn7DmCMsKWGUWcL92XfPKXFbUz7KtFDRa4nnkc3RiF',
           exportOpts: {
-            walletAccount,
+            seedIdentifier,
             keyId: new KeyIdentifier({
               assetName: 'solana',
               derivationAlgorithm: 'BIP32',
@@ -79,7 +74,7 @@ describe.each([
         {
           expected: '7SmaJ41gFZ1LPsZJfb57npzdCFuqBRmgj3CScjbmkQwA',
           exportOpts: {
-            walletAccount,
+            seedIdentifier,
             keyId: new KeyIdentifier({
               assetName: 'solana',
               derivationAlgorithm: 'BIP32',
@@ -102,7 +97,7 @@ describe.each([
         {
           expected: '0xF3d46F0De925B28fDa1219BbD60F5ae2a0128F9F',
           exportOpts: {
-            walletAccount,
+            seedIdentifier,
             keyId: new KeyIdentifier({
               derivationAlgorithm: 'BIP32',
               derivationPath: "m/44'/60'/0'/0/0",
@@ -113,7 +108,7 @@ describe.each([
         {
           expected: '0x55e60F7531a5c701F526f224FCC071EFCf3fFF61',
           exportOpts: {
-            walletAccount,
+            seedIdentifier,
             keyId: new KeyIdentifier({
               derivationAlgorithm: 'BIP32',
               derivationPath: "m/44'/60'/1'/0/0",
@@ -124,7 +119,7 @@ describe.each([
         {
           expected: '0x780984e59eDdA8b1f4bB09dc297241f1Ed0Dcc17',
           exportOpts: {
-            walletAccount,
+            seedIdentifier,
             keyId: new KeyIdentifier({
               derivationAlgorithm: 'BIP32',
               derivationPath: "m/44'/60'/0'/0/1",
@@ -146,7 +141,7 @@ describe.each([
           expected:
             'addr1q8ftlrj30s8f3qks2l5cuv44f5cgflxqym0d0k4q22dusp7jh789zlqwnzpdq4lf3cet2nfssn7vqfk76ld2q55meqrstsxtqg',
           exportOpts: {
-            walletAccount,
+            seedIdentifier,
             keyId: new KeyIdentifier({
               derivationAlgorithm: 'BIP32',
               derivationPath: "m/44'/1815'/0'/0/0",
@@ -166,7 +161,7 @@ describe.each([
     it('should fail to generate addresses if assetname is not in legacy priv pub', async () => {
       await expect(
         keychain.exportKey({
-          walletAccount,
+          seedIdentifier,
           keyId: new KeyIdentifier({
             derivationAlgorithm: 'BIP32',
             derivationPath: "m/44'/1815'/0'/0/0",
@@ -179,7 +174,7 @@ describe.each([
 
     it('should export SLIP10 keys', async () => {
       const key = await keychain.exportKey({
-        walletAccount,
+        seedIdentifier,
         keyId: EXODUS_KEY_IDS.TELEMETRY,
         exportPrivate: true,
       })
@@ -227,7 +222,7 @@ describe.each([
 
     it('should sign solana tx', async () => {
       const result = await keychain.signTx({
-        walletAccount,
+        seedIdentifier,
         keyIds: [keyId],
         signTxCallback: ({ unsignedTx, hdkeys, privateKey }) => {
           expect(hdkeys[44].privateKey).toEqual(privateKey)
@@ -258,7 +253,7 @@ describe.each([
       ]
 
       await keychain.signTx({
-        walletAccount,
+        seedIdentifier,
         keyIds,
         signTxCallback: ({ hdkeys, privateKey }) => {
           expect(privateKey).not.toBeDefined()
@@ -293,14 +288,14 @@ describe.each([
 
       await expect(
         keychain.exportKey({
-          walletAccount,
+          seedIdentifier,
           keyId: solanaKeyId,
         })
       ).resolves.toBeTruthy()
 
       await expect(
         clone.exportKey({
-          walletAccount,
+          seedIdentifier,
           keyId: solanaKeyId,
         })
       ).rejects.toThrow()
@@ -315,7 +310,7 @@ describe.each([
       clone.setPrimarySeed(seed)
 
       await clone.exportKey({
-        walletAccount,
+        seedIdentifier,
         keyId: cardanoKeyId,
       })
 
