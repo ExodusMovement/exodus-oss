@@ -40,6 +40,7 @@
     "minimalistic-assert": "^1.0.1"
   },
   "devDependencies": {
+    "@exodus/key-ids": "^1.0.0",
     "bip39": "2.6.0",
     "eslint": "^8.44.0",
     "events": "^3.3.0",
