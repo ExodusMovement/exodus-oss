@@ -6,7 +6,6 @@ const MODULE_ID = 'keychain'
 
 class MultiSeedKeychain {
   #keychains = Object.create(null)
-  #primarySeedId
   #legacyPrivToPub
   #logger
 
@@ -56,7 +55,6 @@ class MultiSeedKeychain {
 
   lock = () => {
     this.#keychains = null
-    this.#primarySeedId = null
   }
 
   #initKeychain = (seed) => {
@@ -78,36 +76,11 @@ class MultiSeedKeychain {
     return seedId
   }
 
-  setPrimarySeed = (seed) => {
-    this.#primarySeedId = this.#initKeychain(seed)
-    return this.#primarySeedId
-  }
-
   addSeed = (seed) => {
-    assert(this.#keychains, 'keychain is locked')
-    assert(this.#primarySeedId, 'primary seed not set')
+    if (!this.#keychains) this.#keychains = Object.create(null)
+
     return this.#initKeychain(seed)
   }
-
-  // unlock({ seeds, primarySeed }) {
-  //   assert(
-  //     seeds.find((seed) => seed.equals(primarySeed)),
-  //     'default seed not found'
-  //   )
-
-  //   this.#primarySeedId = getSeedId(primarySeed)
-  //   this.#keychains = Object.fromEntries(
-  //     seeds.map((seed) => {
-  //       const keychain = new Keychain({
-  //         legacyPrivToPub: this.#legacyPrivToPub,
-  //         logger: this.#logger,
-  //       })
-
-  //       keychain.unlock({ seed })
-  //       return [keychain.getSeedId(), keychain]
-  //     })
-  //   )
-  // }
 
   async signTx({ seedIdentifier, keyIds, signTxCallback, unsignedTx }) {
     return this.#getKeychainForSeed(seedIdentifier).signTx(keyIds, signTxCallback, unsignedTx)
