@@ -19,7 +19,7 @@ const MAP_KDF = Object.freeze({
   SLIP10: SLIP10.fromSeed,
 })
 
-export const MODULE_ID = 'keychain'
+export const MODULE_ID = 'singleSeedKeychain'
 
 export class Keychain extends ExodusModule {
   #masters = null
