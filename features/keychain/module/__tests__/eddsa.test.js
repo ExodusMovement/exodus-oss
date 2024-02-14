@@ -2,10 +2,10 @@ import { mnemonicToSeed } from 'bip39'
 import { createKeyIdentifierForExodus } from '@exodus/key-ids'
 import { KeyIdentifier } from '../key-identifier'
 import createKeychain from './create-keychain'
-import multiSeedKeychainDefinition from '../multi-seed-keychain'
+import keychainDefinition from '../multi-seed-keychain'
 import { getSeedId } from '../crypto/seed-id'
 
-const { factory: createMultiSeedKeychain } = multiSeedKeychainDefinition
+const { factory: createMultiSeedKeychain } = keychainDefinition
 
 const seed = mnemonicToSeed(
   'menu memory fury language physical wonder dog valid smart edge decrease worth'
@@ -76,29 +76,29 @@ describe.each([
   {
     primarySeed: seed,
     secondarySeed: secondSeed,
-    seedIdentifier: getSeedId(seed),
+    seedId: getSeedId(seed),
   },
   {
     primarySeed: secondSeed,
     secondarySeed: seed,
-    seedIdentifier: getSeedId(seed),
+    seedId: getSeedId(seed),
   },
-])('EdDSA Signer (multi-seed-keychain)', ({ primarySeed, secondarySeed, seedIdentifier }) => {
+])('EdDSA Signer (multi-seed-keychain)', ({ primarySeed, secondarySeed, seedId }) => {
   const solanaKeyId = new KeyIdentifier({
     assetName: 'solana',
     derivationAlgorithm: 'BIP32',
     derivationPath: "m/44'/501'/0'/0/0",
   })
 
-  const multiSeedKeychain = createMultiSeedKeychain()
-  multiSeedKeychain.setPrimarySeed(primarySeed)
-  multiSeedKeychain.addSeed(secondarySeed)
+  const keychain = createMultiSeedKeychain()
+  keychain.addSeed(primarySeed)
+  keychain.addSeed(secondarySeed)
 
   it('should signBuffer (using ed25519 instance)', async () => {
-    const signature = await multiSeedKeychain.ed25519.signBuffer({
+    const signature = await keychain.ed25519.signBuffer({
       keyId: fusionKeyId,
       data: plaintextMessage,
-      seedIdentifier,
+      seedId,
     })
     const expected =
       'a929fd6e7e37524320e9f422caef1fefa14d9a70740626116b3570eac7e992893bea708c1b9004e222a779400c7ccabbd344c2399a2e4508f1de1cc602b0590a'
@@ -106,10 +106,10 @@ describe.each([
   })
 
   it('should signBuffer with solana key (using ed25519 instance)', async () => {
-    const signature = await multiSeedKeychain.ed25519.signBuffer({
+    const signature = await keychain.ed25519.signBuffer({
       keyId: solanaKeyId,
       data: plaintextTx,
-      seedIdentifier,
+      seedId,
     })
 
     const expected =

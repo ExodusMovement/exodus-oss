@@ -45,7 +45,7 @@ describe.each([
       },
     })
 
-    keychain.setPrimarySeed(primarySeed)
+    keychain.addSeed(primarySeed)
     keychain.addSeed(secondarySeed)
   })
 
@@ -283,7 +283,7 @@ describe.each([
 
     it('should return locked instance', async () => {
       const keychain = createMultiSeedKeychain()
-      keychain.setPrimarySeed(seed)
+      keychain.addSeed(seed)
       const clone = keychain.clone()
 
       await expect(
@@ -307,7 +307,7 @@ describe.each([
       const keychain = createMultiSeedKeychain({ legacyPrivToPub })
 
       const clone = keychain.clone()
-      clone.setPrimarySeed(seed)
+      clone.addSeed(seed)
 
       await clone.exportKey({
         seedId,

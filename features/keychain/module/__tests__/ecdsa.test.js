@@ -2,10 +2,10 @@ import { mnemonicToSeed } from 'bip39'
 
 import { createKeyIdentifierForExodus } from '@exodus/key-ids'
 import createKeychain from './create-keychain'
-import multiSeedKeychainDefinition from '../multi-seed-keychain'
+import keychainDefinition from '../multi-seed-keychain'
 import { getSeedId } from '../crypto/seed-id'
 
-const { factory: createMultiSeedKeychain } = multiSeedKeychainDefinition
+const { factory: createMultiSeedKeychain } = keychainDefinition
 
 const seed = mnemonicToSeed(
   'menu memory fury language physical wonder dog valid smart edge decrease worth'
@@ -44,22 +44,22 @@ describe.each([
   {
     primarySeed: seed,
     secondarySeed: secondSeed,
-    seedIdentifier: getSeedId(seed),
+    seedId: getSeedId(seed),
   },
   {
     primarySeed: secondSeed,
     secondarySeed: seed,
-    seedIdentifier: getSeedId(seed),
+    seedId: getSeedId(seed),
   },
-])('EcDSA Signer (multi-seed-keychain)', ({ primarySeed, secondarySeed, seedIdentifier }) => {
+])('EcDSA Signer (multi-seed-keychain)', ({ primarySeed, secondarySeed, seedId }) => {
   it('should signBuffer (using secp256k1 instance)', async () => {
-    const multiSeedKeychain = createMultiSeedKeychain()
-    multiSeedKeychain.setPrimarySeed(primarySeed)
-    multiSeedKeychain.addSeed(secondarySeed)
+    const keychain = createMultiSeedKeychain()
+    keychain.addSeed(primarySeed)
+    keychain.addSeed(secondarySeed)
 
     const plaintext = Buffer.from('I really love keychains')
-    const signature = await multiSeedKeychain.secp256k1.signBuffer({
-      seedIdentifier,
+    const signature = await keychain.secp256k1.signBuffer({
+      seedId,
       keyId: fusionKeyId,
       data: plaintext,
     })
