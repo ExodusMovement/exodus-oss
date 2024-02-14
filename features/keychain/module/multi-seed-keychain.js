@@ -65,7 +65,6 @@ class MultiSeedKeychain {
     if (!this.#keychains) this.#keychains = Object.create(null)
 
     const seedId = getSeedId(seed)
-    const seedIdHex = seedId.toString('hex')
     if (this.#keychains[seedId]) throw new Error(`already have seed with id: ${seedId}`)
 
     const keychain = new Keychain({
