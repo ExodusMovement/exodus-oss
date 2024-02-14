@@ -17,8 +17,8 @@ class MultiSeedKeychain {
       {
         get:
           (target, key) =>
-          async ({ seedIdentifier, ...rest }) =>
-            this.#getKeychainForSeed(seedIdentifier).sodium[key](rest),
+          async ({ seedId, ...rest }) =>
+            this.#getKeychainForSeed(seedId).sodium[key](rest),
       }
     )
 
@@ -27,8 +27,8 @@ class MultiSeedKeychain {
       {
         get:
           (target, key) =>
-          async ({ seedIdentifier, ...rest }) =>
-            this.#getKeychainForSeed(seedIdentifier).secp256k1[key](rest),
+          async ({ seedId, ...rest }) =>
+            this.#getKeychainForSeed(seedId).secp256k1[key](rest),
       }
     )
 
@@ -37,19 +37,19 @@ class MultiSeedKeychain {
       {
         get:
           (target, key) =>
-          async ({ seedIdentifier, ...rest }) =>
-            this.#getKeychainForSeed(seedIdentifier).ed25519[key](rest),
+          async ({ seedId, ...rest }) =>
+            this.#getKeychainForSeed(seedId).ed25519[key](rest),
       }
     )
   }
 
-  #getKeychainForSeed = (seedIdentifier) => {
+  #getKeychainForSeed = (seedId) => {
     assert(this.#keychains, 'keychain is locked')
-    assert(typeof seedIdentifier === 'string', 'expected seedIdentifier')
+    assert(typeof seedId === 'string', 'expected seedId')
 
-    const seedIdentifierHex = seedIdentifier.toString('hex')
-    const keychain = this.#keychains[seedIdentifierHex]
-    assert(keychain, `keychain not found for seed id: ${seedIdentifierHex}`)
+    const seedIdHex = seedId.toString('hex')
+    const keychain = this.#keychains[seedIdHex]
+    assert(keychain, `keychain not found for seed id: ${seedIdHex}`)
     return keychain
   }
 
@@ -82,12 +82,12 @@ class MultiSeedKeychain {
     return this.#initKeychain(seed)
   }
 
-  async signTx({ seedIdentifier, keyIds, signTxCallback, unsignedTx }) {
-    return this.#getKeychainForSeed(seedIdentifier).signTx(keyIds, signTxCallback, unsignedTx)
+  async signTx({ seedId, keyIds, signTxCallback, unsignedTx }) {
+    return this.#getKeychainForSeed(seedId).signTx(keyIds, signTxCallback, unsignedTx)
   }
 
-  async exportKey({ seedIdentifier, keyId, exportPrivate }) {
-    return this.#getKeychainForSeed(seedIdentifier).exportKey(keyId, {
+  async exportKey({ seedId, keyId, exportPrivate }) {
+    return this.#getKeychainForSeed(seedId).exportKey(keyId, {
       exportPrivate,
     })
   }
