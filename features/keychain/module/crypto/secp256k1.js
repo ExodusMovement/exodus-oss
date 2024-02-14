@@ -6,8 +6,8 @@ export const create = ({ getPrivateHDKey }) => {
   const curve = new EC('secp256k1')
 
   const createInstance = () => ({
-    signBuffer: async ({ keyId, data }) => {
-      const { privateKey } = getPrivateHDKey(keyId)
+    signBuffer: async ({ seedId, keyId, data }) => {
+      const { privateKey } = getPrivateHDKey({ seedId, keyId })
       return Buffer.from(curve.sign(data, privateKey).toDER())
     },
   })
