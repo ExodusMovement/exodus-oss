@@ -28,14 +28,14 @@ describe.each([
   {
     primarySeed: seed,
     secondarySeed: secondSeed,
-    seedIdentifier: getSeedId(seed),
+    seedId: getSeedId(seed),
   },
   {
     primarySeed: secondSeed,
     secondarySeed: seed,
-    seedIdentifier: getSeedId(seed),
+    seedId: getSeedId(seed),
   },
-])('multi-seed-keychain', ({ primarySeed, secondarySeed, seedIdentifier }) => {
+])('multi-seed-keychain', ({ primarySeed, secondarySeed, seedId }) => {
   let keychain
 
   beforeEach(() => {
@@ -62,7 +62,7 @@ describe.each([
         {
           expected: 'nsn7DmCMsKWGUWcL92XfPKXFbUz7KtFDRa4nnkc3RiF',
           exportOpts: {
-            seedIdentifier,
+            seedId,
             keyId: new KeyIdentifier({
               assetName: 'solana',
               derivationAlgorithm: 'BIP32',
@@ -74,7 +74,7 @@ describe.each([
         {
           expected: '7SmaJ41gFZ1LPsZJfb57npzdCFuqBRmgj3CScjbmkQwA',
           exportOpts: {
-            seedIdentifier,
+            seedId,
             keyId: new KeyIdentifier({
               assetName: 'solana',
               derivationAlgorithm: 'BIP32',
@@ -97,7 +97,7 @@ describe.each([
         {
           expected: '0xF3d46F0De925B28fDa1219BbD60F5ae2a0128F9F',
           exportOpts: {
-            seedIdentifier,
+            seedId,
             keyId: new KeyIdentifier({
               derivationAlgorithm: 'BIP32',
               derivationPath: "m/44'/60'/0'/0/0",
@@ -108,7 +108,7 @@ describe.each([
         {
           expected: '0x55e60F7531a5c701F526f224FCC071EFCf3fFF61',
           exportOpts: {
-            seedIdentifier,
+            seedId,
             keyId: new KeyIdentifier({
               derivationAlgorithm: 'BIP32',
               derivationPath: "m/44'/60'/1'/0/0",
@@ -119,7 +119,7 @@ describe.each([
         {
           expected: '0x780984e59eDdA8b1f4bB09dc297241f1Ed0Dcc17',
           exportOpts: {
-            seedIdentifier,
+            seedId,
             keyId: new KeyIdentifier({
               derivationAlgorithm: 'BIP32',
               derivationPath: "m/44'/60'/0'/0/1",
@@ -141,7 +141,7 @@ describe.each([
           expected:
             'addr1q8ftlrj30s8f3qks2l5cuv44f5cgflxqym0d0k4q22dusp7jh789zlqwnzpdq4lf3cet2nfssn7vqfk76ld2q55meqrstsxtqg',
           exportOpts: {
-            seedIdentifier,
+            seedId,
             keyId: new KeyIdentifier({
               derivationAlgorithm: 'BIP32',
               derivationPath: "m/44'/1815'/0'/0/0",
@@ -161,7 +161,7 @@ describe.each([
     it('should fail to generate addresses if assetname is not in legacy priv pub', async () => {
       await expect(
         keychain.exportKey({
-          seedIdentifier,
+          seedId,
           keyId: new KeyIdentifier({
             derivationAlgorithm: 'BIP32',
             derivationPath: "m/44'/1815'/0'/0/0",
@@ -174,7 +174,7 @@ describe.each([
 
     it('should export SLIP10 keys', async () => {
       const key = await keychain.exportKey({
-        seedIdentifier,
+        seedId,
         keyId: EXODUS_KEY_IDS.TELEMETRY,
         exportPrivate: true,
       })
@@ -222,7 +222,7 @@ describe.each([
 
     it('should sign solana tx', async () => {
       const result = await keychain.signTx({
-        seedIdentifier,
+        seedId,
         keyIds: [keyId],
         signTxCallback: ({ unsignedTx, hdkeys, privateKey }) => {
           expect(hdkeys[44].privateKey).toEqual(privateKey)
@@ -253,7 +253,7 @@ describe.each([
       ]
 
       await keychain.signTx({
-        seedIdentifier,
+        seedId,
         keyIds,
         signTxCallback: ({ hdkeys, privateKey }) => {
           expect(privateKey).not.toBeDefined()
@@ -288,14 +288,14 @@ describe.each([
 
       await expect(
         keychain.exportKey({
-          seedIdentifier,
+          seedId,
           keyId: solanaKeyId,
         })
       ).resolves.toBeTruthy()
 
       await expect(
         clone.exportKey({
-          seedIdentifier,
+          seedId,
           keyId: solanaKeyId,
         })
       ).rejects.toThrow()
@@ -310,7 +310,7 @@ describe.each([
       clone.setPrimarySeed(seed)
 
       await clone.exportKey({
-        seedIdentifier,
+        seedId,
         keyId: cardanoKeyId,
       })
 
