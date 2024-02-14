@@ -47,9 +47,8 @@ class MultiSeedKeychain {
     assert(this.#keychains, 'keychain is locked')
     assert(typeof seedId === 'string', 'expected seedId')
 
-    const seedIdHex = seedId.toString('hex')
-    const keychain = this.#keychains[seedIdHex]
-    assert(keychain, `keychain not found for seed id: ${seedIdHex}`)
+    const keychain = this.#keychains[seedId]
+    assert(keychain, `keychain not found for seed id: ${seedId}`)
     return keychain
   }
 
