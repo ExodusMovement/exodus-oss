@@ -2,14 +2,13 @@ import { mnemonicToSeed } from 'bip39'
 import { createKeyIdentifierForExodus } from '@exodus/key-ids'
 import { KeyIdentifier } from '../key-identifier'
 import createKeychain from './create-keychain'
-import keychainDefinition from '../multi-seed-keychain'
 import { getSeedId } from '../crypto/seed-id'
-
-const { factory: createMultiSeedKeychain } = keychainDefinition
 
 const seed = mnemonicToSeed(
   'menu memory fury language physical wonder dog valid smart edge decrease worth'
 )
+
+const seedId = getSeedId(seed)
 
 const secondSeed = mnemonicToSeed(
   'wine system mean beyond filter human meat rubber episode wash stomach aunt'
@@ -26,7 +25,7 @@ describe('EdDSA Signer', () => {
   it('should signBuffer', async () => {
     const keychain = createKeychain({ seed })
     const signer = keychain.createEd25519Signer(fusionKeyId)
-    const signature = await signer.signBuffer({ data: plaintextMessage })
+    const signature = await signer.signBuffer({ seedId, data: plaintextMessage })
     const expected =
       'a929fd6e7e37524320e9f422caef1fefa14d9a70740626116b3570eac7e992893bea708c1b9004e222a779400c7ccabbd344c2399a2e4508f1de1cc602b0590a'
     expect(signature.toString('hex')).toBe(expected)
@@ -35,6 +34,7 @@ describe('EdDSA Signer', () => {
   it('should signBuffer (using ed25519 instance)', async () => {
     const keychain = createKeychain({ seed })
     const signature = await keychain.ed25519.signBuffer({
+      seedId,
       keyId: fusionKeyId,
       data: plaintextMessage,
     })
@@ -51,7 +51,7 @@ describe('EdDSA Signer', () => {
       derivationPath: "m/44'/501'/0'/0/0",
     })
     const signer = keychain.createEd25519Signer(keyId)
-    const signature = await signer.signBuffer({ data: plaintextTx })
+    const signature = await signer.signBuffer({ seedId, data: plaintextTx })
     const expected =
       '1102815ed29faa093f8365870c892e82ee2aff0e7ded7e337dee4e206613355c786b769cf48269e08ae1646ca70974b4bbfdeb0fd5f459f3ef8b4845b8dd6b0f'
     expect(signature.toString('hex')).toBe(expected)
@@ -64,7 +64,7 @@ describe('EdDSA Signer', () => {
       derivationAlgorithm: 'BIP32',
       derivationPath: "m/44'/501'/0'/0/0",
     })
-    const signature = await keychain.ed25519.signBuffer({ keyId, data: plaintextTx })
+    const signature = await keychain.ed25519.signBuffer({ seedId, keyId, data: plaintextTx })
     const expected =
       '1102815ed29faa093f8365870c892e82ee2aff0e7ded7e337dee4e206613355c786b769cf48269e08ae1646ca70974b4bbfdeb0fd5f459f3ef8b4845b8dd6b0f'
     expect(signature.toString('hex')).toBe(expected)
@@ -76,12 +76,12 @@ describe.each([
   {
     primarySeed: seed,
     secondarySeed: secondSeed,
-    seedId: getSeedId(seed),
+    seedId,
   },
   {
     primarySeed: secondSeed,
     secondarySeed: seed,
-    seedId: getSeedId(seed),
+    seedId,
   },
 ])('EdDSA Signer (multi-seed-keychain)', ({ primarySeed, secondarySeed, seedId }) => {
   const solanaKeyId = new KeyIdentifier({
@@ -90,8 +90,7 @@ describe.each([
     derivationPath: "m/44'/501'/0'/0/0",
   })
 
-  const keychain = createMultiSeedKeychain()
-  keychain.addSeed(primarySeed)
+  const keychain = createKeychain({ seed: primarySeed })
   keychain.addSeed(secondarySeed)
 
   it('should signBuffer (using ed25519 instance)', async () => {
