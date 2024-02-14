@@ -13,16 +13,17 @@ import {
   throwIfInvalidMasters,
   throwIfInvalidLegacyPrivToPub,
 } from './validate'
+import { getSeedId } from './crypto/seed-id'
 
 const MAP_KDF = Object.freeze({
   BIP32: bip32FromMasterSeed,
   SLIP10: SLIP10.fromSeed,
 })
 
-export const MODULE_ID = 'singleSeedKeychain'
+export const MODULE_ID = 'keychain'
 
 export class Keychain extends ExodusModule {
-  #masters = null
+  #masters = Object.create(null)
   #legacyPrivToPub = null
 
   // TODO: remove default param. Use it temporarily for backward compatibility.
@@ -43,31 +44,41 @@ export class Keychain extends ExodusModule {
     this.secp256k1 = secp256k1.create({ getPrivateHDKey: this.#getPrivateHDKey })
   }
 
-  unlock({ seed }) {
+  addSeed(seed) {
     assert(Buffer.isBuffer(seed) && seed.length === 64, 'seed must be buffer of 64 bytes')
     const masters = Object.assign(
       Object.create(null),
       mapValues(MAP_KDF, (fromSeed) => fromSeed(seed))
     )
     throwIfInvalidMasters(masters)
-    this.#masters = masters
+
+    const seedId = getSeedId(seed)
+    this.#masters[seedId] = masters
+    return seedId
   }
 
   lock() {
-    this.#masters = null
+    this.#masters = Object.create(null)
   }
 
   // Note: keep as non-arrow function to allow subclassing
-  #getPrivateHDKey = (keyId) => {
+  #getPrivateHDKey = ({ seedId, keyId }) => {
     throwIfInvalidKeyIdentifier(keyId)
-    throwIfInvalidMasters(this.#masters)
+
+    if (typeof seedId !== 'string' || !seedId) {
+      throw new Error('seedId must be a BIP32 key identifier in hex encoding')
+    }
+
+    if (!this.#masters[seedId]) throw new Error(`seed "${seedId}" is not initialized`)
+
+    throwIfInvalidMasters(this.#masters[seedId])
 
     const { derivationAlgorithm, derivationPath } = keyId
-    return this.#masters[derivationAlgorithm].derive(derivationPath)
+    return this.#masters[seedId][derivationAlgorithm].derive(derivationPath)
   }
 
-  async exportKey(keyId, { exportPrivate } = Object.create(null)) {
-    const hdkey = this.#getPrivateHDKey(keyId)
+  async exportKey({ seedId, keyId, exportPrivate }) {
+    const hdkey = this.#getPrivateHDKey({ seedId, keyId })
     const privateKey = hdkey.privateKey
     let publicKey = hdkey.publicKey
 
@@ -93,11 +104,11 @@ export class Keychain extends ExodusModule {
     }
   }
 
-  async signTx(keyIds, signTxWithHD, unsignedTx) {
-    assert(typeof signTxWithHD === 'function', 'signTxWithHD must be a function')
+  async signTx({ seedId, keyIds, signTxCallback, unsignedTx }) {
+    assert(typeof signTxCallback === 'function', 'signTxCallback must be a function')
     const hdkeys = Object.fromEntries(
       keyIds.map((keyId) => {
-        const hdkey = this.#getPrivateHDKey(keyId)
+        const hdkey = this.#getPrivateHDKey({ seedId, keyId })
         const { purpose } = parseDerivationPath(keyId.derivationPath)
         return [String(purpose), hdkey]
       })
@@ -106,8 +117,8 @@ export class Keychain extends ExodusModule {
     const hdKeyList = Object.values(hdkeys)
     // most asset only care about the purpose 44 derived private key
     const privateKey = hdKeyList.length === 1 ? hdKeyList[0].privateKey : undefined
-    // signTxWithHD is already an asset-specific signing function
-    return signTxWithHD({ unsignedTx, hdkeys, privateKey })
+    // signTxCallback is already an asset-specific signing function
+    return signTxCallback({ unsignedTx, hdkeys, privateKey })
   }
 
   // @deprecated use keychain.sodium instead
