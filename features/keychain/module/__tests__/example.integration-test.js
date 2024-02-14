@@ -7,10 +7,13 @@ import solanaAssets from '@exodus/solana-meta'
 import { mnemonicToSeed } from 'bip39'
 import assert from 'minimalistic-assert'
 import keychainDefinition, { KeyIdentifier } from '..'
+import { getSeedId } from '../crypto/seed-id'
 
 const seed = mnemonicToSeed(
   'menu memory fury language physical wonder dog valid smart edge decrease worth'
 )
+
+const seedId = getSeedId(seed)
 
 const { solana: asset } = connectAssetsList(solanaAssets)
 
@@ -19,7 +22,7 @@ const keychain = keychainDefinition.factory({
   legacyPrivToPub: Object.create(null),
 })
 
-keychain.unlock({ seed })
+keychain.addSeed(seed)
 
 const solanaKeyId = new KeyIdentifier({
   assetName: 'solana',
@@ -46,11 +49,11 @@ test('unlock', async () => {
     legacyPrivToPub: Object.create(null),
   })
 
-  await expect(keychain.exportKey(solanaKeyId)).rejects.toThrow()
+  await expect(keychain.exportKey({ seedId, keyId: solanaKeyId })).rejects.toThrow()
 
-  keychain.unlock({ seed })
+  keychain.addSeed(seed)
 
-  await expect(keychain.exportKey(solanaKeyId)).resolves.not.toThrow()
+  await expect(keychain.exportKey({ seedId, keyId: solanaKeyId })).resolves.not.toThrow()
 })
 
 test('lock', async () => {
@@ -59,7 +62,7 @@ test('lock', async () => {
     legacyPrivToPub: Object.create(null),
   })
 
-  keychain.unlock({ seed })
+  keychain.addSeed(seed)
   keychain.lock({ seed })
 
   await expect(keychain.exportKey(solanaKeyId)).rejects.toThrow()
@@ -75,16 +78,17 @@ test('signTx', async () => {
     recentBlockhash: '6yWbfvhoDrgzStVnvpRvib2Q1LpuTYc6TtdMPPofCPh8',
   })
 
-  const signedTx = await keychain.signTx(
+  const signedTx = await keychain.signTx({
+    seedId,
     // Note: this is an array as some assets require multiple keys to sign a single transaction,
     // e.g. bitcoin needs a keyId per UTXO
-    [solanaKeyId],
-    function signTx({ unsignedTx, hdkeys, privateKey }) {
+    keyIds: [solanaKeyId],
+    signTxCallback: ({ unsignedTx, hdkeys, privateKey }) => {
       assert(unsignedTx.txMeta.assetName === 'solana', 'expected "solana" tx')
       return signSolanaTx(unsignedTx, privateKey)
     },
-    unsignedTx
-  )
+    unsignedTx,
+  })
 
   expect(signedTx.txId).toBe(
     'Lj2iFo1MKx3cWTLH1GbvxZjCtNTMBmB2rXR5JV7EFQnPySyxKssAReBJF56e7XzXiAFeYdMCwFvyR3NkFVbh8rS'
@@ -93,9 +97,9 @@ test('signTx', async () => {
 
 test('exportKey', async () => {
   // { xpub, publicKey }
-  const publicKey = await keychain.exportKey(solanaKeyId)
+  const publicKey = await keychain.exportKey({ seedId, keyId: solanaKeyId })
   // { xpub, xpriv, publicKey, privateKey }
-  const privateKey = await keychain.exportKey(solanaKeyId, { exportPrivate: true })
+  const privateKey = await keychain.exportKey({ seedId, keyId: solanaKeyId, exportPrivate: true })
 
   expect(publicKey.xpub).toEqual(
     'xpub6GZDo9NGhuCMi1tATK1mrkcCmsJkS7byjwVgjqp1pZxD1EQ4GMf9vD42r1jAM7teWuk63fPXDvWA8sBxrdVM9sEdhsbGH7jfCEgTg7mvVNh'
@@ -121,10 +125,12 @@ test('encryptSecretBox/decryptSecretBox', async () => {
   const sodiumEncryptor = await keychain.createSodiumEncryptor(ALICE_KEY)
   const plaintext = 'I really love keychains'
   const ciphertext = await sodiumEncryptor.encryptSecretBox({
+    seedId,
     data: plaintext,
   })
 
   const decrypted = await sodiumEncryptor.decryptSecretBox({
+    seedId,
     data: ciphertext,
   })
   expect(decrypted.toString()).toBe(plaintext)
@@ -132,8 +138,16 @@ test('encryptSecretBox/decryptSecretBox', async () => {
 
 test('encryptSecretBox/decryptSecretBox (using sodium instance)', async () => {
   const plaintext = 'I really love keychains'
-  const ciphertext = await keychain.sodium.encryptSecretBox({ keyId: ALICE_KEY, data: plaintext })
-  const decrypted = await keychain.sodium.decryptSecretBox({ keyId: ALICE_KEY, data: ciphertext })
+  const ciphertext = await keychain.sodium.encryptSecretBox({
+    seedId,
+    keyId: ALICE_KEY,
+    data: plaintext,
+  })
+  const decrypted = await keychain.sodium.decryptSecretBox({
+    seedId,
+    keyId: ALICE_KEY,
+    data: ciphertext,
+  })
 
   expect(decrypted.toString()).toBe(plaintext)
 })
@@ -144,16 +158,18 @@ test('encryptBox/decryptBox', async () => {
   const plaintext = 'I really love keychains'
   const {
     box: { publicKey: bobPublicKey },
-  } = await bobSodiumEncryptor.getSodiumKeysFromSeed()
+  } = await bobSodiumEncryptor.getSodiumKeysFromSeed({ seedId })
   const ciphertext = await aliceSodiumEncryptor.encryptBox({
+    seedId,
     data: plaintext,
     toPublicKey: bobPublicKey,
   })
   const {
     box: { publicKey: alicePublicKey },
-  } = await aliceSodiumEncryptor.getSodiumKeysFromSeed()
+  } = await aliceSodiumEncryptor.getSodiumKeysFromSeed({ seedId })
 
   const decrypted = await bobSodiumEncryptor.decryptBox({
+    seedId,
     data: ciphertext,
     fromPublicKey: alicePublicKey,
   })
@@ -166,9 +182,10 @@ test('encryptBox/decryptBox (using sodium instance)', async () => {
 
   const {
     box: { publicKey: bobPublicKey },
-  } = await keychain.sodium.getSodiumKeysFromSeed({ keyId: BOB_KEY })
+  } = await keychain.sodium.getSodiumKeysFromSeed({ seedId, keyId: BOB_KEY })
 
   const ciphertext = await keychain.sodium.encryptBox({
+    seedId,
     keyId: ALICE_KEY,
     data: plaintext,
     toPublicKey: bobPublicKey,
@@ -176,9 +193,10 @@ test('encryptBox/decryptBox (using sodium instance)', async () => {
 
   const {
     box: { publicKey: alicePublicKey },
-  } = await keychain.sodium.getSodiumKeysFromSeed({ keyId: ALICE_KEY })
+  } = await keychain.sodium.getSodiumKeysFromSeed({ seedId, keyId: ALICE_KEY })
 
   const decrypted = await keychain.sodium.decryptBox({
+    seedId,
     keyId: BOB_KEY,
     data: ciphertext,
     fromPublicKey: alicePublicKey,
@@ -193,12 +211,14 @@ test('should encryptSealedBox and decryptSealedBox', async () => {
   const plaintext = 'I really love keychains'
   const {
     box: { publicKey: bobPublicKey },
-  } = await bobSodiumEncryptor.getSodiumKeysFromSeed()
+  } = await bobSodiumEncryptor.getSodiumKeysFromSeed({ seedId })
   const ciphertext = await aliceSodiumEncryptor.encryptSealedBox({
+    seedId,
     data: plaintext,
     toPublicKey: bobPublicKey,
   })
   const decrypted = await bobSodiumEncryptor.decryptSealedBox({
+    seedId,
     data: ciphertext,
   })
   expect(decrypted.toString()).toBe(plaintext)
@@ -209,15 +229,17 @@ test('should encryptSealedBox and decryptSealedBox (using sodium instance)', asy
 
   const {
     box: { publicKey: bobPublicKey },
-  } = await keychain.sodium.getSodiumKeysFromSeed({ keyId: BOB_KEY })
+  } = await keychain.sodium.getSodiumKeysFromSeed({ seedId, keyId: BOB_KEY })
 
   const ciphertext = await keychain.sodium.encryptSealedBox({
+    seedId,
     keyId: ALICE_KEY,
     data: plaintext,
     toPublicKey: bobPublicKey,
   })
 
   const decrypted = await keychain.sodium.decryptSealedBox({
+    seedId,
     keyId: BOB_KEY,
     data: ciphertext,
   })
@@ -234,7 +256,7 @@ test('EcDSA Signer', async () => {
 
   const signer = keychain.createSecp256k1Signer(keyId)
   const plaintext = Buffer.from('I really love keychains')
-  const signature = await signer.signBuffer({ data: plaintext })
+  const signature = await signer.signBuffer({ seedId, data: plaintext })
   const expected =
     '304402206102dd19cf16e4d88b5bbc07843dae29fb62b13b65207667898363c90b548bf60220577d77bed19009157593f884bfc8a951dbfc9fe4e4fe99ddaed9ab8b558e208c'
   expect(signature.toString('hex')).toBe(expected)
@@ -248,7 +270,7 @@ test('EcDSA Signer (using secp256k1 instance)', async () => {
   })
 
   const plaintext = Buffer.from('I really love keychains')
-  const signature = await keychain.secp256k1.signBuffer({ keyId, data: plaintext })
+  const signature = await keychain.secp256k1.signBuffer({ seedId, keyId, data: plaintext })
   const expected =
     '304402206102dd19cf16e4d88b5bbc07843dae29fb62b13b65207667898363c90b548bf60220577d77bed19009157593f884bfc8a951dbfc9fe4e4fe99ddaed9ab8b558e208c'
   expect(signature.toString('hex')).toBe(expected)
@@ -263,7 +285,7 @@ test('EdDSA Signer', async () => {
 
   const signer = keychain.createEd25519Signer(keyId)
   const plaintext = Buffer.from('I really love keychains')
-  const signature = await signer.signBuffer({ data: plaintext })
+  const signature = await signer.signBuffer({ seedId, data: plaintext })
   const expected =
     'd28f13d22ef56c7c5b89a68f67a581ecb01358ed4782dca4f5bc672c4e11d669f853d8110c56dec8bcbafd96bf319d27fa8d8a73dabd95d4c18bf65788a9680d'
   expect(signature.toString('hex')).toBe(expected)
@@ -277,7 +299,7 @@ test('EdDSA Signer (using ed25519 instance)', async () => {
   })
 
   const plaintext = Buffer.from('I really love keychains')
-  const signature = await keychain.ed25519.signBuffer({ keyId, data: plaintext })
+  const signature = await keychain.ed25519.signBuffer({ seedId, keyId, data: plaintext })
   const expected =
     'd28f13d22ef56c7c5b89a68f67a581ecb01358ed4782dca4f5bc672c4e11d669f853d8110c56dec8bcbafd96bf319d27fa8d8a73dabd95d4c18bf65788a9680d'
   expect(signature.toString('hex')).toBe(expected)
