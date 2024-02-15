@@ -61,7 +61,6 @@ export class Keychain extends ExodusModule {
     this.#masters = Object.create(null)
   }
 
-  // Note: keep as non-arrow function to allow subclassing
   #getPrivateHDKey = ({ seedId, keyId }) => {
     throwIfInvalidKeyIdentifier(keyId)
 
