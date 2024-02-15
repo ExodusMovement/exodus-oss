@@ -6,7 +6,7 @@ In its current state, this library aims to provide a good interface for working 
 
 - Private key material IS passed directly to asset libraries which can contain code by third party developers. This is on our roadmap to eliminate by refactoring asset libraries to accept signing functions instead of keys.
 - Private keys _can_ be exported, via `keychain.exportKey`
-- `keychain.lock()` does not guarantee that private keys get completely cleared from memory
+- `keychain.removeAllSeeds()` does not guarantee that private keys get completely cleared from memory
 
 ## Install
 
@@ -37,16 +37,24 @@ const keyId = new KeyIdentifier({
 })
 ```
 
-### Lock/Unlock the Keychain
+### Seed Identifier
 
-Before you can perform keychain operations, you must unlock the keychain by providing it a `seed`. Calling `keychain.lock()` will lock the keychain again and remove the seed and any derived cryptographic material from its internal fields.
+Because the keychain supports managing multiple seeds at once, most operations require passing in a seed identifier (`seedId`) in addition to a `KeyIdentifier`. A `seedId` is a hex-encoded BIP32 identifier of seed's master key (see [./module/crypto/seed-id.js](./module/crypto/seed-id.js)).
+
+### Adding/Removing Seeds
+
+Before you can perform keychain operations, you must provide it one or more `seed`s via `keychain.addSeed(seed)`. Calling `keychain.removeAllSeeds()` will remove all previously added seeds and any derived cryptographic material from its internal fields.
 
 ```js
 const seed = mnemonicToSeed(
   'menu memory fury language physical wonder dog valid smart edge decrease worth'
 )
 
-keychain.unlock({ seed })
+keychain.addSeed(seed)
+keychain.addSeed(secondSeed)
+keychain.addSeed(thirdSeed)
+// ...
+keychain.removeAllSeeds()
 ```
 
 ### Sign a transaction
@@ -75,18 +83,19 @@ const unsignedTx = await createUnsignedSolanaTx({
   recentBlockhash: '6yWbfvhoDrgzStVnvpRvib2Q1LpuTYc6TtdMPPofCPh8',
 })
 
-const signedTx = await keychain.signTx(
+const signedTx = await keychain.signTx({
+  seedId,
   // Note: this is an array as some assets require multiple keys to sign a single transaction,
   // e.g. bitcoin needs a keyId per UTXO
-  [keyId],
+  keyIds: [keyId],
   // in Exodus mobile/desktop/browser-extension clients, this is typically aggregated
   // for all assets into a single delegator function
-  function signTx({ unsignedTx, hdkeys, privateKey }) {
+  signTxCallback: ({ unsignedTx, hdkeys, privateKey }) => {
     assert(unsignedTx.txMeta.assetName === 'solana', `expected "solana" tx`)
     return signSolanaTx(unsignedTx, privateKey)
   },
-  unsignedTx
-)
+  unsignedTx,
+})
 
 // signedTx.txId === 'Lj2iFo1MKx3cWTLH1GbvxZjCtNTMBmB2rXR5JV7EFQnPySyxKssAReBJF56e7XzXiAFeYdMCwFvyR3NkFVbh8rS'
 ```
@@ -104,13 +113,15 @@ const ALICE_KEY = new KeyIdentifier({
   keyType: 'nacl',
 })
 
-const sodiumEncryptor = await keychain.createSodiumEncryptor(ALICE_KEY)
+const sodiumEncryptor = keychain.createSodiumEncryptor(ALICE_KEY)
 const plaintext = 'I really love keychains'
 const ciphertext = await sodiumEncryptor.encryptSecretBox({
+  seedId,
   data: plaintext,
 })
 
 const decrypted = await sodiumEncryptor.decryptSecretBox({
+  seedId,
   data: ciphertext,
 })
 
@@ -120,21 +131,23 @@ const decrypted = await sodiumEncryptor.decryptSecretBox({
 #### encryptBox/decryptBox
 
 ```js
-const aliceSodiumEncryptor = await keychain.createSodiumEncryptor(ALICE_KEY)
-const bobSodiumEncryptor = await keychain.createSodiumEncryptor(BOB_KEY)
+const aliceSodiumEncryptor = keychain.createSodiumEncryptor(ALICE_KEY)
+const bobSodiumEncryptor = keychain.createSodiumEncryptor(BOB_KEY)
 const plaintext = 'I really love keychains'
 const {
   box: { publicKey: bobPublicKey },
-} = await bobSodiumEncryptor.getSodiumKeysFromSeed()
+} = await bobSodiumEncryptor.getSodiumKeysFromSeed({ seedId })
 const ciphertext = await aliceSodiumEncryptor.encryptBox({
+  seedId,
   data: plaintext,
   toPublicKey: bobPublicKey,
 })
 const {
   box: { publicKey: alicePublicKey },
-} = await aliceSodiumEncryptor.getSodiumKeysFromSeed()
+} = await aliceSodiumEncryptor.getSodiumKeysFromSeed({ seedId })
 
 const decrypted = await bobSodiumEncryptor.decryptBox({
+  seedId,
   data: ciphertext,
   fromPublicKey: alicePublicKey,
 })
@@ -145,19 +158,21 @@ const decrypted = await bobSodiumEncryptor.decryptBox({
 #### encryptSealedBox/decryptSealedBox
 
 ```js
-const aliceSodiumEncryptor = await keychain.createSodiumEncryptor(ALICE_KEY)
-const bobSodiumEncryptor = await keychain.createSodiumEncryptor(BOB_KEY)
+const aliceSodiumEncryptor = keychain.createSodiumEncryptor(ALICE_KEY)
+const bobSodiumEncryptor = keychain.createSodiumEncryptor(BOB_KEY)
 const plaintext = 'I really love keychains'
 const {
   box: { publicKey: bobPublicKey },
-} = await bobSodiumEncryptor.getSodiumKeysFromSeed()
+} = await bobSodiumEncryptor.getSodiumKeysFromSeed({ seedId })
 
 const ciphertext = await aliceSodiumEncryptor.encryptSealedBox({
+  seedId,
   data: plaintext,
   toPublicKey: bobPublicKey,
 })
 
 const decrypted = await bobSodiumEncryptor.decryptSealedBox({
+  seedId,
   data: ciphertext,
 })
 
@@ -170,9 +185,9 @@ Export public and/or private key material.
 
 ```js
 // { xpub, publicKey }
-const publicKey = await keychain.exportKey(keyId)
+const publicKey = await keychain.exportKey({ seedId, keyId })
 // { xpub, xpriv, publicKey, privateKey }
-const privateKey = await keychain.exportKey(keyId, { exportPrivate: true })
+const privateKey = await keychain.exportKey({ seedId, keyId, exportPrivate: true })
 ```
 
 ### Clone the Keychain Instance
@@ -192,7 +207,7 @@ const keyId = new KeyIdentifier({
 
 const signer = keychain.createSecp256k1Signer(keyId)
 const plaintext = Buffer.from('I really love keychains')
-const signature = await signer.signBuffer({ data: plaintext })
+const signature = await signer.signBuffer({ seedId, data: plaintext })
 ```
 
 ### ed25519 signer
@@ -208,5 +223,5 @@ const keyId = new KeyIdentifier({
 
 const signer = keychain.createEd25519Signer(keyId)
 const plaintext = Buffer.from('I really love keychains')
-const signature = await signer.signBuffer({ data: plaintext })
+const signature = await signer.signBuffer({ seedId, data: plaintext })
 ```
