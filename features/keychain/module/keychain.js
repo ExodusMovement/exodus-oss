@@ -57,7 +57,7 @@ export class Keychain extends ExodusModule {
     return seedId
   }
 
-  lock() {
+  removeAllSeeds() {
     this.#masters = Object.create(null)
   }
 
