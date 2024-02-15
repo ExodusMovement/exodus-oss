@@ -1834,17 +1834,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/currency@npm:^2.1.2":
-  version: 2.3.2
-  resolution: "@exodus/currency@npm:2.3.2"
-  dependencies:
-    bn.js: ^4.11.0
-    lodash: ^4.17.11
-    minimalistic-assert: ^1.0.1
-  checksum: 37c864210178e16c9384551b710fafd47bcfe7880128dbb407de0eaabc46229605a020dd32ca6d0b06e06b6ee8871f957064d6c6810167fc6254f1e4223621d8
-  languageName: node
-  linkType: hard
-
 "@exodus/elliptic@npm:6.5.4-precomputed, @exodus/elliptic@npm:^6.5.4-precomputed":
   version: 6.5.4-precomputed
   resolution: "@exodus/elliptic@npm:6.5.4-precomputed"
@@ -2020,7 +2009,6 @@ __metadata:
     "@exodus/elliptic": ^6.5.4-precomputed
     "@exodus/key-ids": ^1.0.0
     "@exodus/key-utils": ^3.0.0
-    "@exodus/models": ^11.5.0
     "@exodus/module": ^1.2.0
     "@exodus/slip10": ^1.0.0
     "@exodus/sodium-crypto": ^3.1.0
@@ -2051,20 +2039,6 @@ __metadata:
   dependencies:
     "@exodus/react-native-crypto-shim": ^1.0.0
   checksum: 3264588b6f13e1ae72c0a3e0dba21f466370e8cfe7a95392c2210e6e68b8520f7ea61a47086741e068387b35ccb2fcef4116aef8c96dc2ae09609fb79e6bbef0
-  languageName: node
-  linkType: hard
-
-"@exodus/models@npm:^11.5.0":
-  version: 11.5.0
-  resolution: "@exodus/models@npm:11.5.0"
-  dependencies:
-    "@exodus/currency": ^2.1.2
-    "@exodus/serialization": ^1.0.0
-    bip32-path: ^0.4.2
-    lodash: ^4.17.11
-    minimalistic-assert: ^1.0.1
-    proxy-freeze: ^1.0.0
-  checksum: 80463820aabe7502f6d22aeecb0d534be28854f3224aa092637666b452df1959202ee32e28e036d02f457047646a9285c4cdcb568abb94a64e99b6c3e714210f
   languageName: node
   linkType: hard
 
@@ -2103,15 +2077,6 @@ __metadata:
     elliptic: ^6.5.2
     node-gyp: latest
   checksum: 7f712318969d5f31a470ed697f9c6c77b0de9fb7338aa90d0afb19bd8a3d91536d1cd68e05a20c4357b3187151a939862c0636d6377fcfa8d222b571ee60a00a
-  languageName: node
-  linkType: hard
-
-"@exodus/serialization@npm:^1.0.0":
-  version: 1.0.2
-  resolution: "@exodus/serialization@npm:1.0.2"
-  dependencies:
-    lodash: ^4.17.11
-  checksum: 82113bf5b6aff256fb4624e7725774fd05d45483e7a1907109822dfa58609748f7cddf141355a701a1a37d3234a7cc49ae2fab576613896f1c0db56bc5428019
   languageName: node
   linkType: hard
 
@@ -4432,7 +4397,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bn.js@npm:^4.11.0, bn.js@npm:^4.11.8, bn.js@npm:^4.11.9":
+"bn.js@npm:^4.11.8, bn.js@npm:^4.11.9":
   version: 4.12.0
   resolution: "bn.js@npm:4.12.0"
   checksum: 39afb4f15f4ea537b55eaf1446c896af28ac948fdcf47171961475724d1bb65118cca49fa6e3d67706e4790955ec0e74de584e45c8f1ef89f46c812bee5b5a12
