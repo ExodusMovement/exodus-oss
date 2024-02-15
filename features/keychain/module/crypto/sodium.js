@@ -11,14 +11,14 @@ export const create = ({ getPrivateHDKey }) => {
   // Sodium encryptor caches the private key and the return value holds
   // not refences to keychain internals, allowing the seed to be safely
   // garbage collected, clearing it from memory.
-  const getSodiumKeysFromIdentifier = async (keyId) => {
-    const { privateKey: sodiumSeed } = getPrivateHDKey(keyId)
+  const getSodiumKeysFromIdentifier = async ({ seedId, keyId }) => {
+    const { privateKey: sodiumSeed } = getPrivateHDKey({ seedId, keyId })
     return sodium.getSodiumKeysFromSeed(sodiumSeed)
   }
 
   const createInstance = () => ({
-    getSodiumKeysFromSeed: async ({ keyId }) => {
-      const { box, sign, secret } = await getSodiumKeysFromIdentifier(keyId)
+    getSodiumKeysFromSeed: async ({ seedId, keyId }) => {
+      const { box, sign, secret } = await getSodiumKeysFromIdentifier({ seedId, keyId })
 
       return {
         box: { publicKey: cloneBuffer(box.publicKey) },
@@ -26,43 +26,43 @@ export const create = ({ getPrivateHDKey }) => {
         secret: cloneBuffer(secret),
       }
     },
-    sign: async ({ keyId, data }) => {
-      const { sign } = await getSodiumKeysFromIdentifier(keyId)
+    sign: async ({ seedId, keyId, data }) => {
+      const { sign } = await getSodiumKeysFromIdentifier({ seedId, keyId })
       return sodium.sign({ message: data, privateKey: sign.privateKey })
     },
-    signOpen: async ({ keyId, data }) => {
-      const { sign } = await getSodiumKeysFromIdentifier(keyId)
+    signOpen: async ({ seedId, keyId, data }) => {
+      const { sign } = await getSodiumKeysFromIdentifier({ seedId, keyId })
       return sodium.signOpen({ signed: data, publicKey: sign.publicKey })
     },
-    signDetached: async ({ keyId, data }) => {
-      const { sign } = await getSodiumKeysFromIdentifier(keyId)
+    signDetached: async ({ seedId, keyId, data }) => {
+      const { sign } = await getSodiumKeysFromIdentifier({ seedId, keyId })
       return sodium.signDetached({ message: data, privateKey: sign.privateKey })
     },
-    verifyDetached: async ({ keyId, data, signature }) => {
-      const { sign } = await getSodiumKeysFromIdentifier(keyId)
+    verifyDetached: async ({ seedId, keyId, data, signature }) => {
+      const { sign } = await getSodiumKeysFromIdentifier({ seedId, keyId })
       return sodium.verifyDetached({ message: data, sig: signature, publicKey: sign.publicKey })
     },
-    encryptSecretBox: async ({ keyId, data }) => {
-      const { privateKey: sodiumSeed } = getPrivateHDKey(keyId)
+    encryptSecretBox: async ({ seedId, keyId, data }) => {
+      const { privateKey: sodiumSeed } = getPrivateHDKey({ seedId, keyId })
       return sodium.encryptSecret(data, sodiumSeed)
     },
-    decryptSecretBox: async ({ keyId, data }) => {
-      const { privateKey: sodiumSeed } = getPrivateHDKey(keyId)
+    decryptSecretBox: async ({ seedId, keyId, data }) => {
+      const { privateKey: sodiumSeed } = getPrivateHDKey({ seedId, keyId })
       return sodium.decryptSecret(data, sodiumSeed)
     },
-    encryptBox: async ({ keyId, data, toPublicKey }) => {
-      const { box } = await getSodiumKeysFromIdentifier(keyId)
+    encryptBox: async ({ seedId, keyId, data, toPublicKey }) => {
+      const { box } = await getSodiumKeysFromIdentifier({ seedId, keyId })
       return sodium.encryptBox(data, toPublicKey, box.privateKey)
     },
-    decryptBox: async ({ keyId, data, fromPublicKey }) => {
-      const { box } = await getSodiumKeysFromIdentifier(keyId)
+    decryptBox: async ({ seedId, keyId, data, fromPublicKey }) => {
+      const { box } = await getSodiumKeysFromIdentifier({ seedId, keyId })
       return sodium.decryptBox(data, fromPublicKey, box.privateKey)
     },
     encryptSealedBox: async ({ data, toPublicKey }) => {
       return sodium.encryptSealedBox(data, toPublicKey)
     },
-    decryptSealedBox: async ({ keyId, data }) => {
-      const { box } = await getSodiumKeysFromIdentifier(keyId)
+    decryptSealedBox: async ({ seedId, keyId, data }) => {
+      const { box } = await getSodiumKeysFromIdentifier({ seedId, keyId })
       return sodium.decryptSealedBox(data, box.publicKey, box.privateKey)
     },
   })

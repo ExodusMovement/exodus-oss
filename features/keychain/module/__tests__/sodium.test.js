@@ -2,10 +2,13 @@ import { mnemonicToSeed } from 'bip39'
 
 import { KeyIdentifier } from '../key-identifier'
 import createKeychain from './create-keychain'
+import { getSeedId } from '../crypto/seed-id'
 
 const seed = mnemonicToSeed(
   'menu memory fury language physical wonder dog valid smart edge decrease worth'
 )
+
+const seedId = getSeedId(seed)
 
 const ALICE_KEY = new KeyIdentifier({
   derivationAlgorithm: 'SLIP10',
@@ -22,22 +25,22 @@ const BOB_KEY = new KeyIdentifier({
 describe('libsodium', () => {
   it('should have sign keys compatibility with SLIP10', async () => {
     const keychain = createKeychain({ seed })
-    const exportedKeys = await keychain.exportKey(ALICE_KEY)
+    const exportedKeys = await keychain.exportKey({ seedId, keyId: ALICE_KEY })
 
     const sodiumEncryptor = await keychain.createSodiumEncryptor(ALICE_KEY)
     const {
       sign: { publicKey },
-    } = await sodiumEncryptor.getSodiumKeysFromSeed()
+    } = await sodiumEncryptor.getSodiumKeysFromSeed({ seedId })
     expect(Buffer.compare(publicKey, exportedKeys.publicKey)).toBe(0)
   })
 
   it('should have sign keys compatibility with SLIP10 (using sodium instance)', async () => {
     const keychain = createKeychain({ seed })
-    const exportedKeys = await keychain.exportKey(ALICE_KEY)
+    const exportedKeys = await keychain.exportKey({ seedId, keyId: ALICE_KEY })
 
     const {
       sign: { publicKey },
-    } = await keychain.sodium.getSodiumKeysFromSeed({ keyId: ALICE_KEY })
+    } = await keychain.sodium.getSodiumKeysFromSeed({ seedId, keyId: ALICE_KEY })
 
     expect(Buffer.compare(publicKey, exportedKeys.publicKey)).toBe(0)
   })
@@ -46,12 +49,14 @@ describe('libsodium', () => {
     const keychain = createKeychain({ seed })
     const sodiumEncryptor = await keychain.createSodiumEncryptor(ALICE_KEY)
     const plaintext = Buffer.from('I really love keychains')
-    const signature = await sodiumEncryptor.sign({ data: plaintext })
-    const isVerified = await sodiumEncryptor.signOpen({ data: signature })
+    const signature = await sodiumEncryptor.sign({ seedId, data: plaintext })
+    const isVerified = await sodiumEncryptor.signOpen({ seedId, data: signature })
     const signatureDetached = await sodiumEncryptor.signDetached({
+      seedId,
       data: plaintext,
     })
     const isVerifiedDetached = await sodiumEncryptor.verifyDetached({
+      seedId,
       data: plaintext,
       signature: signatureDetached,
     })
@@ -63,13 +68,15 @@ describe('libsodium', () => {
     const keychain = createKeychain({ seed })
     const plaintext = Buffer.from('I really love keychains')
 
-    const signature = await keychain.sodium.sign({ keyId: ALICE_KEY, data: plaintext })
-    const isVerified = await keychain.sodium.signOpen({ keyId: ALICE_KEY, data: signature })
+    const signature = await keychain.sodium.sign({ seedId, keyId: ALICE_KEY, data: plaintext })
+    const isVerified = await keychain.sodium.signOpen({ seedId, keyId: ALICE_KEY, data: signature })
     const signatureDetached = await keychain.sodium.signDetached({
+      seedId,
       keyId: ALICE_KEY,
       data: plaintext,
     })
     const isVerifiedDetached = await keychain.sodium.verifyDetached({
+      seedId,
       keyId: ALICE_KEY,
       data: plaintext,
       signature: signatureDetached,
@@ -83,9 +90,11 @@ describe('libsodium', () => {
     const sodiumEncryptor = await keychain.createSodiumEncryptor(ALICE_KEY)
     const plaintext = 'I really love keychains'
     const ciphertext = await sodiumEncryptor.encryptSecretBox({
+      seedId,
       data: plaintext,
     })
     const decrypted = await sodiumEncryptor.decryptSecretBox({
+      seedId,
       data: ciphertext,
     })
     expect(decrypted.toString()).toBe(plaintext)
@@ -96,10 +105,12 @@ describe('libsodium', () => {
     const plaintext = 'I really love keychains'
 
     const ciphertext = await keychain.sodium.encryptSecretBox({
+      seedId,
       keyId: ALICE_KEY,
       data: plaintext,
     })
     const decrypted = await keychain.sodium.decryptSecretBox({
+      seedId,
       keyId: ALICE_KEY,
       data: ciphertext,
     })
@@ -113,15 +124,17 @@ describe('libsodium', () => {
     const plaintext = 'I really love keychains'
     const {
       box: { publicKey: bobPublicKey },
-    } = await bobSodiumEncryptor.getSodiumKeysFromSeed()
+    } = await bobSodiumEncryptor.getSodiumKeysFromSeed({ seedId })
     const ciphertext = await aliceSodiumEncryptor.encryptBox({
+      seedId,
       data: plaintext,
       toPublicKey: bobPublicKey,
     })
     const {
       box: { publicKey: alicePublicKey },
-    } = await aliceSodiumEncryptor.getSodiumKeysFromSeed()
+    } = await aliceSodiumEncryptor.getSodiumKeysFromSeed({ seedId })
     const decrypted = await bobSodiumEncryptor.decryptBox({
+      seedId,
       data: ciphertext,
       fromPublicKey: alicePublicKey,
     })
@@ -134,16 +147,18 @@ describe('libsodium', () => {
 
     const {
       box: { publicKey: bobPublicKey },
-    } = await keychain.sodium.getSodiumKeysFromSeed({ keyId: BOB_KEY })
+    } = await keychain.sodium.getSodiumKeysFromSeed({ seedId, keyId: BOB_KEY })
     const ciphertext = await keychain.sodium.encryptBox({
+      seedId,
       keyId: ALICE_KEY,
       data: plaintext,
       toPublicKey: bobPublicKey,
     })
     const {
       box: { publicKey: alicePublicKey },
-    } = await keychain.sodium.getSodiumKeysFromSeed({ keyId: ALICE_KEY })
+    } = await keychain.sodium.getSodiumKeysFromSeed({ seedId, keyId: ALICE_KEY })
     const decrypted = await keychain.sodium.decryptBox({
+      seedId,
       keyId: BOB_KEY,
       data: ciphertext,
       fromPublicKey: alicePublicKey,
@@ -159,12 +174,14 @@ describe('libsodium', () => {
     const plaintext = 'I really love keychains'
     const {
       box: { publicKey: bobPublicKey },
-    } = await bobSodiumEncryptor.getSodiumKeysFromSeed()
+    } = await bobSodiumEncryptor.getSodiumKeysFromSeed({ seedId })
     const ciphertext = await aliceSodiumEncryptor.encryptSealedBox({
+      seedId,
       data: plaintext,
       toPublicKey: bobPublicKey,
     })
     const decrypted = await bobSodiumEncryptor.decryptSealedBox({
+      seedId,
       data: ciphertext,
     })
     expect(decrypted.toString()).toBe(plaintext)
@@ -176,13 +193,20 @@ describe('libsodium', () => {
 
     const {
       box: { publicKey: bobPublicKey },
-    } = await keychain.sodium.getSodiumKeysFromSeed({ keyId: BOB_KEY })
+    } = await keychain.sodium.getSodiumKeysFromSeed({
+      seedId,
+      keyId: BOB_KEY,
+    })
+
     const ciphertext = await keychain.sodium.encryptSealedBox({
+      seedId,
       keyId: ALICE_KEY,
       data: plaintext,
       toPublicKey: bobPublicKey,
     })
+
     const decrypted = await keychain.sodium.decryptSealedBox({
+      seedId,
       keyId: BOB_KEY,
       data: ciphertext,
     })

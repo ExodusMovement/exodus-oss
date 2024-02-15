@@ -2,10 +2,13 @@ import { mnemonicToSeed } from 'bip39'
 import { createKeyIdentifierForExodus } from '@exodus/key-ids'
 import { KeyIdentifier } from '../key-identifier'
 import createKeychain from './create-keychain'
+import { getSeedId } from '../crypto/seed-id'
 
 const seed = mnemonicToSeed(
   'menu memory fury language physical wonder dog valid smart edge decrease worth'
 )
+
+const seedId = getSeedId(seed)
 
 describe('compatibility', () => {
   it('should have libsodium.sign keys compatible with SLIP10', async () => {
@@ -16,7 +19,9 @@ describe('compatibility', () => {
 
     const keychain = createKeychain({ seed })
     const keyId = createKeyIdentifierForExodus({ exoType: 'FUSION' })
-    const exportedKeys = await keychain.exportKey(keyId, {
+    const exportedKeys = await keychain.exportKey({
+      seedId,
+      keyId,
       exportPrivate: true,
     })
 
@@ -24,7 +29,7 @@ describe('compatibility', () => {
     const sodiumEncryptor = keychain.createSodiumEncryptor(keyId)
     const {
       sign: { publicKey },
-    } = await sodiumEncryptor.getSodiumKeysFromSeed()
+    } = await sodiumEncryptor.getSodiumKeysFromSeed({ seedId })
     expect(Buffer.compare(publicKey, exportedKeys.publicKey)).toBe(0)
   })
 
@@ -48,6 +53,7 @@ describe('compatibility', () => {
     })
     const signer = keychain.createEd25519Signer(keyId)
     const signature = await signer.signBuffer({
+      seedId,
       data: Buffer.from(tweetnacl.message, 'hex'),
     })
     expect(signature.toString('hex')).toBe(tweetnacl.signature)
