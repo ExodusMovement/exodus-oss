@@ -3,13 +3,14 @@ import {
   getShelleyAddress as getCardanoAddress,
 } from '@exodus/cardano-lib'
 import { encodePublic as encodePublicEthereum } from '@exodus/ethereum-lib'
+import { EXODUS_KEY_IDS } from '@exodus/key-ids'
 import { createUnsignedTx } from '@exodus/solana-lib'
 import { mnemonicToSeed } from 'bip39'
 
 import { assets } from './fixtures/assets'
 import simpleTx from './fixtures/simple-tx'
 
-import { EXODUS_KEY_IDS, KeyIdentifier } from '../key-identifier'
+import { KeyIdentifier } from '../key-identifier'
 import keychainDefinition from '../multi-seed-keychain'
 import { getSeedId } from '../crypto/seed-id'
 
