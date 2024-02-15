@@ -65,11 +65,8 @@ export class Keychain extends ExodusModule {
   #getPrivateHDKey = ({ seedId, keyId }) => {
     throwIfInvalidKeyIdentifier(keyId)
 
-    if (typeof seedId !== 'string' || !seedId) {
-      throw new Error('seedId must be a BIP32 key identifier in hex encoding')
-    }
-
-    if (!this.#masters[seedId]) throw new Error(`seed "${seedId}" is not initialized`)
+    assert(typeof seedId === 'string', 'seedId must be a BIP32 key identifier in hex encoding') 
+    assert(this.#masters[seedId], `seed "${seedId}" is not initialized`)
 
     throwIfInvalidMasters(this.#masters[seedId])
 
