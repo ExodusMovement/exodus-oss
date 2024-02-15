@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@5.0.1...@exodus/keychain@6.0.0) (2024-02-15)
+
+### ⚠ BREAKING CHANGES
+
+- add multi-seed support ([#50](https://github.com/ExodusMovement/exodus-oss/issues/50)) ([82e5cf2e](https://github.com/ExodusMovement/exodus-oss/commit/82e5cf2e1b9334af150bf2a8bba4abbc0f74c764))
+
 ## [5.0.1](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@5.0.0...@exodus/keychain@5.0.1) (2024-01-26)
 
 ### Bug Fixes
