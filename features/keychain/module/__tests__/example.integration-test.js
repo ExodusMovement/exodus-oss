@@ -63,7 +63,7 @@ test('lock', async () => {
   })
 
   keychain.addSeed(seed)
-  keychain.lock({ seed })
+  keychain.removeAllSeeds()
 
   await expect(keychain.exportKey(solanaKeyId)).rejects.toThrow()
 })
