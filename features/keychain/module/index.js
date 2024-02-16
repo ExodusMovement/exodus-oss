@@ -1,2 +1,2 @@
-export { KeyIdentifier } from './key-identifier'
+export { default as KeyIdentifier } from '@exodus/key-identifier'
 export { default, Keychain } from './keychain'

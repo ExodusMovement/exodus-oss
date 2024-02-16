@@ -10,7 +10,7 @@ import { mnemonicToSeed } from 'bip39'
 import { assets } from './fixtures/assets'
 import simpleTx from './fixtures/simple-tx'
 
-import { KeyIdentifier } from '../key-identifier'
+import KeyIdentifier from '@exodus/key-identifier'
 import keychainDefinition, { Keychain } from '../keychain'
 import { getSeedId } from '../crypto/seed-id'
 

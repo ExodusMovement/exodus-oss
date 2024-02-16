@@ -1,0 +1,34 @@
+{
+  "name": "@exodus/key-identifier",
+  "version": "1.0.0",
+  "description": "Provides a KeyIdentifier class that helps to define how a key is derived",
+  "author": "Exodus Movement Inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ExodusMovement/exodus-oss.git"
+  },
+  "homepage": "https://github.com/ExodusMovement/exodus-oss/tree/master/libraries/key-identifier",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/ExodusMovement/exodus-oss/issues?q=is%3Aissue+is%3Aopen+label%3Akey-identifier"
+  },
+  "main": "src/index.js",
+  "files": [
+    "src",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "lint": "yarn run -T eslint . --ignore-path ../../.gitignore",
+    "lint:fix": "yarn lint --fix",
+    "test": "yarn run -T jest"
+  },
+  "dependencies": {
+    "@exodus/key-utils": "^3.1.0",
+    "minimalistic-assert": "^1.0.1"
+  },
+  "devDependencies": {
+    "@exodus/key-ids": "^1.2.0",
+    "@exodus/keychain": "workspace:^"
+  }
+}

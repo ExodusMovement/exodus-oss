@@ -27,7 +27,7 @@ Check [here](https://github.com/ExodusMovement/exodus-desktop/tree/master/src/ap
 In order to interact with a private key, you must first specify how it's accessed. A `KeyIdentifier` must be created, for assets there is a helpful `KeyIdentifier` class that will do the heavy lifting.
 
 ```js
-import { KeyIdentifier } from '@exodus/keychain/module'
+import KeyIdentifier from '@exodus/key-identifier'
 
 const keyId = new KeyIdentifier({
   assetName: 'solana',
