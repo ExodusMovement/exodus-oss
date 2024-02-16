@@ -30,7 +30,7 @@
     "@exodus/basic-utils": "^2.0.0",
     "@exodus/bip32": "^2.1.0",
     "@exodus/elliptic": "^6.5.4-precomputed",
-    "@exodus/key-identifier": "workspace:^",
+    "@exodus/key-identifier": "^1.0.0",
     "@exodus/key-utils": "^3.0.0",
     "@exodus/module": "^1.2.0",
     "@exodus/slip10": "^1.0.0",
