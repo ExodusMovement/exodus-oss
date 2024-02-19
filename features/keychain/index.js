@@ -5,7 +5,7 @@ const keychain = ({ cachePublicKeys }) => {
   // TODO: support caching
   return {
     id: 'keychain',
-    definitions: [moduleDefinition, apiDefinition],
+    definitions: [{ definition: moduleDefinition }, { definition: apiDefinition }],
   }
 }
 
