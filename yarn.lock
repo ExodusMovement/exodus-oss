@@ -1960,6 +1960,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@exodus/key-identifier@^1.0.0, @exodus/key-identifier@workspace:libraries/key-identifier":
+  version: 0.0.0-use.local
+  resolution: "@exodus/key-identifier@workspace:libraries/key-identifier"
+  dependencies:
+    "@exodus/key-ids": ^1.2.0
+    "@exodus/key-utils": ^3.1.0
+    "@exodus/keychain": "workspace:^"
+    minimalistic-assert: ^1.0.1
+  languageName: unknown
+  linkType: soft
+
 "@exodus/key-ids@npm:^1.0.0":
   version: 1.0.0
   resolution: "@exodus/key-ids@npm:1.0.0"
@@ -1970,7 +1981,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/key-utils@npm:^3.0.0":
+"@exodus/key-ids@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@exodus/key-ids@npm:1.2.0"
+  dependencies:
+    "@exodus/keychain": ^5.0.1
+    minimalistic-assert: ^1.0.1
+  checksum: c70f9ffb94773f7cef10cf5f90d54651e510e7be78f685fa999871516dc9e9e7488909022eb4db80d079c7b9d21dd72680ba81bc51d65537a8f1c3145cae2abd
+  languageName: node
+  linkType: hard
+
+"@exodus/key-utils@npm:^3.0.0, @exodus/key-utils@npm:^3.1.0":
   version: 3.1.0
   resolution: "@exodus/key-utils@npm:3.1.0"
   dependencies:
@@ -2000,13 +2021,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/keychain@workspace:features/keychain":
+"@exodus/keychain@workspace:^, @exodus/keychain@workspace:features/keychain":
   version: 0.0.0-use.local
   resolution: "@exodus/keychain@workspace:features/keychain"
   dependencies:
     "@exodus/basic-utils": ^2.0.0
     "@exodus/bip32": ^2.1.0
     "@exodus/elliptic": ^6.5.4-precomputed
+    "@exodus/key-identifier": ^1.0.0
     "@exodus/key-ids": ^1.0.0
     "@exodus/key-utils": ^3.0.0
     "@exodus/module": ^1.2.0

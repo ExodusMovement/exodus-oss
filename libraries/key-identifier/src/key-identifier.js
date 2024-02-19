@@ -11,7 +11,7 @@ import { assertValidDerivationPath } from '@exodus/key-utils'
 const SUPPORTED_KDFS = new Set(['BIP32', 'SLIP10'])
 const SUPPORTED_KEY_TYPES = new Set(['legacy', 'nacl', 'secp256k1'])
 
-export class KeyIdentifier {
+export default class KeyIdentifier {
   constructor({ derivationAlgorithm, derivationPath, assetName, keyType }) {
     assert(typeof derivationAlgorithm === 'string', 'derivationAlgorithm not a string')
     assert(

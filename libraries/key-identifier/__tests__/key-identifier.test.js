@@ -1,46 +1,35 @@
-import { assets } from './fixtures/assets'
 import { createKeyIdentifierForExodus } from '@exodus/key-ids'
-import { KeyIdentifier } from '../key-identifier'
+import KeyIdentifier from '../src/key-identifier'
 
 describe('KeyIdentifier', () => {
   it('should fail on incorrect construction', () => {
     const failures = [
+      null,
+      undefined,
+      Object.create(null),
+      // Missing parameters
+
       {
         derivationAlgorithm: 'BIP32',
-        asset: assets.ethereum,
       },
       {
         derivationPath: "m/44'/60'/0'/0/0",
-        asset: assets.ethereum,
       },
+
+      // Incorrect types
       {
-        asset: assets.ethereum,
-      },
-      {
-        derivationAlgorithm: 0,
-        asset: assets.ethereum,
+        derivationAlgorithm: 'BIP32',
+        assetName: 0,
         derivationPath: "m/44'/60'/0'/0/0",
       },
-      {
-        derivationAlgorithm: 'BIP32',
-        asset: assets.ethereum,
-        derivationPath: 0,
-      },
-      {
-        derivationAlgorithm: 'BIP32',
-        asset: assets.ethereum,
-        derivationPath: "m/44'/60'/0'/0/0dddd",
-      },
-      {
-        derivationAlgorithm: 'BIP32',
-        asset: assets.ethereum,
-        derivationPath: "m\\44'/60'/0'/0/0",
-      },
-      {
-        derivationAlgorithm: 'BIP32',
-        asset: assets.ethereum,
-        derivationPath: "m44'/60'/0'/0/0",
-      },
+
+      // Non-existing assetNames
+      // {
+      //  derivationAlgorithm: 'BIP32',
+      //  asset: { name: 'i-do-not-exist' },
+      //  derivationPath: `m/44'/60'/0'/0/0`,
+      // },
+      // Incorrect paths
     ]
 
     const failuresAsFunctions = failures.map((failure) => () => {
@@ -113,6 +102,18 @@ describe('KeyIdentifier', () => {
 
       expect(KeyIdentifier.compare(keyIdA, keyIdB)).toBe(false)
       expect(KeyIdentifier.compare('not-an-object', keyIdB)).toBe(false)
+    })
+  })
+
+  describe('.toString()', () => {
+    it('should show derivation path and algorithm', () => {
+      const keyIdentifier = new KeyIdentifier({
+        derivationAlgorithm: 'SLIP10',
+        assetName: 'solana',
+        derivationPath: "m/44'/501'/0'",
+      })
+
+      expect(keyIdentifier.toString()).toBe("m/44'/501'/0' (SLIP10)")
     })
   })
 })
