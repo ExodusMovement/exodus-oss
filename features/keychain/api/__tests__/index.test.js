@@ -93,7 +93,7 @@ describe('keychain api', () => {
   })
 
   test('export publicKey', async () => {
-    await expect(api.exportKey({ seedId: seedId, keyId: solanaKeyId })).resolves.toEqual({
+    await expect(api.exportKey({ seedId, keyId: solanaKeyId })).resolves.toEqual({
       privateKey: null,
       publicKey: Buffer.from(
         '0379c8ac8ec19111f49630e7d8b3c1cf87ecdb86f2ff9e9fc29269bfc19574bca9',
