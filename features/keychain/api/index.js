@@ -1,5 +1,3 @@
-import KeyIdentifier from '@exodus/key-identifier'
-
 const createKeychainApi = ({ keychain }) => {
   const exportKey = async ({ seedId, keyId, exportPrivate }) =>
     keychain.exportKey({ seedId, keyId, exportPrivate })
