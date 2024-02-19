@@ -8,7 +8,7 @@
     "url": "git+https://github.com/ExodusMovement/exodus-oss.git"
   },
   "homepage": "https://github.com/ExodusMovement/exodus-oss/tree/master/libraries/key-identifier",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ExodusMovement/exodus-oss/issues?q=is%3Aissue+is%3Aopen+label%3Akey-identifier"
   },
