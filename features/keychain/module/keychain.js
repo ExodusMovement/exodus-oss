@@ -9,7 +9,11 @@ import assert from 'minimalistic-assert'
 import * as ed25519 from './crypto/ed25519'
 import * as secp256k1 from './crypto/secp256k1'
 import * as sodium from './crypto/sodium'
-import { throwIfInvalidMasters, throwIfInvalidLegacyPrivToPub } from './validate'
+import {
+  throwIfInvalidKeyIdentifier,
+  throwIfInvalidMasters,
+  throwIfInvalidLegacyPrivToPub,
+} from './validate'
 import { getSeedId } from './crypto/seed-id'
 
 const MAP_KDF = Object.freeze({
@@ -59,6 +63,8 @@ export class Keychain extends ExodusModule {
   }
 
   #getPrivateHDKey = ({ seedId, keyId }) => {
+    throwIfInvalidKeyIdentifier(keyId)
+
     assert(typeof seedId === 'string', 'seedId must be a BIP32 key identifier in hex encoding')
     assert(this.#masters[seedId], `seed "${seedId}" is not initialized`)
 
