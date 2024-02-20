@@ -12,6 +12,7 @@
   "files": [
     "index.js",
     "module",
+    "api",
     "README.md",
     "CHANGELOG.md",
     "!**/__tests__/**"
