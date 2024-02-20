@@ -1823,6 +1823,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@exodus/bip32@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@exodus/bip32@npm:2.1.0"
+  dependencies:
+    "@exodus/hdkey": ^2.1.0-exodus.0
+    lodash: ^4.17.11
+    minimalistic-assert: ^1.0.1
+  checksum: c9ffa61fc41154d9188fc371eb11d56786c3284e61eebdd7d20ed19ff53b389a09eb6cdaf3dcbad63df440c63a83cd6cfe591cf60c84f0b62113dff5af6665e0
+  languageName: node
+  linkType: hard
+
 "@exodus/elliptic@npm:6.5.4-precomputed, @exodus/elliptic@npm:^6.5.4-precomputed":
   version: 6.5.4-precomputed
   resolution: "@exodus/elliptic@npm:6.5.4-precomputed"
@@ -1949,7 +1960,38 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/key-utils@npm:^3.0.0":
+"@exodus/key-identifier@^1.0.0, @exodus/key-identifier@workspace:libraries/key-identifier":
+  version: 0.0.0-use.local
+  resolution: "@exodus/key-identifier@workspace:libraries/key-identifier"
+  dependencies:
+    "@exodus/key-ids": ^1.2.0
+    "@exodus/key-utils": ^3.1.0
+    "@exodus/keychain": "workspace:^"
+    minimalistic-assert: ^1.0.1
+  languageName: unknown
+  linkType: soft
+
+"@exodus/key-ids@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@exodus/key-ids@npm:1.0.0"
+  dependencies:
+    "@exodus/keychain": ^5.0.1
+    minimalistic-assert: ^1.0.1
+  checksum: 303fba340385ba03c0f7e0757ddde562c5c74764363b228d4185634ac27006504dce03864bfd7f00cb025ae987845007e2070ee62fbffce3af18a7df17d1ec10
+  languageName: node
+  linkType: hard
+
+"@exodus/key-ids@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@exodus/key-ids@npm:1.2.0"
+  dependencies:
+    "@exodus/keychain": ^5.0.1
+    minimalistic-assert: ^1.0.1
+  checksum: c70f9ffb94773f7cef10cf5f90d54651e510e7be78f685fa999871516dc9e9e7488909022eb4db80d079c7b9d21dd72680ba81bc51d65537a8f1c3145cae2abd
+  languageName: node
+  linkType: hard
+
+"@exodus/key-utils@npm:^3.0.0, @exodus/key-utils@npm:^3.1.0":
   version: 3.1.0
   resolution: "@exodus/key-utils@npm:3.1.0"
   dependencies:
@@ -1960,9 +2002,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/keychain@workspace:features/keychain":
-  version: 0.0.0-use.local
-  resolution: "@exodus/keychain@workspace:features/keychain"
+"@exodus/keychain@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "@exodus/keychain@npm:5.0.1"
   dependencies:
     "@exodus/basic-utils": ^2.0.0
     "@exodus/bip32": ^1.0.0
@@ -1971,8 +2013,30 @@ __metadata:
     "@exodus/module": ^1.2.0
     "@exodus/slip10": ^1.0.0
     "@exodus/sodium-crypto": ^3.1.0
+    buffer-json: ^2.0.0
+    json-stable-stringify: ^1.0.1
+    lodash: ^4.17.21
+    minimalistic-assert: ^1.0.1
+  checksum: 1b9f4298de6793f6150371dbb0f3f0cc7877cd00f4a8560642a29c7308a745e9290e5817a83c1a616f45f9b9bbd9e54b74d7fcf6942d0a7c99a536eb25ce6449
+  languageName: node
+  linkType: hard
+
+"@exodus/keychain@workspace:^, @exodus/keychain@workspace:features/keychain":
+  version: 0.0.0-use.local
+  resolution: "@exodus/keychain@workspace:features/keychain"
+  dependencies:
+    "@exodus/basic-utils": ^2.0.0
+    "@exodus/bip32": ^2.1.0
+    "@exodus/elliptic": ^6.5.4-precomputed
+    "@exodus/key-identifier": ^1.0.0
+    "@exodus/key-ids": ^1.0.0
+    "@exodus/key-utils": ^3.0.0
+    "@exodus/module": ^1.2.0
+    "@exodus/slip10": ^1.0.0
+    "@exodus/sodium-crypto": ^3.1.0
     bip39: 2.6.0
     buffer-json: ^2.0.0
+    create-hash: ^1.2.0
     eslint: ^8.44.0
     events: ^3.3.0
     jest: ^29.1.2

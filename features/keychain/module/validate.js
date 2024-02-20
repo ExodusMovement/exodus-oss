@@ -1,7 +1,7 @@
 import assert from 'minimalistic-assert'
+import KeyIdentifier from '@exodus/key-identifier'
 
 import { ExpectedKeyIdentifier, NotInitializedError } from './errors'
-import { KeyIdentifier } from './key-identifier'
 
 export const throwIfInvalidKeyIdentifier = (potentialKeyIdentifier) => {
   if (!KeyIdentifier.validate(potentialKeyIdentifier) || !Object.isFrozen(potentialKeyIdentifier)) {
