@@ -4,15 +4,6 @@
 
 - freeze internally in exportKey to callers don't have to ([#68](https://github.com/ExodusMovement/exodus-oss/issues/68)) ([9f08e2b](https://github.com/ExodusMovement/exodus-oss/commit/9f08e2b88a768574b9532aba929ac40f00aa8558))
 
-### Features
-
-- add separate key-identifier package ([#61](https://github.com/ExodusMovement/exodus-oss/issues/61)) ([49dc7f6](https://github.com/ExodusMovement/exodus-oss/commit/49dc7f66040a9ecaba1d971858764532d695bbdc))
-- **key-identifier:** add meaningful `toString()` ([#49](https://github.com/ExodusMovement/exodus-oss/issues/49)) ([6b40c83](https://github.com/ExodusMovement/exodus-oss/commit/6b40c83ddc60526e4e164651fc277f4001d02d16))
-- keychain api, to replace the one from the wallet feature ([#64](https://github.com/ExodusMovement/exodus-oss/issues/64)) ([f5fd3e1](https://github.com/ExodusMovement/exodus-oss/commit/f5fd3e1cc5d813c6da527ab972b5402c0a2508e3))
-- **keychain:** add compare function for keyidentifier ([#4540](https://github.com/ExodusMovement/exodus-oss/issues/4540)) ([8c196db](https://github.com/ExodusMovement/exodus-oss/commit/8c196db2cfb66d5229109046891b02e2cda4b9d6))
-- move keychain to feature dir ([#2374](https://github.com/ExodusMovement/exodus-oss/issues/2374)) ([0353822](https://github.com/ExodusMovement/exodus-oss/commit/03538224746ce74192fd44ef811e6918869de6d5))
-- set up monorepo ([#1](https://github.com/ExodusMovement/exodus-oss/issues/1)) ([374fb13](https://github.com/ExodusMovement/exodus-oss/commit/374fb1308408df08622e56d9a0f6f8999e88c132))
-
 # 6.1.0 (2024-02-20)
 
 ### Features
