@@ -1,3 +1,9 @@
+## 6.1.1 (2024-02-20)
+
+### Bug Fixes
+
+- freeze internally in exportKey to callers don't have to ([#68](https://github.com/ExodusMovement/exodus-oss/issues/68)) ([9f08e2b](https://github.com/ExodusMovement/exodus-oss/commit/9f08e2b88a768574b9532aba929ac40f00aa8558))
+
 # 6.1.0 (2024-02-20)
 
 ### Features
