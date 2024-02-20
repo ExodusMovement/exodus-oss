@@ -1,4 +1,5 @@
 import ExodusModule from '@exodus/module'
+import KeyIdentifier from '@exodus/key-identifier'
 import { parseDerivationPath } from '@exodus/key-utils'
 import { fromMasterSeed as bip32FromMasterSeed } from '@exodus/bip32'
 import SLIP10 from '@exodus/slip10'
@@ -8,11 +9,7 @@ import assert from 'minimalistic-assert'
 import * as ed25519 from './crypto/ed25519'
 import * as secp256k1 from './crypto/secp256k1'
 import * as sodium from './crypto/sodium'
-import {
-  throwIfInvalidKeyIdentifier,
-  throwIfInvalidMasters,
-  throwIfInvalidLegacyPrivToPub,
-} from './validate'
+import { throwIfInvalidMasters, throwIfInvalidLegacyPrivToPub } from './validate'
 import { getSeedId } from './crypto/seed-id'
 
 const MAP_KDF = Object.freeze({
@@ -62,8 +59,6 @@ export class Keychain extends ExodusModule {
   }
 
   #getPrivateHDKey = ({ seedId, keyId }) => {
-    throwIfInvalidKeyIdentifier(keyId)
-
     assert(typeof seedId === 'string', 'seedId must be a BIP32 key identifier in hex encoding')
     assert(this.#masters[seedId], `seed "${seedId}" is not initialized`)
 
@@ -74,6 +69,8 @@ export class Keychain extends ExodusModule {
   }
 
   async exportKey({ seedId, keyId, exportPrivate }) {
+    keyId = new KeyIdentifier(keyId)
+
     const hdkey = this.#getPrivateHDKey({ seedId, keyId })
     const privateKey = hdkey.privateKey
     let publicKey = hdkey.publicKey
