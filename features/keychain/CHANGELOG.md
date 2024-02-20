@@ -1,3 +1,10 @@
+# 6.1.0 (2024-02-20)
+
+### Features
+
+- keychain api, to replace the one from the wallet feature ([#64](https://github.com/ExodusMovement/exodus-oss/issues/64)) ([f5fd3e1cc](https://github.com/ExodusMovement/exodus-oss/commit/f5fd3e1cc5d813c6da527ab972b5402c0a2508e3))
+- add separate key-identifier package ([#61](https://github.com/ExodusMovement/exodus-oss/issues/61)) ([49dc7f6](https://github.com/ExodusMovement/exodus-oss/commit/49dc7f66040a9ecaba1d971858764532d695bbdc))
+
 # Change Log
 
 All notable changes to this project will be documented in this file.
