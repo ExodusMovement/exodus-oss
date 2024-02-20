@@ -1,4 +1,5 @@
 import ExodusModule from '@exodus/module'
+import KeyIdentifier from '@exodus/key-identifier'
 import { parseDerivationPath } from '@exodus/key-utils'
 import { fromMasterSeed as bip32FromMasterSeed } from '@exodus/bip32'
 import SLIP10 from '@exodus/slip10'
@@ -74,6 +75,8 @@ export class Keychain extends ExodusModule {
   }
 
   async exportKey({ seedId, keyId, exportPrivate }) {
+    keyId = new KeyIdentifier(keyId)
+
     const hdkey = this.#getPrivateHDKey({ seedId, keyId })
     const privateKey = hdkey.privateKey
     let publicKey = hdkey.publicKey
