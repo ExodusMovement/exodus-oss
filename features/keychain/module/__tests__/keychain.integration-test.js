@@ -1,172 +1,189 @@
-import createInMemoryStorage from '@exodus/storage-memory'
 import {
   getPublicKey as getCardanoPublicKey,
   getShelleyAddress as getCardanoAddress,
 } from '@exodus/cardano-lib'
 import { encodePublic as encodePublicEthereum } from '@exodus/ethereum-lib'
+import { EXODUS_KEY_IDS } from '@exodus/key-ids'
 import { createUnsignedTx } from '@exodus/solana-lib'
 import { mnemonicToSeed } from 'bip39'
 
 import { assets } from './fixtures/assets'
 import simpleTx from './fixtures/simple-tx'
 
-import { Keychain } from '../keychain'
-import { EXODUS_KEY_IDS, KeyIdentifier } from '../key-identifier'
-import createKeychain from './create-keychain'
-import memoizedKeychain from '../memoized-keychain'
+import KeyIdentifier from '@exodus/key-identifier'
+import keychainDefinition, { Keychain } from '../keychain'
+import { getSeedId } from '../crypto/seed-id'
+
+const { factory: createMultiSeedKeychain } = keychainDefinition
 
 const seed = mnemonicToSeed(
   'menu memory fury language physical wonder dog valid smart edge decrease worth'
 )
 
+const secondSeed = mnemonicToSeed(
+  'wine system mean beyond filter human meat rubber episode wash stomach aunt'
+)
+
 describe.each([
-  { module: 'keychain', factory: () => createKeychain({ seed }) },
+  // reduce fixtures by switching seeds
   {
-    module: 'memoizedKeychain',
-    factory: () =>
-      memoizedKeychain.factory({
-        keychain: createKeychain({ seed }),
-        storage: createInMemoryStorage(),
-        logger: console,
-      }),
+    primarySeed: seed,
+    secondarySeed: secondSeed,
+    seedId: getSeedId(seed),
   },
-])('$module', ({ factory }) => {
-  describe('constructor', () => {
-    it('should construct correctly', () => {
-      expect(factory()).toBeInstanceOf(Keychain)
+  {
+    primarySeed: secondSeed,
+    secondarySeed: seed,
+    seedId: getSeedId(seed),
+  },
+])('multi-seed-keychain', ({ primarySeed, secondarySeed, seedId }) => {
+  let keychain
+
+  it('should construct correctly', () => {
+    expect(keychainDefinition.factory()).toBeInstanceOf(Keychain)
+  })
+
+  beforeEach(() => {
+    keychain = createMultiSeedKeychain({
+      legacyPrivToPub: {
+        cardano: getCardanoPublicKey,
+      },
     })
 
-    it('should throw when constructing incorrectly', () => {
-      const failures = [Buffer.from('failure'), 'failure', 1, true]
-      failures.forEach((failure) => {
-        expect(() => createKeychain({ seed: failure })).toThrow()
-      })
-    })
+    keychain.addSeed(primarySeed)
+    keychain.addSeed(secondarySeed)
   })
 
   describe('exportKeys', () => {
     it('should throw if not passed key id', async () => {
-      const keychain = factory()
       const failures = [Buffer.from('failure'), 'failure', 0, null, undefined, true]
       for (const failure of failures) {
-        await expect(keychain.exportKey(failure)).rejects.toThrow()
+        await expect(keychain.exportKey({ keyId: failure })).rejects.toThrow()
       }
     })
 
     it('should generate solana addresses', async () => {
-      const keychain = createKeychain({ seed })
       const successes = [
         {
           expected: 'nsn7DmCMsKWGUWcL92XfPKXFbUz7KtFDRa4nnkc3RiF',
-          keyid: new KeyIdentifier({
-            assetName: 'solana',
-            derivationAlgorithm: 'BIP32',
-            derivationPath: "m/44'/501'/0'/0/0",
-            keyType: 'nacl',
-          }),
+          exportOpts: {
+            seedId,
+            keyId: new KeyIdentifier({
+              assetName: 'solana',
+              derivationAlgorithm: 'BIP32',
+              derivationPath: "m/44'/501'/0'/0/0",
+              keyType: 'nacl',
+            }),
+          },
         },
         {
           expected: '7SmaJ41gFZ1LPsZJfb57npzdCFuqBRmgj3CScjbmkQwA',
-          keyid: new KeyIdentifier({
-            assetName: 'solana',
-            derivationAlgorithm: 'BIP32',
-            derivationPath: "m/44'/501'/1'/0/0",
-            keyType: 'nacl',
-          }),
+          exportOpts: {
+            seedId,
+            keyId: new KeyIdentifier({
+              assetName: 'solana',
+              derivationAlgorithm: 'BIP32',
+              derivationPath: "m/44'/501'/1'/0/0",
+              keyType: 'nacl',
+            }),
+          },
         },
       ]
 
       const encodePublic = assets.solana.keys.encodePublic
-      for (const success of successes) {
-        const key = await keychain.exportKey(success.keyid)
-        expect(encodePublic(key.publicKey)).toBe(success.expected)
+      for (const { expected, exportOpts } of successes) {
+        const key = await keychain.exportKey(exportOpts)
+        expect(encodePublic(key.publicKey)).toBe(expected)
       }
     })
 
     it('should generate ethereum addresses', async () => {
-      const keychain = createKeychain({ seed })
       const fixtures = [
         {
           expected: '0xF3d46F0De925B28fDa1219BbD60F5ae2a0128F9F',
-          keyid: new KeyIdentifier({
-            derivationAlgorithm: 'BIP32',
-            derivationPath: "m/44'/60'/0'/0/0",
-            assetName: 'ethereum',
-          }),
+          exportOpts: {
+            seedId,
+            keyId: new KeyIdentifier({
+              derivationAlgorithm: 'BIP32',
+              derivationPath: "m/44'/60'/0'/0/0",
+              assetName: 'ethereum',
+            }),
+          },
         },
         {
           expected: '0x55e60F7531a5c701F526f224FCC071EFCf3fFF61',
-          keyid: new KeyIdentifier({
-            derivationAlgorithm: 'BIP32',
-            derivationPath: "m/44'/60'/1'/0/0",
-            assetName: 'ethereum',
-          }),
+          exportOpts: {
+            seedId,
+            keyId: new KeyIdentifier({
+              derivationAlgorithm: 'BIP32',
+              derivationPath: "m/44'/60'/1'/0/0",
+              assetName: 'ethereum',
+            }),
+          },
         },
         {
           expected: '0x780984e59eDdA8b1f4bB09dc297241f1Ed0Dcc17',
-          keyid: new KeyIdentifier({
-            derivationAlgorithm: 'BIP32',
-            derivationPath: "m/44'/60'/0'/0/1",
-            assetName: 'ethereum',
-          }),
+          exportOpts: {
+            seedId,
+            keyId: new KeyIdentifier({
+              derivationAlgorithm: 'BIP32',
+              derivationPath: "m/44'/60'/0'/0/1",
+              assetName: 'ethereum',
+            }),
+          },
         },
       ]
 
-      for (const fixture of fixtures) {
-        const key = await keychain.exportKey(fixture.keyid)
-        expect(encodePublicEthereum(key.publicKey)).toBe(fixture.expected)
+      for (const { expected, exportOpts } of fixtures) {
+        const key = await keychain.exportKey(exportOpts)
+        expect(encodePublicEthereum(key.publicKey)).toBe(expected)
       }
     })
 
     it('should generate cardano addresses', async () => {
-      const keychain = createKeychain({
-        seed,
-        legacyPrivToPub: {
-          cardano: getCardanoPublicKey,
-        },
-      })
       const fixtures = [
         {
           expected:
             'addr1q8ftlrj30s8f3qks2l5cuv44f5cgflxqym0d0k4q22dusp7jh789zlqwnzpdq4lf3cet2nfssn7vqfk76ld2q55meqrstsxtqg',
-          keyid: new KeyIdentifier({
-            derivationAlgorithm: 'BIP32',
-            derivationPath: "m/44'/1815'/0'/0/0",
-            keyType: 'legacy',
-            assetName: 'cardano',
-          }),
+          exportOpts: {
+            seedId,
+            keyId: new KeyIdentifier({
+              derivationAlgorithm: 'BIP32',
+              derivationPath: "m/44'/1815'/0'/0/0",
+              keyType: 'legacy',
+              assetName: 'cardano',
+            }),
+          },
         },
       ]
 
-      for (const fixture of fixtures) {
-        const key = await keychain.exportKey(fixture.keyid, { exportPrivate: true })
-        expect(getCardanoAddress(key.publicKey)).toBe(fixture.expected)
+      for (const { expected, exportOpts } of fixtures) {
+        const key = await keychain.exportKey(exportOpts)
+        expect(getCardanoAddress(key.publicKey)).toBe(expected)
       }
     })
 
     it('should fail to generate addresses if assetname is not in legacy priv pub', async () => {
-      const keychain = createKeychain({
-        seed,
-        legacyPrivToPub: {
-          cardano: getCardanoPublicKey,
-        },
-      })
-
       await expect(
-        keychain.exportKey(
-          new KeyIdentifier({
+        keychain.exportKey({
+          seedId,
+          keyId: new KeyIdentifier({
             derivationAlgorithm: 'BIP32',
             derivationPath: "m/44'/1815'/0'/0/0",
             keyType: 'legacy',
             assetName: 'UNKNOWN',
-          })
-        )
+          }),
+        })
       ).rejects.toThrow('legacyPrivToPub')
     })
 
     it('should export SLIP10 keys', async () => {
-      const keychain = createKeychain({ seed })
-      const key = await keychain.exportKey(EXODUS_KEY_IDS.TELEMETRY, { exportPrivate: true })
+      const key = await keychain.exportKey({
+        seedId,
+        keyId: EXODUS_KEY_IDS.TELEMETRY,
+        exportPrivate: true,
+      })
+
       expect(key).toEqual({
         publicKey: Buffer.from(
           'eeab6c9e861ed9f3a7f7917f6d972032e3e4d7a433eb6bc30f4b488ee13682c7',
@@ -186,16 +203,19 @@ describe.each([
   })
 
   describe('sign', () => {
-    it('should sign solana tx', async () => {
-      const keychain = createKeychain({ seed })
-      const keyId = new KeyIdentifier({
-        assetName: 'solana',
-        derivationAlgorithm: 'BIP32',
-        derivationPath: "m/44'/501'/0'/0/0",
-        keyType: 'nacl',
-      })
-      const asset = assets.solana
-      const unsignedTx = await createUnsignedTx({
+    let unsignedTx
+
+    const keyId = new KeyIdentifier({
+      assetName: 'solana',
+      derivationAlgorithm: 'BIP32',
+      derivationPath: "m/44'/501'/0'/0/0",
+      keyType: 'nacl',
+    })
+
+    const asset = assets.solana
+
+    beforeAll(async () => {
+      unsignedTx = await createUnsignedTx({
         asset,
         from: 'nsn7DmCMsKWGUWcL92XfPKXFbUz7KtFDRa4nnkc3RiF',
         to: '7SmaJ41gFZ1LPsZJfb57npzdCFuqBRmgj3CScjbmkQwA',
@@ -203,22 +223,25 @@ describe.each([
         fee: asset.currency.SOL('0.000005'),
         recentBlockhash: '6yWbfvhoDrgzStVnvpRvib2Q1LpuTYc6TtdMPPofCPh8',
       })
+    })
 
-      const result = await keychain.signTx(
-        [keyId],
-        ({ unsignedTx, hdkeys, privateKey }) => {
+    it('should sign solana tx', async () => {
+      const result = await keychain.signTx({
+        seedId,
+        keyIds: [keyId],
+        signTxCallback: ({ unsignedTx, hdkeys, privateKey }) => {
           expect(hdkeys[44].privateKey).toEqual(privateKey)
           return simpleTx(unsignedTx, privateKey)
         },
-        unsignedTx
-      )
+        unsignedTx,
+      })
+
       expect(result.txId).toBe(
         'Lj2iFo1MKx3cWTLH1GbvxZjCtNTMBmB2rXR5JV7EFQnPySyxKssAReBJF56e7XzXiAFeYdMCwFvyR3NkFVbh8rS'
       )
     })
 
-    it('should sign solana tx', async () => {
-      const keychain = createKeychain({ seed })
+    it('should pass through all required hdkeys', async () => {
       const keyIds = [
         new KeyIdentifier({
           assetName: 'solana',
@@ -233,53 +256,68 @@ describe.each([
           keyType: 'secp256k1',
         }),
       ]
-      const unsignedTx = Object.create(null)
 
-      await keychain.signTx(
+      await keychain.signTx({
+        seedId,
         keyIds,
-        ({ hdkeys, privateKey }) => {
+        signTxCallback: ({ hdkeys, privateKey }) => {
           expect(privateKey).not.toBeDefined()
           expect(hdkeys[44].privateKey).toBeDefined()
           expect(hdkeys[84].privateKey).toBeDefined()
           return null
         },
-        unsignedTx
-      )
+        unsignedTx: Object.create(null),
+      })
     })
   })
 
   describe('clone', () => {
+    const solanaKeyId = new KeyIdentifier({
+      assetName: 'solana',
+      derivationAlgorithm: 'BIP32',
+      derivationPath: "m/44'/501'/0'/0/0",
+      keyType: 'nacl',
+    })
+
+    const cardanoKeyId = new KeyIdentifier({
+      derivationAlgorithm: 'BIP32',
+      derivationPath: "m/44'/1815'/0'/0/0",
+      keyType: 'legacy',
+      assetName: 'cardano',
+    })
+
     it('should return locked instance', async () => {
-      const keychain = createKeychain({ seed })
+      const keychain = createMultiSeedKeychain()
+      keychain.addSeed(seed)
       const clone = keychain.clone()
 
-      const keyid = new KeyIdentifier({
-        assetName: 'solana',
-        derivationAlgorithm: 'BIP32',
-        derivationPath: "m/44'/501'/0'/0/0",
-        keyType: 'nacl',
-      })
+      await expect(
+        keychain.exportKey({
+          seedId,
+          keyId: solanaKeyId,
+        })
+      ).resolves.toBeTruthy()
 
-      await expect(keychain.exportKey(keyid)).resolves.toBeTruthy()
-      await expect(clone.exportKey(keyid)).rejects.toThrow()
+      await expect(
+        clone.exportKey({
+          seedId,
+          keyId: solanaKeyId,
+        })
+      ).rejects.toThrow()
     })
 
     it('should have parent legacyPrivToPub config', async () => {
       const legacyPrivToPub = { cardano: jest.fn() }
 
-      const keychain = createKeychain({ seed, legacyPrivToPub })
+      const keychain = createMultiSeedKeychain({ legacyPrivToPub })
 
       const clone = keychain.clone()
-      clone.unlock({ seed })
+      clone.addSeed(seed)
 
-      const keyid = new KeyIdentifier({
-        derivationAlgorithm: 'BIP32',
-        derivationPath: "m/44'/1815'/0'/0/0",
-        keyType: 'legacy',
-        assetName: 'cardano',
+      await clone.exportKey({
+        seedId,
+        keyId: cardanoKeyId,
       })
-
-      await clone.exportKey(keyid)
 
       expect(legacyPrivToPub.cardano).toBeCalled()
     })

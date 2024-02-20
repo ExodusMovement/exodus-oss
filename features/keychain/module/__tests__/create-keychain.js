@@ -2,7 +2,7 @@ import keychainDefinition from '..'
 
 const createKeychain = ({ seed, ...rest }) => {
   const instance = keychainDefinition.factory(rest)
-  instance.unlock({ seed })
+  instance.addSeed(seed)
 
   return instance
 }

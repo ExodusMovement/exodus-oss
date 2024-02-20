@@ -1,12 +1,11 @@
-import memoizedKeychainDefinition from './module/memoized-keychain'
-import keychainDefinition from './module/keychain'
+import moduleDefinition from './module/keychain'
+import apiDefinition from './api'
 
 const keychain = ({ cachePublicKeys }) => {
+  // TODO: support caching
   return {
     id: 'keychain',
-    definitions: cachePublicKeys
-      ? [{ definition: memoizedKeychainDefinition, storage: { namespace: 'keychain' } }]
-      : [{ definition: keychainDefinition }],
+    definitions: [{ definition: moduleDefinition }, { definition: apiDefinition }],
   }
 }
 

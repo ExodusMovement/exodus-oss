@@ -34,6 +34,7 @@
     "lint:fix": "LINTER=true lerna run lint -- --fix",
     "test": "lerna run test -- --passWithNoTests",
     "test:integration": "lerna run test:integration",
+    "todo:reenable:test:integration": "lerna run todo:reenable:test:integration",
     "coverage:merge": "lerna run coverage:merge",
     "build": "lerna run build",
     "format": "prettier --write \"**/*.{json,md,yaml}\" --log-level warn",
