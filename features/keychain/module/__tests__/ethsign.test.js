@@ -1,5 +1,4 @@
 import { create } from '../crypto/secp256k1'
-import Signature from '@exodus/elliptic/lib/elliptic/ec/signature'
 
 const fixtures = [
   {
