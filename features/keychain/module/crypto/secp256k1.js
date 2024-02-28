@@ -9,7 +9,7 @@ export const create = ({ getPrivateHDKey }) => {
     signBuffer: async ({ seedId, keyId, data, ecOptions, rawSignature }) => {
       const { privateKey } = getPrivateHDKey({ seedId, keyId })
       const signature = curve.sign(data, privateKey, ecOptions)
-      return rawSignature ? signature : Buffer.from(signature.toDER())
+      return rawSignature ? { ...signature } : Buffer.from(signature.toDER())
     },
   })
 
