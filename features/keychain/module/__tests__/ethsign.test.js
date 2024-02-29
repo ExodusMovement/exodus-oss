@@ -55,7 +55,7 @@ describe('ETH Signer', () => {
         const sig = await secp256k1Signer.signBuffer({
           data: buffer,
           ecOptions: { canonical: true },
-          rawSignature: true,
+          enc: 'raw',
         })
         const signature = new Uint8Array(64)
         signature.set(sig.r.toArrayLike(Uint8Array, 'be', 32), 0)
