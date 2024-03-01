@@ -10,10 +10,10 @@ export const create = ({ getPrivateHDKey }) => {
   const curve = new EC('secp256k1')
 
   const createInstance = () => ({
-    signBuffer: async ({ seedId, keyId, data, ecOptions, enc = 'der' }) => {
+    signBuffer: async ({ keyId, data, ecOptions, enc = 'der' }) => {
       assert(['der', 'raw'].includes(enc), 'signBuffer: invalid enc')
       assert(validEcOptions(ecOptions), 'signBuffer: invalid EC option')
-      const { privateKey } = getPrivateHDKey({ seedId, keyId })
+      const { privateKey } = getPrivateHDKey(keyId)
       const signature = curve.sign(data, privateKey, pick(ecOptions, ['canonical']))
       return enc === 'der' ? Buffer.from(signature.toDER()) : { ...signature }
     },
