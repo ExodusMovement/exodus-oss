@@ -1,10 +1,7 @@
 const createKeychainApi = ({ keychain }) => {
-  const exportKey = async ({ seedId, keyId, exportPrivate }) =>
-    keychain.exportKey({ seedId, keyId, exportPrivate })
-
   return {
     keychain: {
-      exportKey,
+      exportKey: (...args) => keychain.exportKey(...args),
     },
   }
 }
