@@ -1,3 +1,9 @@
+# 5.1.0 (2024-03-01)
+
+### Features
+
+- pass options to secp256k1 signBuffer ([#71](https://github.com/ExodusMovement/exodus-oss/issues/71)) ([6c345ae](https://github.com/ExodusMovement/exodus-oss/commit/6c345ae91c9e74f691083c7a07f29db8eee67e26))
+
 # Change Log
 
 All notable changes to this project will be documented in this file.
