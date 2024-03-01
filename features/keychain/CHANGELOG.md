@@ -9,6 +9,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - include memory cache on clear ([#82](https://github.com/ExodusMovement/exodus-oss/pull/82)) ([4dc0e02](https://github.com/ExodusMovement/exodus-oss/commit/4dc0e02729317cba925686b98059f5ac75f231dc))
 
+# 5.1.0 (2024-03-01)
+
+### Features
+
+- pass options to secp256k1 signBuffer ([#71](https://github.com/ExodusMovement/exodus-oss/issues/71)) ([6c345ae](https://github.com/ExodusMovement/exodus-oss/commit/6c345ae91c9e74f691083c7a07f29db8eee67e26))
+
 ## [5.0.1](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@5.0.0...@exodus/keychain@5.0.1) (2024-01-26)
 
 ### Bug Fixes
