@@ -1,3 +1,9 @@
+# 6.2.0 (2024-03-01)
+
+### Features
+
+- pass options to secp256k1 signBuffer ([#71](https://github.com/ExodusMovement/exodus-oss/issues/71)) ([a951bbd](https://github.com/ExodusMovement/exodus-oss/commit/a951bbd7ddbd5bc1feada3cae8d93bd112f16dd9))
+
 ## 6.1.1 (2024-02-20)
 
 ### Bug Fixes
