@@ -7,7 +7,7 @@ const createKeychainApi = ({ keychain }) => {
         getKeysFromSeed: (...args) =>
           keychain.sodium
             .getSodiumKeysFromSeed(...args)
-            .then(({ secret, ...publicKeys }) => publicKeys),
+            .then(({ box, sign }) => ({ box, sign })),
       },
     },
   }
