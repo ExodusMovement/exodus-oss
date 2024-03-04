@@ -5,9 +5,7 @@ const createKeychainApi = ({ keychain }) => {
       sodium: {
         signDetached: keychain.sodium.signDetached,
         getKeysFromSeed: (...args) =>
-          keychain.sodium
-            .getSodiumKeysFromSeed(...args)
-            .then(({ box, sign }) => ({ box, sign })),
+          keychain.sodium.getSodiumKeysFromSeed(...args).then(({ box, sign }) => ({ box, sign })),
       },
     },
   }
