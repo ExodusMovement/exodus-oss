@@ -114,15 +114,15 @@ describe('keychain api', () => {
     })
   })
 
-  describe('sodium', () => {
-    const EXO = Number.parseInt(Buffer.from('exo').toString('hex'), '16')
-    const keyId = new KeyIdentifier({
-      __proto__: null,
-      derivationAlgorithm: 'SLIP10',
-      derivationPath: `m/${EXO}'/5'/0'`,
-      keyType: 'nacl',
-    })
+  const EXO = Number.parseInt(Buffer.from('exo').toString('hex'), '16')
+  const keyId = new KeyIdentifier({
+    __proto__: null,
+    derivationAlgorithm: 'SLIP10',
+    derivationPath: `m/${EXO}'/5'/0'`,
+    keyType: 'nacl',
+  })
 
+  describe('sodium', () => {
     test('signDetached signs data', async () => {
       const data = Buffer.from("Batman's identity was revealed as Harvey Dent")
       const signature = await api.sodium.signDetached({ seedId, keyId, data })
@@ -141,6 +141,28 @@ describe('keychain api', () => {
       )
       expect(keys.box.publicKey.toString('hex')).toBe(
         '250f5d2b0d4639b17eb68dc71f68fb69f7ef1d3c592a37c15b45be72f29c0358'
+      )
+    })
+  })
+
+  describe('ed25519', () => {
+    test('signBuffer signs binary data', async () => {
+      const data = Buffer.from("Batman's identity was revealed as Harvey Dent")
+      const signature = await api.ed25519.signBuffer({ seedId, keyId, data })
+
+      expect(signature.toString('hex')).toBe(
+        '5554a24c0885288135f5a4e6bc77b8e84c5e0a836b43b8ea578e3eef890e7d3a4b224d1a9b24960316c626546ff410d1bec918ddb455921c62acbc617c0c2d05'
+      )
+    })
+  })
+
+  describe('secp256k1', () => {
+    test('signBuffer signs binary data', async () => {
+      const data = Buffer.from("Batman's identity was revealed as Harvey Dent")
+      const signature = await api.secp256k1.signBuffer({ seedId, keyId, data })
+
+      expect(signature.toString('hex')).toBe(
+        '3045022100a41633f9330f8cd4f0b84c800f4d80a777bc9210da43132b1571a2753ce7131702200950d1031ddef3149d51a15b1a86c09cf2eac8b3467d76dbd067c117aada7c78'
       )
     })
   })
