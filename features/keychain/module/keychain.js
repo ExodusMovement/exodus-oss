@@ -1,4 +1,3 @@
-import ExodusModule from '@exodus/module'
 import KeyIdentifier from '@exodus/key-identifier'
 import { parseDerivationPath } from '@exodus/key-utils'
 import { fromMasterSeed as bip32FromMasterSeed } from '@exodus/bip32'
@@ -23,14 +22,12 @@ const MAP_KDF = Object.freeze({
 
 export const MODULE_ID = 'keychain'
 
-export class Keychain extends ExodusModule {
+export class Keychain {
   #masters = Object.create(null)
   #legacyPrivToPub = null
 
   // TODO: remove default param. Use it temporarily for backward compatibility.
-  constructor({ legacyPrivToPub = Object.create(null), logger }) {
-    super({ name: MODULE_ID, logger })
-
+  constructor({ legacyPrivToPub = Object.create(null) }) {
     throwIfInvalidLegacyPrivToPub(legacyPrivToPub)
 
     // Create a safe, cloned, frozen map of what was passed to us.
@@ -150,7 +147,7 @@ const keychainDefinition = {
   id: MODULE_ID,
   type: 'module',
   factory: createKeychain,
-  dependencies: ['legacyPrivToPub', 'logger'],
+  dependencies: ['legacyPrivToPub'],
 }
 
 export default keychainDefinition
