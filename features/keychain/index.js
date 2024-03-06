@@ -1,10 +1,11 @@
-import keychainDefinition from './module/keychain'
+import moduleDefinition from './module/keychain'
+import apiDefinition from './api'
 
 const keychain = ({ cachePublicKeys }) => {
   // TODO: support caching
   return {
     id: 'keychain',
-    definitions: [keychainDefinition],
+    definitions: [{ definition: moduleDefinition }, { definition: apiDefinition }],
   }
 }
 

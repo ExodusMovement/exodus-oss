@@ -1,3 +1,22 @@
+# 6.2.0 (2024-03-01)
+
+### Features
+
+- pass options to secp256k1 signBuffer ([#71](https://github.com/ExodusMovement/exodus-oss/issues/71)) ([a951bbd](https://github.com/ExodusMovement/exodus-oss/commit/a951bbd7ddbd5bc1feada3cae8d93bd112f16dd9))
+
+## 6.1.1 (2024-02-20)
+
+### Bug Fixes
+
+- freeze internally in exportKey to callers don't have to ([#68](https://github.com/ExodusMovement/exodus-oss/issues/68)) ([9f08e2b](https://github.com/ExodusMovement/exodus-oss/commit/9f08e2b88a768574b9532aba929ac40f00aa8558))
+
+# 6.1.0 (2024-02-20)
+
+### Features
+
+- keychain api, to replace the one from the wallet feature ([#64](https://github.com/ExodusMovement/exodus-oss/issues/64)) ([f5fd3e1cc](https://github.com/ExodusMovement/exodus-oss/commit/f5fd3e1cc5d813c6da527ab972b5402c0a2508e3))
+- add separate key-identifier package ([#61](https://github.com/ExodusMovement/exodus-oss/issues/61)) ([49dc7f6](https://github.com/ExodusMovement/exodus-oss/commit/49dc7f66040a9ecaba1d971858764532d695bbdc))
+
 # Change Log
 
 All notable changes to this project will be documented in this file.

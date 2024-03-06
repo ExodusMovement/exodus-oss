@@ -5,7 +5,6 @@ import { Keychain } from './keychain'
 
 const keyIdToCacheKey = stableStringify
 
-const MODULE_ID = 'memoizedKeychain'
 const CACHE_KEY = 'data'
 
 const getPublicKeyData = ({ xpub, publicKey }) => ({ xpub, publicKey })
@@ -15,15 +14,15 @@ class MemoizedKeychain extends Keychain {
   #publicKeys = Object.create(null)
   #cloneOpts
 
-  constructor({ storage, logger }) {
-    super({ id: MODULE_ID, logger })
+  constructor({ storage, legacyPrivToPub }) {
+    super({ legacyPrivToPub })
 
     this.#storage = storage
     this.#storage.get(CACHE_KEY).then((data) => {
       this.#publicKeys = data ? BJSON.parse(data) : Object.create(null)
     })
 
-    this.#cloneOpts = { storage, logger }
+    this.#cloneOpts = { storage }
   }
 
   #getCachedKey = async (keyId) => {
@@ -61,7 +60,7 @@ const memoizedKeychainDefinition = {
   id: 'keychain',
   type: 'module',
   factory: (opts) => new MemoizedKeychain(opts),
-  dependencies: ['storage', 'logger'],
+  dependencies: ['storage', 'legacyPrivToPub'],
 }
 
 export default memoizedKeychainDefinition

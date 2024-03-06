@@ -2031,7 +2031,6 @@ __metadata:
     "@exodus/key-identifier": ^1.0.0
     "@exodus/key-ids": ^1.0.0
     "@exodus/key-utils": ^3.0.0
-    "@exodus/module": ^1.2.0
     "@exodus/slip10": ^1.0.0
     "@exodus/sodium-crypto": ^3.1.0
     bip39: 2.6.0
