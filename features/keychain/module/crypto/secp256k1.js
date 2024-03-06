@@ -1,14 +1,21 @@
+import assert from 'minimalistic-assert'
 import elliptic from '@exodus/elliptic'
-import { mapValues } from '@exodus/basic-utils'
+import { mapValues, pick } from '@exodus/basic-utils'
+
+const validEcOptions = (ecOptions) =>
+  !ecOptions || Object.keys(ecOptions).every((key) => ['canonical'].includes(key))
 
 export const create = ({ getPrivateHDKey }) => {
   const EC = elliptic.ec
   const curve = new EC('secp256k1')
 
   const createInstance = () => ({
-    signBuffer: async ({ seedId, keyId, data }) => {
+    signBuffer: async ({ seedId, keyId, data, ecOptions, enc = 'der' }) => {
+      assert(['der', 'raw'].includes(enc), 'signBuffer: invalid enc')
+      assert(validEcOptions(ecOptions), 'signBuffer: invalid EC option')
       const { privateKey } = getPrivateHDKey({ seedId, keyId })
-      return Buffer.from(curve.sign(data, privateKey).toDER())
+      const signature = curve.sign(data, privateKey, pick(ecOptions, ['canonical']))
+      return enc === 'der' ? Buffer.from(signature.toDER()) : { ...signature }
     },
   })
 
