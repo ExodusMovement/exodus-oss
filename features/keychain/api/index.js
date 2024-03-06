@@ -1,10 +1,18 @@
 const createKeychainApi = ({ keychain }) => {
-  const exportKey = async ({ seedId, keyId, exportPrivate }) =>
-    keychain.exportKey({ seedId, keyId, exportPrivate })
-
   return {
     keychain: {
-      exportKey,
+      exportKey: (...args) => keychain.exportKey(...args),
+      sodium: {
+        signDetached: keychain.sodium.signDetached,
+        getKeysFromSeed: (...args) =>
+          keychain.sodium.getSodiumKeysFromSeed(...args).then(({ box, sign }) => ({ box, sign })),
+      },
+      ed25519: {
+        signBuffer: keychain.ed25519.signBuffer,
+      },
+      secp256k1: {
+        signBuffer: keychain.secp256k1.signBuffer,
+      },
     },
   }
 }
