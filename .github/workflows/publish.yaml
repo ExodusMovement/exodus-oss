@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-      - uses: ExodusMovement/actions/setup/lerna@06f077a9081a1e973586dde8870e7116873b9b84
+      - uses: ExodusMovement/actions/setup/lerna@65b395a82884455e8dc0cbc32355d8864f1ec30c
         with:
           npm-token: ${{ secrets.NPM_PUBLISH_TOKEN }}
       - name: Install dependencies
