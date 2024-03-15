@@ -1,0 +1,47 @@
+name: Version
+on:
+  workflow_dispatch:
+    inputs:
+      packages:
+        description: 'Selected packages as comma separated string, e.g. modules/storage-spec,libraries/formatting'
+        type: string
+        required: true
+      version-strategy:
+        type: choice
+        options:
+          - conventional-commits
+          - patch
+          - minor
+          - major
+          - prerelease
+          - prepatch
+          - preminor
+          - premajor
+        default: 'conventional-commits'
+      assignee:
+        description: 'Overrides the default assignee, which is the user to trigger this workflow.'
+        type: string
+        required: false
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ExodusMovement/actions/setup/lerna@master
+        with:
+          npm-token: ${{ secrets.NPM_TOKEN }}
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Prepare
+        run: yarn prepare
+      - name: Version
+        uses: ExodusMovement/lerna-release-action/version@master
+        with:
+          github-token: ${{ secrets.GH_AUTOMATION_PAT }}
+          packages: ${{ inputs.packages }}
+          assignee: ${{ inputs.assignee }}
+          version-strategy: ${{ inputs.version-strategy }}
+          auto-merge: true
