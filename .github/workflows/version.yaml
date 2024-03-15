@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: ExodusMovement/actions/setup/lerna@master
+      - uses: ExodusMovement/actions/setup/lerna@06f077a9081a1e973586dde8870e7116873b9b84
         with:
           npm-token: ${{ secrets.NPM_TOKEN }}
       - name: Install dependencies
@@ -38,7 +38,7 @@ jobs:
       - name: Prepare
         run: yarn prepare
       - name: Version
-        uses: ExodusMovement/lerna-release-action/version@master
+        uses: ExodusMovement/lerna-release-action/version@5bc3d09d8259df70e96766ae300b8d33aa0eb08d
         with:
           github-token: ${{ secrets.GH_AUTOMATION_PAT }}
           packages: ${{ inputs.packages }}

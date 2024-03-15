@@ -13,14 +13,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-      - uses: ExodusMovement/actions/setup/lerna@v3
+      - uses: ExodusMovement/actions/setup/lerna@06f077a9081a1e973586dde8870e7116873b9b84
         with:
           npm-token: ${{ secrets.NPM_PUBLISH_TOKEN }}
       - name: Install dependencies
         run: yarn install --immutable
       - name: Build
         run: yarn build
-      - uses: ExodusMovement/lerna-release-action/publish@master
+      - uses: ExodusMovement/lerna-release-action/publish@5bc3d09d8259df70e96766ae300b8d33aa0eb08d
         id: publish
         with:
           github-token: ${{ secrets.GH_AUTOMATION_PAT }}
