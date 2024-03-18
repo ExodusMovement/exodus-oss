@@ -1,0 +1,18 @@
+name: Version dispatch
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  invoke-versioning:
+    if: contains(github.event.pull_request.labels.*.name , 'publish-on-merge') == false && contains(github.event.pull_request.labels.*.name , 'skip-release') == false
+    name: Invoke version workflow
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ExodusMovement/lerna-release-action/version-dispatch@5bc3d09d8259df70e96766ae300b8d33aa0eb08d
+        with:
+          version-workflow-id: version.yaml
+          github-token: ${{ secrets.GH_AUTOMATION_PAT }}
+          exclude-commit-types: chore,docs,test,ci
