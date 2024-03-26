@@ -1,11 +1,6 @@
 import sodium from '@exodus/sodium-crypto'
 import { mapValues } from '@exodus/basic-utils'
-
-const cloneBuffer = (buf) => {
-  const newBuffer = Buffer.alloc(buf.length)
-  buf.copy(newBuffer)
-  return newBuffer
-}
+import { cloneBuffer } from './_utils'
 
 export const create = ({ getPrivateHDKey }) => {
   // Sodium encryptor caches the private key and the return value holds
