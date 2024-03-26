@@ -1,5 +1,6 @@
 import sodium from '@exodus/sodium-crypto'
 import { mapValues } from '@exodus/basic-utils'
+import { cloneBuffer } from './_utils'
 
 export const create = ({ getPrivateHDKey }) => {
   const getSodiumKeysFromIdentifier = async ({ seedId, keyId }) => {
@@ -11,6 +12,10 @@ export const create = ({ getPrivateHDKey }) => {
     signBuffer: async ({ seedId, keyId, data }) => {
       const { sign } = await getSodiumKeysFromIdentifier({ seedId, keyId })
       return sodium.signDetached({ message: data, privateKey: sign.privateKey })
+    },
+    getPublicKey: async ({ seedId, keyId }) => {
+      const { sign } = await getSodiumKeysFromIdentifier({ seedId, keyId })
+      return cloneBuffer(sign.publicKey)
     },
   })
 
