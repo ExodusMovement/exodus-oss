@@ -1,6 +1,5 @@
 import { mnemonicToSeed } from 'bip39'
 import { createKeyIdentifierForExodus } from '@exodus/key-ids'
-import KeyIdentifier from '@exodus/key-identifier'
 import createKeychain from './create-keychain'
 import { getSeedId } from '../crypto/seed-id'
 
