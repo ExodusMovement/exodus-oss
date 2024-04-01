@@ -84,6 +84,7 @@ export class Keychain {
   }
 
   #getPrivateHDKey = ({ seedId, keyId }) => {
+    assert(!this.#lockedPrivateKeys, 'private keys are not locked')
     throwIfInvalidKeyIdentifier(keyId)
 
     assert(typeof seedId === 'string', 'seedId must be a BIP32 key identifier in hex encoding')
@@ -125,6 +126,7 @@ export class Keychain {
   }
 
   async signTx({ seedId, keyIds, signTxCallback, unsignedTx }) {
+    assert(!this.#lockedPrivateKeys, 'private keys are not locked')
     assert(typeof signTxCallback === 'function', 'signTxCallback must be a function')
     const hdkeys = Object.fromEntries(
       keyIds.map((keyId) => {
