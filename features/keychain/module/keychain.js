@@ -49,6 +49,7 @@ export class Keychain {
   }
 
   unlockPrivateKeys(seeds) {
+    assert(this.#lockedPrivateKeys, 'already unlocked')
     assert(
       seeds?.length === Object.values(this.#masters).length,
       'must pass in same number of seeds'
