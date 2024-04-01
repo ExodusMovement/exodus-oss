@@ -26,7 +26,7 @@ export class Keychain {
   #masters = Object.create(null)
   #legacyPrivToPub = null
   #lockedPrivateKeys = false
-  #canUsePrivateKeysSymbol = Symbol('canUsePrivateKeys')
+  #getPrivateHDKeySymbol = Symbol('getPrivateHDKey')
 
   // TODO: remove default param. Use it temporarily for backward compatibility.
   constructor({ legacyPrivToPub = Object.create(null) }) {
@@ -84,8 +84,8 @@ export class Keychain {
     this.#masters = Object.create(null)
   }
 
-  #getPrivateHDKey = ({ seedId, keyId, canUsePrivateKeysSymbol }) => {
-    if (canUsePrivateKeysSymbol !== this.#canUsePrivateKeysSymbol)
+  #getPrivateHDKey = ({ seedId, keyId, getPrivateHDKeySymbol }) => {
+    if (getPrivateHDKeySymbol !== this.#getPrivateHDKeySymbol)
       assert(!this.#lockedPrivateKeys, 'private keys are not locked')
     throwIfInvalidKeyIdentifier(keyId)
 
@@ -105,7 +105,7 @@ export class Keychain {
     const hdkey = this.#getPrivateHDKey({
       seedId,
       keyId,
-      canUsePrivateKeysSymbol: this.#canUsePrivateKeysSymbol,
+      getPrivateHDKeySymbol: this.#getPrivateHDKeySymbol,
     })
     const privateKey = hdkey.privateKey
     let publicKey = hdkey.publicKey
