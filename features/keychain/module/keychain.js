@@ -44,6 +44,10 @@ export class Keychain {
     this.secp256k1 = secp256k1.create({ getPrivateHDKey: this.#getPrivateHDKey })
   }
 
+  hasLockedPrivateKeys() {
+    return this.#lockedPrivateKeys
+  }
+
   lockPrivateKeys() {
     this.#lockedPrivateKeys = true
   }
