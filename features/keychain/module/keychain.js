@@ -42,6 +42,10 @@ export class Keychain {
     this.secp256k1 = secp256k1.create({ getPrivateHDKey: this.#getPrivateHDKey })
   }
 
+  addSeeds(seeds) {
+    return seeds.map((seed) => this.addSeed(seed))
+  }
+
   addSeed(seed) {
     assert(Buffer.isBuffer(seed) && seed.length === 64, 'seed must be buffer of 64 bytes')
     const masters = Object.assign(
