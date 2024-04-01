@@ -93,6 +93,11 @@ describe('lockPrivateKeys', () => {
     )
   })
 
+  it('should block unlock when already unlocked', async () => {
+    const keychain = createKeychain({ seed })
+    await expect(async () => keychain.unlockPrivateKeys([seed])).rejects.toThrow(/already unlocked/)
+  })
+
   it('should block unlock for wrong seed ids', async () => {
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
