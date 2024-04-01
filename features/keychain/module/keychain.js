@@ -26,6 +26,7 @@ export class Keychain {
   #masters = Object.create(null)
   #legacyPrivToPub = null
   #lockedPrivateKeys = false
+  #canUsePrivateKeysSymbol = Symbol('canUsePrivateKeys')
 
   // TODO: remove default param. Use it temporarily for backward compatibility.
   constructor({ legacyPrivToPub = Object.create(null) }) {
@@ -83,8 +84,9 @@ export class Keychain {
     this.#masters = Object.create(null)
   }
 
-  #getPrivateHDKey = ({ seedId, keyId }) => {
-    assert(!this.#lockedPrivateKeys, 'private keys are not locked')
+  #getPrivateHDKey = ({ seedId, keyId, canUsePrivateKeysSymbol }) => {
+    if (canUsePrivateKeysSymbol !== this.#canUsePrivateKeysSymbol)
+      assert(!this.#lockedPrivateKeys, 'private keys are not locked')
     throwIfInvalidKeyIdentifier(keyId)
 
     assert(typeof seedId === 'string', 'seedId must be a BIP32 key identifier in hex encoding')
@@ -99,7 +101,11 @@ export class Keychain {
   async exportKey({ seedId, keyId, exportPrivate }) {
     keyId = new KeyIdentifier(keyId)
 
-    const hdkey = this.#getPrivateHDKey({ seedId, keyId })
+    const hdkey = this.#getPrivateHDKey({
+      seedId,
+      keyId,
+      canUsePrivateKeysSymbol: this.#canUsePrivateKeysSymbol,
+    })
     const privateKey = hdkey.privateKey
     let publicKey = hdkey.publicKey
 
