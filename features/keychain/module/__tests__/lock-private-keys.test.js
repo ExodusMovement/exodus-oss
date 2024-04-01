@@ -8,6 +8,10 @@ const seed = mnemonicToSeed(
   'menu memory fury language physical wonder dog valid smart edge decrease worth'
 )
 
+const seed1 = mnemonicToSeed(
+  'menu memory fury language physical wonder dog valid smart edge decrease test'
+)
+
 const seedId = getSeedId(seed)
 
 describe('lockPrivateKeys', () => {
@@ -56,6 +60,45 @@ describe('lockPrivateKeys', () => {
     })
 
     expect(!!exportedKeys.publicKey).toBe(true)
+  })
+
+  it('should allow exportKeys after lock/unlock', async () => {
+    const keychain = createKeychain({ seed })
+    keychain.lockPrivateKeys()
+    keychain.unlockPrivateKeys([seed])
+
+    const keyId = createKeyIdentifierForExodus({ exoType: 'FUSION' })
+    const exportedKeys = await keychain.exportKey({
+      seedId,
+      keyId,
+      exportPrivate: true,
+    })
+
+    // Public keys should be the same
+    const sodiumEncryptor = keychain.createSodiumEncryptor(keyId)
+    const {
+      sign: { publicKey },
+    } = await sodiumEncryptor.getSodiumKeysFromSeed({ seedId })
+    expect(Buffer.compare(publicKey, exportedKeys.publicKey)).toBe(0)
+  })
+
+  it('should block unlock for wrong seeds length', async () => {
+    const keychain = createKeychain({ seed })
+    keychain.lockPrivateKeys()
+    await expect(async () => keychain.unlockPrivateKeys([])).rejects.toThrow(
+      /must pass in same number of seeds/
+    )
+    await expect(async () => keychain.unlockPrivateKeys([seed, seed])).rejects.toThrow(
+      /must pass in same number of seeds/
+    )
+  })
+
+  it('should block unlock for wrong seed ids', async () => {
+    const keychain = createKeychain({ seed })
+    keychain.lockPrivateKeys()
+    await expect(async () => keychain.unlockPrivateKeys([seed1])).rejects.toThrow(
+      /must pass in existing seed/
+    )
   })
 
   it('should block exportKey for private keys when locked', async () => {
