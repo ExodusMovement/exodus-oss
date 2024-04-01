@@ -166,6 +166,7 @@ export class Keychain {
   }
 
   clone() {
+    assert(!this.#lockedPrivateKeys, 'private keys are not locked')
     return new Keychain({ legacyPrivToPub: this.#legacyPrivToPub })
   }
 
