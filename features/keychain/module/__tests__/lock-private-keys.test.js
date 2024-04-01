@@ -116,47 +116,47 @@ describe('lockPrivateKeys', () => {
         keyId,
         exportPrivate: true,
       })
-    ).rejects.toThrow(/private keys are not locked/)
+    ).rejects.toThrow(/private keys are locked/)
   })
 
   it('should block signTx when locked', async () => {
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
-    await expect(keychain.signTx({})).rejects.toThrow(/private keys are not locked/)
+    await expect(keychain.signTx({})).rejects.toThrow(/private keys are locked/)
   })
 
   it('should block clone when locked', async () => {
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
-    await expect(async () => keychain.clone()).rejects.toThrow(/private keys are not locked/)
+    await expect(async () => keychain.clone()).rejects.toThrow(/private keys are locked/)
   })
 
   it('should block sodium when locked', async () => {
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
     await expect(keychain.sodium.getSodiumKeysFromSeed({})).rejects.toThrow(
-      /private keys are not locked/
+      /private keys are locked/
     )
     await expect(keychain.createSodiumEncryptor({}).getSodiumKeysFromSeed({})).rejects.toThrow(
-      /private keys are not locked/
+      /private keys are locked/
     )
   })
 
   it('should block ed25519 when locked', async () => {
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
-    await expect(keychain.ed25519.signBuffer({})).rejects.toThrow(/private keys are not locked/)
+    await expect(keychain.ed25519.signBuffer({})).rejects.toThrow(/private keys are locked/)
     await expect(keychain.createEd25519Signer({}).signBuffer({})).rejects.toThrow(
-      /private keys are not locked/
+      /private keys are locked/
     )
   })
 
   it('should block secp256k1 when locked', async () => {
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
-    await expect(keychain.secp256k1.signBuffer({})).rejects.toThrow(/private keys are not locked/)
+    await expect(keychain.secp256k1.signBuffer({})).rejects.toThrow(/private keys are locked/)
     await expect(keychain.createSecp256k1Signer({}).signBuffer({})).rejects.toThrow(
-      /private keys are not locked/
+      /private keys are locked/
     )
   })
 })
