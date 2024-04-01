@@ -25,6 +25,7 @@ export const MODULE_ID = 'keychain'
 export class Keychain {
   #masters = Object.create(null)
   #legacyPrivToPub = null
+  #lockedPrivateKeys = false
 
   // TODO: remove default param. Use it temporarily for backward compatibility.
   constructor({ legacyPrivToPub = Object.create(null) }) {
@@ -40,6 +41,25 @@ export class Keychain {
     this.sodium = sodium.create({ getPrivateHDKey: this.#getPrivateHDKey })
     this.ed25519 = ed25519.create({ getPrivateHDKey: this.#getPrivateHDKey })
     this.secp256k1 = secp256k1.create({ getPrivateHDKey: this.#getPrivateHDKey })
+  }
+
+  lockPrivateKeys() {
+    this.#lockedPrivateKeys = true
+  }
+
+  unlockPrivateKeys(seeds) {
+    assert(
+      seeds?.length === Object.values(this.#masters).length,
+      'must pass in same number of seeds'
+    )
+    for (const seed of seeds) {
+      const seedId = getSeedId(seed)
+      assert(!!this.#masters[seedId], 'must pass in existing seed')
+    }
+
+    this.removeAllSeeds()
+    this.#lockedPrivateKeys = false
+    return this.addSeeds(seeds)
   }
 
   addSeeds(seeds) {
