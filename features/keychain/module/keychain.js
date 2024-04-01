@@ -99,6 +99,7 @@ export class Keychain {
   }
 
   async exportKey({ seedId, keyId, exportPrivate }) {
+    if (exportPrivate) assert(!this.#lockedPrivateKeys, 'private keys are not locked')
     keyId = new KeyIdentifier(keyId)
 
     const hdkey = this.#getPrivateHDKey({
