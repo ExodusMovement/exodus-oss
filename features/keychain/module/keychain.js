@@ -62,9 +62,9 @@ export class Keychain {
       seeds?.length === Object.values(this.#masters).length,
       'must pass in same number of seeds'
     )
-    for (const seed of seeds) {
-      const seedId = getSeedId(seed)
-      assert(!!this.#masters[seedId], 'must pass in existing seed')
+    const seedIds = new Set(seeds.map((seed) => getSeedId(seed)))
+    for (const seedId of Object.keys(this.#masters)) {
+      assert(seedIds.has(seedId), 'must pass in existing seed')
     }
 
     this.#privateKeysAreLocked = false
