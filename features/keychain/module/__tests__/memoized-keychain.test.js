@@ -74,12 +74,15 @@ describe('MemoizedKeychain', () => {
     const { keychain, storage } = await setup({ prefilledCache: false })
 
     await expect(keychain.exportKey(keyId)).resolves.toEqual(retrievedKey)
-    expect(storage.set).toHaveBeenCalledWith(CACHE_KEY, BJSON.stringify({
-      [stableStringify(keyId)]: {
-        xpub: retrievedKey.xpub,
-        publicKey: retrievedKey.publicKey,
-      },
-    }))
+    expect(storage.set).toHaveBeenCalledWith(
+      CACHE_KEY,
+      BJSON.stringify({
+        [stableStringify(keyId)]: {
+          xpub: retrievedKey.xpub,
+          publicKey: retrievedKey.publicKey,
+        },
+      })
+    )
   })
 
   it('should properly clear all caches', async () => {
