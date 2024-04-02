@@ -1,3 +1,4 @@
+import createInMemoryStorage from '@exodus/storage-memory'
 import {
   getPublicKey as getCardanoPublicKey,
   getShelleyAddress as getCardanoAddress,
@@ -12,6 +13,7 @@ import simpleTx from './fixtures/simple-tx'
 
 import KeyIdentifier from '@exodus/key-identifier'
 import keychainDefinition, { Keychain } from '../keychain'
+import memoizedKeychainDefinition from '../memoized-keychain'
 import { getSeedId } from '../crypto/seed-id'
 
 const { factory: createMultiSeedKeychain } = keychainDefinition
@@ -24,7 +26,7 @@ const secondSeed = mnemonicToSeed(
   'wine system mean beyond filter human meat rubber episode wash stomach aunt'
 )
 
-describe.each([
+const seedOpts = [
   // reduce fixtures by switching seeds
   {
     primarySeed: seed,
@@ -36,11 +38,33 @@ describe.each([
     secondarySeed: seed,
     seedId: getSeedId(seed),
   },
-])('multi-seed-keychain', ({ primarySeed, secondarySeed, seedId }) => {
+]
+
+const keychainImplementations = [
+  {
+    module: 'keychain',
+    factory: () => createMultiSeedKeychain(),
+    ...seedOpts,
+  },
+  {
+    module: 'memoizedKeychain',
+    factory: () => memoizedKeychainDefinition.factory({ storage: createInMemoryStorage() }),
+    ...seedOpts,
+  },
+]
+
+describe.each(
+  seedOpts.flatMap((seedOptsVariant) =>
+    keychainImplementations.map((implementationVariant) => ({
+      ...implementationVariant,
+      ...seedOptsVariant,
+    }))
+  )
+)('multi-seed-keychain: $module', ({ module, factory, primarySeed, secondarySeed, seedId }) => {
   let keychain
 
   it('should construct correctly', () => {
-    expect(keychainDefinition.factory()).toBeInstanceOf(Keychain)
+    expect(factory()).toBeInstanceOf(Keychain)
   })
 
   beforeEach(() => {
