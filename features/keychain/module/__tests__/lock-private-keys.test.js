@@ -55,6 +55,12 @@ describe('lockPrivateKeys', () => {
     expect(!!exportedKeys.publicKey).toBe(true)
   })
 
+  it('should allow clone when locked', async () => {
+    const keychain = createKeychain({ seed })
+    keychain.lockPrivateKeys()
+    keychain.clone()
+  })
+
   it('should allow exportKeys after lock/unlock', async () => {
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
@@ -123,12 +129,6 @@ describe('lockPrivateKeys', () => {
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
     await expect(keychain.signTx({})).rejects.toThrow(/private keys are locked/)
-  })
-
-  it('should block clone when locked', async () => {
-    const keychain = createKeychain({ seed })
-    keychain.lockPrivateKeys()
-    await expect(async () => keychain.clone()).rejects.toThrow(/private keys are locked/)
   })
 
   it('should block sodium when locked', async () => {

@@ -168,7 +168,6 @@ export class Keychain {
   }
 
   clone() {
-    this.#assertPrivateKeysUnlocked()
     return new Keychain({ legacyPrivToPub: this.#legacyPrivToPub })
   }
 
