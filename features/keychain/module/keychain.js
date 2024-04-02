@@ -25,7 +25,7 @@ export const MODULE_ID = 'keychain'
 export class Keychain {
   #masters = Object.create(null)
   #legacyPrivToPub = null
-  #lockedPrivateKeys = false
+  #privateKeysAreLocked = false
   #getPrivateHDKeySymbol = Symbol('getPrivateHDKey')
 
   // TODO: remove default param. Use it temporarily for backward compatibility.
@@ -45,15 +45,15 @@ export class Keychain {
   }
 
   hasLockedPrivateKeys() {
-    return this.#lockedPrivateKeys
+    return this.#privateKeysAreLocked
   }
 
   lockPrivateKeys() {
-    this.#lockedPrivateKeys = true
+    this.#privateKeysAreLocked = true
   }
 
   unlockPrivateKeys(seeds) {
-    assert(this.#lockedPrivateKeys, 'already unlocked')
+    assert(this.#privateKeysAreLocked, 'already unlocked')
     assert(
       seeds?.length === Object.values(this.#masters).length,
       'must pass in same number of seeds'
@@ -64,7 +64,7 @@ export class Keychain {
     }
 
     this.removeAllSeeds()
-    this.#lockedPrivateKeys = false
+    this.#privateKeysAreLocked = false
     return this.addSeeds(seeds)
   }
 
@@ -91,7 +91,7 @@ export class Keychain {
 
   #getPrivateHDKey = ({ seedId, keyId, getPrivateHDKeySymbol }) => {
     if (getPrivateHDKeySymbol !== this.#getPrivateHDKeySymbol)
-      assert(!this.#lockedPrivateKeys, 'private keys are locked')
+      assert(!this.#privateKeysAreLocked, 'private keys are locked')
     throwIfInvalidKeyIdentifier(keyId)
 
     assert(typeof seedId === 'string', 'seedId must be a BIP32 key identifier in hex encoding')
@@ -104,7 +104,7 @@ export class Keychain {
   }
 
   async exportKey({ seedId, keyId, exportPrivate }) {
-    if (exportPrivate) assert(!this.#lockedPrivateKeys, 'private keys are locked')
+    if (exportPrivate) assert(!this.#privateKeysAreLocked, 'private keys are locked')
     keyId = new KeyIdentifier(keyId)
 
     const hdkey = this.#getPrivateHDKey({
@@ -138,7 +138,7 @@ export class Keychain {
   }
 
   async signTx({ seedId, keyIds, signTxCallback, unsignedTx }) {
-    assert(!this.#lockedPrivateKeys, 'private keys are locked')
+    assert(!this.#privateKeysAreLocked, 'private keys are locked')
     assert(typeof signTxCallback === 'function', 'signTxCallback must be a function')
     const hdkeys = Object.fromEntries(
       keyIds.map((keyId) => {
@@ -171,7 +171,7 @@ export class Keychain {
   }
 
   clone() {
-    assert(!this.#lockedPrivateKeys, 'private keys are locked')
+    assert(!this.#privateKeysAreLocked, 'private keys are locked')
     return new Keychain({ legacyPrivToPub: this.#legacyPrivToPub })
   }
 
