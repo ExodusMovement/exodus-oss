@@ -97,6 +97,13 @@ describe('lockPrivateKeys', () => {
     await expect(async () => keychain.unlockPrivateKeys([seed1])).rejects.toThrow(
       /must pass in existing seed/
     )
+
+    const keychain1 = createKeychain({ seed })
+    keychain1.addSeed(seed1)
+    keychain1.lockPrivateKeys()
+    await expect(async () => keychain1.unlockPrivateKeys([seed, seed])).rejects.toThrow(
+      /must pass in existing seed/
+    )
   })
 
   it('should block exportKey for private keys when locked', async () => {
