@@ -67,13 +67,7 @@ export class Keychain {
       assert(!!this.#masters[seedId], 'must pass in existing seed')
     }
 
-    this.removeAllSeeds()
     this.#privateKeysAreLocked = false
-    return this.addSeeds(seeds)
-  }
-
-  addSeeds(seeds) {
-    return seeds.map((seed) => this.addSeed(seed))
   }
 
   addSeed(seed) {

@@ -37,12 +37,6 @@ describe('lockPrivateKeys', () => {
     keychain.addSeed(seed)
   })
 
-  it('should allow addSeeds when locked', async () => {
-    const keychain = createKeychain({ seed })
-    keychain.lockPrivateKeys()
-    keychain.addSeeds([seed])
-  })
-
   it('should allow removeAllSeeds when locked', async () => {
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
