@@ -5,7 +5,7 @@ import { Keychain } from './keychain'
 
 const keyIdToCacheKey = stableStringify
 
-const CACHE_KEY = 'data'
+const CACHE_KEY = 'data1'
 
 const getPublicKeyData = ({ xpub, publicKey }) => ({ xpub, publicKey })
 
