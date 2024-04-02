@@ -53,6 +53,7 @@ class MemoizedKeychain extends Keychain {
 
   clear = async () => {
     await super.clear()
+    this.#publicKeys = Object.create(null)
     await this.#storage.delete(CACHE_KEY)
   }
 }
