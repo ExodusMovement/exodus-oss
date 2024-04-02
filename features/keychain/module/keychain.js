@@ -44,6 +44,10 @@ export class Keychain {
     this.secp256k1 = secp256k1.create({ getPrivateHDKey: this.#getPrivateHDKey })
   }
 
+  #assertPrivateKeysUnlocked() {
+    assert(!this.#privateKeysAreLocked, 'private keys are locked')
+  }
+
   hasLockedPrivateKeys() {
     return this.#privateKeysAreLocked
   }
@@ -90,8 +94,7 @@ export class Keychain {
   }
 
   #getPrivateHDKey = ({ seedId, keyId, getPrivateHDKeySymbol }) => {
-    if (getPrivateHDKeySymbol !== this.#getPrivateHDKeySymbol)
-      assert(!this.#privateKeysAreLocked, 'private keys are locked')
+    if (getPrivateHDKeySymbol !== this.#getPrivateHDKeySymbol) this.#assertPrivateKeysUnlocked()
     throwIfInvalidKeyIdentifier(keyId)
 
     assert(typeof seedId === 'string', 'seedId must be a BIP32 key identifier in hex encoding')
@@ -104,7 +107,7 @@ export class Keychain {
   }
 
   async exportKey({ seedId, keyId, exportPrivate }) {
-    if (exportPrivate) assert(!this.#privateKeysAreLocked, 'private keys are locked')
+    if (exportPrivate) this.#assertPrivateKeysUnlocked()
     keyId = new KeyIdentifier(keyId)
 
     const hdkey = this.#getPrivateHDKey({
@@ -138,7 +141,7 @@ export class Keychain {
   }
 
   async signTx({ seedId, keyIds, signTxCallback, unsignedTx }) {
-    assert(!this.#privateKeysAreLocked, 'private keys are locked')
+    this.#assertPrivateKeysUnlocked()
     assert(typeof signTxCallback === 'function', 'signTxCallback must be a function')
     const hdkeys = Object.fromEntries(
       keyIds.map((keyId) => {
@@ -171,7 +174,7 @@ export class Keychain {
   }
 
   clone() {
-    assert(!this.#privateKeysAreLocked, 'private keys are locked')
+    this.#assertPrivateKeysUnlocked()
     return new Keychain({ legacyPrivToPub: this.#legacyPrivToPub })
   }
 
