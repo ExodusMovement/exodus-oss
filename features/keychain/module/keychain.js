@@ -48,7 +48,7 @@ export class Keychain {
     assert(!this.#privateKeysAreLocked, 'private keys are locked')
   }
 
-  hasLockedPrivateKeys() {
+  arePrivateKeysLocked() {
     return this.#privateKeysAreLocked
   }
 
