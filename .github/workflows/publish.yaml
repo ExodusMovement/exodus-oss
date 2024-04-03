@@ -1,0 +1,26 @@
+name: Publish
+on:
+  pull_request:
+    types:
+      - closed
+  workflow_dispatch:
+
+jobs:
+  publish:
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'publish-on-merge'))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: ExodusMovement/actions/setup/lerna@65b395a82884455e8dc0cbc32355d8864f1ec30c
+        with:
+          npm-token: ${{ secrets.NPM_PUBLISH_TOKEN }}
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Build
+        run: yarn build
+      - uses: ExodusMovement/lerna-release-action/publish@5bc3d09d8259df70e96766ae300b8d33aa0eb08d
+        id: publish
+        with:
+          github-token: ${{ secrets.GH_AUTOMATION_PAT }}
