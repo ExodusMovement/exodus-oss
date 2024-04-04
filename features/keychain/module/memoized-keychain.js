@@ -67,6 +67,11 @@ class MemoizedKeychain extends Keychain {
     await super.clear()
     await this.#storage.delete(CACHE_KEY)
   }
+
+  removeAllSeeds = () => {
+    super.removeAllSeeds()
+    this.#publicKeys = Object.create(null)
+  }
 }
 
 const memoizedKeychainDefinition = {
