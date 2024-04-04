@@ -52,7 +52,7 @@ describe('lockPrivateKeys', () => {
       keyId,
     })
 
-    expect(!!exportedKeys.publicKey).toBe(true)
+    expect(exportedKeys.publicKey).toBeDefined()
   })
 
   it('should allow clone when locked', async () => {
