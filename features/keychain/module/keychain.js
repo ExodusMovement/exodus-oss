@@ -85,6 +85,7 @@ export class Keychain {
 
   removeAllSeeds() {
     this.#masters = Object.create(null)
+    this.#privateKeysAreLocked = false
   }
 
   #getPrivateHDKey = ({ seedId, keyId, getPrivateHDKeySymbol }) => {
