@@ -50,7 +50,7 @@ describe('lockPrivateKeys', () => {
     keychain.addSeed(seed)
 
     const keyId = createKeyIdentifierForExodus({ exoType: 'FUSION' })
-    const exportedKeys = await keychain.exportKey({
+    await keychain.exportKey({
       seedId,
       keyId,
       exportPrivate: true,
