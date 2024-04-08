@@ -19,11 +19,15 @@ const MAP_KDF = Object.freeze({
   SLIP10: SLIP10.fromSeed,
 })
 
+const getSeedId = (seed) => bip32FromMasterSeed(seed)._hdkey._identifier.toString('hex')
+
 export const MODULE_ID = 'keychain'
 
 export class Keychain extends ExodusModule {
   #masters = null
   #legacyPrivToPub = null
+  #privateKeysAreLocked = false
+  #getPrivateHDKeySymbol = Symbol('getPrivateHDKey')
 
   // TODO: remove default param. Use it temporarily for backward compatibility.
   constructor({ legacyPrivToPub = Object.create(null), logger }) {
@@ -43,6 +47,32 @@ export class Keychain extends ExodusModule {
     this.secp256k1 = secp256k1.create({ getPrivateHDKey: this.#getPrivateHDKey })
   }
 
+  #assertPrivateKeysUnlocked() {
+    assert(!this.#privateKeysAreLocked, 'private keys are locked')
+  }
+
+  arePrivateKeysLocked() {
+    return this.#privateKeysAreLocked
+  }
+
+  lockPrivateKeys() {
+    this.#privateKeysAreLocked = true
+  }
+
+  unlockPrivateKeys(seed) {
+    assert(this.#privateKeysAreLocked, 'already unlocked')
+    assert(!!seed, 'must pass in same number of seeds')
+
+    const seedId = getSeedId(seed)
+
+    assert(
+      seedId === this.#masters.BIP32._hdkey._identifier.toString('hex'),
+      'must pass in existing seed'
+    )
+
+    this.#privateKeysAreLocked = false
+  }
+
   unlock({ seed }) {
     assert(Buffer.isBuffer(seed) && seed.length === 64, 'seed must be buffer of 64 bytes')
     const masters = Object.assign(
@@ -57,8 +87,8 @@ export class Keychain extends ExodusModule {
     this.#masters = null
   }
 
-  // Note: keep as non-arrow function to allow subclassing
-  #getPrivateHDKey = (keyId) => {
+  #getPrivateHDKey = ({ keyId, getPrivateHDKeySymbol }) => {
+    if (getPrivateHDKeySymbol !== this.#getPrivateHDKeySymbol) this.#assertPrivateKeysUnlocked()
     throwIfInvalidKeyIdentifier(keyId)
     throwIfInvalidMasters(this.#masters)
 
@@ -67,7 +97,12 @@ export class Keychain extends ExodusModule {
   }
 
   async exportKey(keyId, { exportPrivate } = Object.create(null)) {
-    const hdkey = this.#getPrivateHDKey(keyId)
+    if (exportPrivate) this.#assertPrivateKeysUnlocked()
+
+    const hdkey = this.#getPrivateHDKey({
+      keyId,
+      getPrivateHDKeySymbol: this.#getPrivateHDKeySymbol,
+    })
     const privateKey = hdkey.privateKey
     let publicKey = hdkey.publicKey
 
@@ -94,10 +129,11 @@ export class Keychain extends ExodusModule {
   }
 
   async signTx(keyIds, signTxWithHD, unsignedTx) {
+    this.#assertPrivateKeysUnlocked()
     assert(typeof signTxWithHD === 'function', 'signTxWithHD must be a function')
     const hdkeys = Object.fromEntries(
       keyIds.map((keyId) => {
-        const hdkey = this.#getPrivateHDKey(keyId)
+        const hdkey = this.#getPrivateHDKey({ keyId })
         const { purpose } = parseDerivationPath(keyId.derivationPath)
         return [String(purpose), hdkey]
       })

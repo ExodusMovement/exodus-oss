@@ -3,7 +3,7 @@ import { mapValues } from '@exodus/basic-utils'
 
 export const create = ({ getPrivateHDKey }) => {
   const getSodiumKeysFromIdentifier = async (keyId) => {
-    const { privateKey: sodiumSeed } = getPrivateHDKey(keyId)
+    const { privateKey: sodiumSeed } = getPrivateHDKey({ keyId })
     return sodium.getSodiumKeysFromSeed(sodiumSeed)
   }
 

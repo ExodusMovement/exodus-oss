@@ -12,7 +12,7 @@ export const create = ({ getPrivateHDKey }) => {
   // not refences to keychain internals, allowing the seed to be safely
   // garbage collected, clearing it from memory.
   const getSodiumKeysFromIdentifier = async (keyId) => {
-    const { privateKey: sodiumSeed } = getPrivateHDKey(keyId)
+    const { privateKey: sodiumSeed } = getPrivateHDKey({ keyId })
     return sodium.getSodiumKeysFromSeed(sodiumSeed)
   }
 
@@ -43,11 +43,11 @@ export const create = ({ getPrivateHDKey }) => {
       return sodium.verifyDetached({ message: data, sig: signature, publicKey: sign.publicKey })
     },
     encryptSecretBox: async ({ keyId, data }) => {
-      const { privateKey: sodiumSeed } = getPrivateHDKey(keyId)
+      const { privateKey: sodiumSeed } = getPrivateHDKey({ keyId })
       return sodium.encryptSecret(data, sodiumSeed)
     },
     decryptSecretBox: async ({ keyId, data }) => {
-      const { privateKey: sodiumSeed } = getPrivateHDKey(keyId)
+      const { privateKey: sodiumSeed } = getPrivateHDKey({ keyId })
       return sodium.decryptSecret(data, sodiumSeed)
     },
     encryptBox: async ({ keyId, data, toPublicKey }) => {
