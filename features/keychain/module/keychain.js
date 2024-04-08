@@ -85,6 +85,7 @@ export class Keychain extends ExodusModule {
 
   lock() {
     this.#masters = null
+    this.#privateKeysAreLocked = false
   }
 
   #getPrivateHDKey = ({ keyId, getPrivateHDKeySymbol }) => {

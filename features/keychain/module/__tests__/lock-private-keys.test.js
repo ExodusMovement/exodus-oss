@@ -44,6 +44,18 @@ describe('lockPrivateKeys', () => {
     keychain.lock()
   })
 
+  it('should allow usage when locked after lock and re-adding seeds', async () => {
+    const keychain = createKeychain({ seed })
+    keychain.lockPrivateKeys()
+    keychain.lock()
+    keychain.unlock({ seed })
+
+    const keyId = createKeyIdentifierForExodus({ exoType: 'FUSION' })
+    await keychain.exportKey(keyId, {
+      exportPrivate: true,
+    })
+  })
+
   it('should allow exportKey for public keys when locked', async () => {
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
