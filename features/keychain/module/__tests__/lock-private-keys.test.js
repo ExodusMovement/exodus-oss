@@ -21,7 +21,7 @@ const seed1 = mnemonicToSeed(
 describe('lockPrivateKeys', () => {
   it('should allow private key usage when unlocked', async () => {
     const keychain = createKeychain({ seed })
-    const keyId = createKeyIdentifierForExodus({ exoType: 'FUSION' })
+    const keyId = createKeyIdentifierForExodus()
     const exportedKeys = await keychain.exportKey(keyId, { exportPrivate: true })
 
     // Public keys should be the same
@@ -50,7 +50,7 @@ describe('lockPrivateKeys', () => {
     keychain.lock()
     keychain.unlock({ seed })
 
-    const keyId = createKeyIdentifierForExodus({ exoType: 'FUSION' })
+    const keyId = createKeyIdentifierForExodus()
     await keychain.exportKey(keyId, {
       exportPrivate: true,
     })
@@ -59,7 +59,7 @@ describe('lockPrivateKeys', () => {
   it('should allow exportKey for public keys when locked', async () => {
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
-    const keyId = createKeyIdentifierForExodus({ exoType: 'FUSION' })
+    const keyId = createKeyIdentifierForExodus()
     const exportedKeys = await keychain.exportKey(keyId)
 
     expect(exportedKeys.publicKey).toBeDefined()
@@ -76,7 +76,7 @@ describe('lockPrivateKeys', () => {
     keychain.lockPrivateKeys()
     keychain.unlockPrivateKeys(seed)
 
-    const keyId = createKeyIdentifierForExodus({ exoType: 'FUSION' })
+    const keyId = createKeyIdentifierForExodus()
     const exportedKeys = await keychain.exportKey(keyId, { exportPrivate: true })
 
     // Public keys should be the same
@@ -111,7 +111,7 @@ describe('lockPrivateKeys', () => {
   it('should block exportKey for private keys when locked', async () => {
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
-    const keyId = createKeyIdentifierForExodus({ exoType: 'FUSION' })
+    const keyId = createKeyIdentifierForExodus()
     await expect(keychain.exportKey(keyId, { exportPrivate: true })).rejects.toThrow(
       /private keys are locked/
     )
