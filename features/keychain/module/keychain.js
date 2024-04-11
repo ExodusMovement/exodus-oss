@@ -59,11 +59,11 @@ export class Keychain extends ExodusModule {
     this.#privateKeysAreLocked = true
   }
 
-  unlockPrivateKeys(seed) {
+  unlockPrivateKeys(seeds) {
     assert(this.#privateKeysAreLocked, 'already unlocked')
-    assert(!!seed, 'must pass in same number of seeds')
+    assert(seeds.length === 1, 'must pass in same number of seeds')
 
-    const seedId = getSeedId(seed)
+    const seedId = getSeedId(seeds[0])
 
     assert(
       seedId === this.#masters.BIP32._hdkey._identifier.toString('hex'),

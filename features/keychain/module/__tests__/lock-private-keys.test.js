@@ -74,7 +74,7 @@ describe('lockPrivateKeys', () => {
   it('should allow exportKeys after lock/unlock', async () => {
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
-    keychain.unlockPrivateKeys(seed)
+    keychain.unlockPrivateKeys([seed])
 
     const keyId = createKeyIdentifierForExodus()
     const exportedKeys = await keychain.exportKey(keyId, { exportPrivate: true })
@@ -90,20 +90,23 @@ describe('lockPrivateKeys', () => {
   it('should block unlock for wrong seeds length', async () => {
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
-    await expect(async () => keychain.unlockPrivateKeys()).rejects.toThrow(
+    await expect(async () => keychain.unlockPrivateKeys([])).rejects.toThrow(
+      /must pass in same number of seeds/
+    )
+    await expect(async () => keychain.unlockPrivateKeys([seed, seed])).rejects.toThrow(
       /must pass in same number of seeds/
     )
   })
 
   it('should block unlock when already unlocked', async () => {
     const keychain = createKeychain({ seed })
-    await expect(async () => keychain.unlockPrivateKeys(seed)).rejects.toThrow(/already unlocked/)
+    await expect(async () => keychain.unlockPrivateKeys([seed])).rejects.toThrow(/already unlocked/)
   })
 
   it('should block unlock for wrong seed ids', async () => {
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
-    await expect(async () => keychain.unlockPrivateKeys(seed1)).rejects.toThrow(
+    await expect(async () => keychain.unlockPrivateKeys([seed1])).rejects.toThrow(
       /must pass in existing seed/
     )
   })
