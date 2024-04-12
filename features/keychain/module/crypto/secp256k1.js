@@ -13,7 +13,7 @@ export const create = ({ getPrivateHDKey }) => {
     signBuffer: async ({ keyId, data, ecOptions, enc = 'der' }) => {
       assert(['der', 'raw'].includes(enc), 'signBuffer: invalid enc')
       assert(validEcOptions(ecOptions), 'signBuffer: invalid EC option')
-      const { privateKey } = getPrivateHDKey(keyId)
+      const { privateKey } = getPrivateHDKey({ keyId })
       const signature = curve.sign(data, privateKey, pick(ecOptions, ['canonical']))
       return enc === 'der' ? Buffer.from(signature.toDER()) : { ...signature }
     },
