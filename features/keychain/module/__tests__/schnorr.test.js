@@ -1,3 +1,6 @@
+import { utils } from '@noble/secp256k1'
+import ecc from '@exodus/bitcoinerlab-secp256k1'
+
 import { create } from '../crypto/secp256k1'
 
 const fixtures = [
@@ -13,6 +16,12 @@ const fixtures = [
   },
 ]
 
+const tapTweakHash = (publicKey, h) => {
+  const xOnlyPoint = ecc.xOnlyPointFromPoint(publicKey)
+  const hash = utils.taggedHashSync('TapTweak', Buffer.concat(h ? [xOnlyPoint, h] : [xOnlyPoint]))
+  return Buffer.from(hash)
+}
+
 describe('Schnorr signer', () => {
   it('signSchnorr should sign buffer with tweaked key', async () => {
     for (const fixture of fixtures) {
@@ -22,10 +31,13 @@ describe('Schnorr signer', () => {
       })
       const secp256k1Signer = create({ getPrivateHDKey })
 
+      const publicKey = await secp256k1Signer.getPublicKey({})
+      const tweakHash = tapTweakHash(publicKey)
+
       const result = await secp256k1Signer.signSchnorr({
         data: Buffer.from(fixture.buffer, 'hex'),
         tweak: true,
-        tweakOptions: { extraEntropy: Buffer.from(fixture.entropy, 'hex') },
+        tweakOptions: { extraEntropy: Buffer.from(fixture.entropy, 'hex'), tweakHash },
       })
 
       expect(Buffer.from(result).toString('hex')).toBe(fixture.sig)
@@ -41,11 +53,13 @@ describe('Schnorr signer', () => {
       const secp256k1Signer = create({ getPrivateHDKey })
 
       const publicKey = await secp256k1Signer.getPublicKey({})
+      const tweakHash = tapTweakHash(publicKey)
+
       expect(publicKey.toString('hex')).toBe(fixture.pub)
 
       const tweakedPublicKey = await secp256k1Signer.getPublicKey({
         tweak: true,
-        tweakOptions: { extraEntropy: Buffer.from(fixture.entropy, 'hex') },
+        tweakOptions: { extraEntropy: Buffer.from(fixture.entropy, 'hex'), tweakHash },
       })
       expect(tweakedPublicKey.toString('hex')).toBe(fixture.pub2)
     }
