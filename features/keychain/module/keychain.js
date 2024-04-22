@@ -25,6 +25,8 @@ export const MODULE_ID = 'keychain'
 export class Keychain {
   #masters = Object.create(null)
   #legacyPrivToPub = null
+  #privateKeysAreLocked = false
+  #getPrivateHDKeySymbol = Symbol('getPrivateHDKey')
 
   // TODO: remove default param. Use it temporarily for backward compatibility.
   constructor({ legacyPrivToPub = Object.create(null) }) {
@@ -42,6 +44,32 @@ export class Keychain {
     this.secp256k1 = secp256k1.create({ getPrivateHDKey: this.#getPrivateHDKey })
   }
 
+  #assertPrivateKeysUnlocked() {
+    assert(!this.#privateKeysAreLocked, 'private keys are locked')
+  }
+
+  arePrivateKeysLocked() {
+    return this.#privateKeysAreLocked
+  }
+
+  lockPrivateKeys() {
+    this.#privateKeysAreLocked = true
+  }
+
+  unlockPrivateKeys(seeds) {
+    assert(this.#privateKeysAreLocked, 'already unlocked')
+    assert(
+      seeds?.length === Object.values(this.#masters).length,
+      'must pass in same number of seeds'
+    )
+    const seedIds = new Set(seeds.map((seed) => getSeedId(seed)))
+    for (const seedId of Object.keys(this.#masters)) {
+      assert(seedIds.has(seedId), 'must pass in existing seed')
+    }
+
+    this.#privateKeysAreLocked = false
+  }
+
   addSeed(seed) {
     assert(Buffer.isBuffer(seed) && seed.length === 64, 'seed must be buffer of 64 bytes')
     const masters = Object.assign(
@@ -57,9 +85,11 @@ export class Keychain {
 
   removeAllSeeds() {
     this.#masters = Object.create(null)
+    this.#privateKeysAreLocked = false
   }
 
-  #getPrivateHDKey = ({ seedId, keyId }) => {
+  #getPrivateHDKey = ({ seedId, keyId, getPrivateHDKeySymbol }) => {
+    if (getPrivateHDKeySymbol !== this.#getPrivateHDKeySymbol) this.#assertPrivateKeysUnlocked()
     throwIfInvalidKeyIdentifier(keyId)
 
     assert(typeof seedId === 'string', 'seedId must be a BIP32 key identifier in hex encoding')
@@ -72,9 +102,14 @@ export class Keychain {
   }
 
   async exportKey({ seedId, keyId, exportPrivate }) {
+    if (exportPrivate) this.#assertPrivateKeysUnlocked()
     keyId = new KeyIdentifier(keyId)
 
-    const hdkey = this.#getPrivateHDKey({ seedId, keyId })
+    const hdkey = this.#getPrivateHDKey({
+      seedId,
+      keyId,
+      getPrivateHDKeySymbol: this.#getPrivateHDKeySymbol,
+    })
     const privateKey = hdkey.privateKey
     let publicKey = hdkey.publicKey
 
@@ -101,6 +136,7 @@ export class Keychain {
   }
 
   async signTx({ seedId, keyIds, signTxCallback, unsignedTx }) {
+    this.#assertPrivateKeysUnlocked()
     assert(typeof signTxCallback === 'function', 'signTxCallback must be a function')
     const hdkeys = Object.fromEntries(
       keyIds.map((keyId) => {
