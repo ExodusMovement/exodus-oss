@@ -15,6 +15,6 @@ export default class KeyIdentifier {
 
   constructor(params: ConstructorParams)
 
-  validate(potentialKeyIdentifier: KeyIdentifierLike): boolean
-  compare(a: KeyIdentifierLike, b: KeyIdentifierLike): boolean
+  static validate(potentialKeyIdentifier: KeyIdentifierLike): boolean
+  static compare(a: KeyIdentifierLike, b: KeyIdentifierLike): boolean
 }
