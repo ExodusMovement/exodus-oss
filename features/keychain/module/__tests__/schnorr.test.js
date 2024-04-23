@@ -32,12 +32,14 @@ describe('Schnorr signer', () => {
       const secp256k1Signer = create({ getPrivateHDKey })
 
       const publicKey = await secp256k1Signer.getPublicKey({})
-      const tweakHash = tapTweakHash(publicKey)
+      const scalar = tapTweakHash(publicKey)
 
       const result = await secp256k1Signer.signSchnorr({
         data: Buffer.from(fixture.buffer, 'hex'),
-        tweak: true,
-        tweakOptions: { extraEntropy: Buffer.from(fixture.entropy, 'hex'), tweakHash },
+        tweak: {
+          scalar,
+          options: { extraEntropy: Buffer.from(fixture.entropy, 'hex') },
+        },
       })
 
       expect(Buffer.from(result).toString('hex')).toBe(fixture.sig)
@@ -53,13 +55,15 @@ describe('Schnorr signer', () => {
       const secp256k1Signer = create({ getPrivateHDKey })
 
       const publicKey = await secp256k1Signer.getPublicKey({})
-      const tweakHash = tapTweakHash(publicKey)
+      const scalar = tapTweakHash(publicKey)
 
       expect(publicKey.toString('hex')).toBe(fixture.pub)
 
       const tweakedPublicKey = await secp256k1Signer.getPublicKey({
-        tweak: true,
-        tweakOptions: { extraEntropy: Buffer.from(fixture.entropy, 'hex'), tweakHash },
+        tweak: {
+          scalar,
+          options: { extraEntropy: Buffer.from(fixture.entropy, 'hex') },
+        },
       })
       expect(tweakedPublicKey.toString('hex')).toBe(fixture.pub2)
     }

@@ -1,22 +1,19 @@
 import assert from 'minimalistic-assert'
 import ecc from '@exodus/bitcoinerlab-secp256k1'
 
-export const tweakPrivateKey = ({ hdkey, tweakOptions = {} }) => {
-  const { publicKey } = hdkey
+export const tweakPrivateKey = ({ hdkey, scalar }) => {
+  const { privateKey, publicKey } = hdkey
+  assert(ecc.isPrivate(privateKey), 'tweakPrivateKey: expected valid private key')
   assert(ecc.isPointCompressed(publicKey), 'tweakPrivateKey: expected compressed public key')
 
-  const { tweakHash } = tweakOptions
-  assert(tweakHash, 'tweakPrivateKey: tweakHash is required')
+  let tweakedPrivateKey = publicKey[0] === 3 ? ecc.privateNegate(privateKey) : privateKey
+  tweakedPrivateKey = Buffer.from(ecc.privateAdd(tweakedPrivateKey, scalar))
 
-  let { privateKey } = hdkey
-  privateKey = publicKey[0] === 3 ? ecc.privateNegate(privateKey) : privateKey
-  privateKey = Buffer.from(ecc.privateAdd(privateKey, tweakHash))
-
-  return privateKey
+  return tweakedPrivateKey
 }
 
-export const tweakPublicKey = ({ hdkey, tweakOptions }) => {
-  const privateKey = tweakPrivateKey({ hdkey, tweakOptions })
+export const tweakPublicKey = ({ hdkey, scalar }) => {
+  const privateKey = tweakPrivateKey({ hdkey, scalar })
 
   return Buffer.from(ecc.pointFromScalar(privateKey, true))
 }

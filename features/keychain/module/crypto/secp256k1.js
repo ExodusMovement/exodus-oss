@@ -8,9 +8,9 @@ import { tweakPrivateKey, tweakPublicKey } from './tweak'
 const isValidEcOptions = (ecOptions) =>
   !ecOptions || Object.keys(ecOptions).every((key) => ['canonical'].includes(key))
 
-const isValidTweakOptions = (tweakOptions) =>
-  !tweakOptions ||
-  Object.keys(tweakOptions).every((key) => ['tweakHash', 'extraEntropy'].includes(key))
+const isValidTweak = (tweak) =>
+  !tweak ||
+  (tweak.scalar && Object.keys(tweak.options || {}).every((key) => ['extraEntropy'].includes(key)))
 
 export const create = ({ getPrivateHDKey }) => {
   const EC = elliptic.ec
@@ -24,16 +24,16 @@ export const create = ({ getPrivateHDKey }) => {
       const signature = curve.sign(data, privateKey, pick(ecOptions, ['canonical']))
       return enc === 'der' ? Buffer.from(signature.toDER()) : { ...signature }
     },
-    signSchnorr: async ({ seedId, keyId, data, tweak = false, tweakOptions }) => {
-      assert(isValidTweakOptions(tweakOptions), 'signSchnorr: invalid tweak options')
+    signSchnorr: async ({ seedId, keyId, data, tweak }) => {
+      assert(isValidTweak(tweak), 'signSchnorr: invalid tweak data')
       const hdkey = getPrivateHDKey({ seedId, keyId })
-      const privateKey = tweak ? tweakPrivateKey({ hdkey, tweakOptions }) : hdkey.privateKey
-      return ecc.signSchnorr(data, privateKey, tweakOptions?.extraEntropy)
+      const privateKey = tweak ? tweakPrivateKey({ hdkey, scalar: tweak.scalar }) : hdkey.privateKey
+      return ecc.signSchnorr(data, privateKey, tweak?.options?.extraEntropy)
     },
-    getPublicKey: async ({ seedId, keyId, tweak = false, tweakOptions }) => {
-      assert(isValidTweakOptions(tweakOptions), 'getPublicKey: invalid tweak options')
+    getPublicKey: async ({ seedId, keyId, tweak }) => {
+      assert(isValidTweak(tweak), 'getPublicKey: invalid tweak data')
       const hdkey = getPrivateHDKey({ seedId, keyId })
-      return tweak ? tweakPublicKey({ hdkey, tweakOptions }) : hdkey.publicKey
+      return tweak ? tweakPublicKey({ hdkey, scalar: tweak.scalar }) : hdkey.publicKey
     },
   })
 
