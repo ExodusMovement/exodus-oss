@@ -1,7 +1,7 @@
 type ConstructorParams = {
-  derivationAlgorithm: 'BIP32' | 'SLIP10',
-  derivationPath: string,
-  assetName?: string,
+  derivationAlgorithm: 'BIP32' | 'SLIP10'
+  derivationPath: string
+  assetName?: string
   keyType: 'legacy' | 'nacl' | 'secp2561'
 }
 
