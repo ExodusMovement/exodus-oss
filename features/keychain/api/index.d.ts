@@ -14,21 +14,20 @@ type EcSignature = {
   recoveryParam?: number
 }
 
+type PublicKeys = {
+  publicKey: Buffer
+  xpub: string
+}
+
+type PrivateKeys = {
+  privateKey: Buffer
+  xpriv: string
+}
+
 export interface KeychainApi {
-  exportKey(params: KeySource): Promise<{
-    publicKey: Buffer
-    xpub: string
-  }>
-  exportKey(params: { exportPrivate: false } & KeySource): Promise<{
-    publicKey: Buffer
-    xpub: string
-  }>
-  exportKey(params: { exportPrivate: true } & KeySource): Promise<{
-    publicKey: Buffer
-    xpub: string
-    privateKey: Buffer
-    xpriv: string
-  }>
+  exportKey(params: KeySource): Promise<PublicKeys>
+  exportKey(params: { exportPrivate: false } & KeySource): Promise<PublicKeys>
+  exportKey(params: { exportPrivate: true } & KeySource): Promise<PublicKeys & PrivateKeys>
   arePrivateKeysLocked(): Promise<boolean>
   sodium: {
     signDetached(params: { data: Buffer } & KeySource): Promise<Buffer>
