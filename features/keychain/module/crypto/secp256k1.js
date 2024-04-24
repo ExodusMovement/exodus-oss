@@ -3,14 +3,10 @@ import elliptic from '@exodus/elliptic'
 import { mapValues, pick } from '@exodus/basic-utils'
 import ecc from '@exodus/bitcoinerlab-secp256k1'
 
-import { tweakPrivateKey, tweakPublicKey } from './tweak'
+import { tweakPrivateKey } from './tweak'
 
 const isValidEcOptions = (ecOptions) =>
   !ecOptions || Object.keys(ecOptions).every((key) => ['canonical'].includes(key))
-
-const isValidTweak = (tweak) =>
-  !tweak ||
-  (tweak.scalar && Object.keys(tweak.options || {}).every((key) => ['extraEntropy'].includes(key)))
 
 export const create = ({ getPrivateHDKey }) => {
   const EC = elliptic.ec
@@ -24,16 +20,10 @@ export const create = ({ getPrivateHDKey }) => {
       const signature = curve.sign(data, privateKey, pick(ecOptions, ['canonical']))
       return enc === 'der' ? Buffer.from(signature.toDER()) : { ...signature }
     },
-    signSchnorr: async ({ seedId, keyId, data, tweak }) => {
-      assert(isValidTweak(tweak), 'signSchnorr: invalid tweak data')
+    signSchnorr: async ({ seedId, keyId, data, tweak, extraEntropy }) => {
       const hdkey = getPrivateHDKey({ seedId, keyId })
-      const privateKey = tweak ? tweakPrivateKey({ hdkey, scalar: tweak.scalar }) : hdkey.privateKey
-      return ecc.signSchnorr(data, privateKey, tweak?.options?.extraEntropy)
-    },
-    getPublicKey: async ({ seedId, keyId, tweak }) => {
-      assert(isValidTweak(tweak), 'getPublicKey: invalid tweak data')
-      const hdkey = getPrivateHDKey({ seedId, keyId })
-      return tweak ? tweakPublicKey({ hdkey, scalar: tweak.scalar }) : hdkey.publicKey
+      const privateKey = tweak ? tweakPrivateKey({ hdkey, tweak }) : hdkey.privateKey
+      return ecc.signSchnorr(data, privateKey, extraEntropy)
     },
   })
 
