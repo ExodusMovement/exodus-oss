@@ -1,26 +1,26 @@
-# 6.2.0 (2024-03-01)
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [6.3.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.1.1...@exodus/keychain@6.3.0) (2024-04-24)
 
 ### Features
 
+- expose signing functions from API ([#73](https://github.com/ExodusMovement/exodus-oss/issues/73)) ([75fcb83](https://github.com/ExodusMovement/exodus-oss/commit/75fcb830a5f0d5fe7ca08a1b1022ca9d012ab6ec))
+- lockPrivateKeys and unlockPrivateKeys ([#78](https://github.com/ExodusMovement/exodus-oss/issues/78)) ([9753ae9](https://github.com/ExodusMovement/exodus-oss/commit/9753ae9061e02a026b3a62a80464e98eab528530))
 - pass options to secp256k1 signBuffer ([#71](https://github.com/ExodusMovement/exodus-oss/issues/71)) ([a951bbd](https://github.com/ExodusMovement/exodus-oss/commit/a951bbd7ddbd5bc1feada3cae8d93bd112f16dd9))
-
-## 6.1.1 (2024-02-20)
 
 ### Bug Fixes
 
-- freeze internally in exportKey to callers don't have to ([#68](https://github.com/ExodusMovement/exodus-oss/issues/68)) ([9f08e2b](https://github.com/ExodusMovement/exodus-oss/commit/9f08e2b88a768574b9532aba929ac40f00aa8558))
+- privateKeysAreLocked should be false when seeds removed ([#87](https://github.com/ExodusMovement/exodus-oss/issues/87)) ([ad22118](https://github.com/ExodusMovement/exodus-oss/commit/ad221186a02c7dc5707c6749a024c5021938d15f))
 
-# 6.1.0 (2024-02-20)
+## [6.1.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.0.0...@exodus/keychain@6.1.0) (2024-02-20)
 
 ### Features
 
 - keychain api, to replace the one from the wallet feature ([#64](https://github.com/ExodusMovement/exodus-oss/issues/64)) ([f5fd3e1cc](https://github.com/ExodusMovement/exodus-oss/commit/f5fd3e1cc5d813c6da527ab972b5402c0a2508e3))
 - add separate key-identifier package ([#61](https://github.com/ExodusMovement/exodus-oss/issues/61)) ([49dc7f6](https://github.com/ExodusMovement/exodus-oss/commit/49dc7f66040a9ecaba1d971858764532d695bbdc))
-
-# Change Log
-
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 ## [6.0.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@5.0.1...@exodus/keychain@6.0.0) (2024-02-15)
 
