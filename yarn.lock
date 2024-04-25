@@ -2033,6 +2033,7 @@ __metadata:
     "@exodus/key-utils": ^3.0.0
     "@exodus/slip10": ^1.0.0
     "@exodus/sodium-crypto": ^3.1.0
+    "@exodus/typeforce": ^1.18.1
     bip39: 2.6.0
     bn.js: ^5.2.1
     buffer-json: ^2.0.0
@@ -2119,6 +2120,13 @@ __metadata:
   dependencies:
     "@exodus/libsodium-wrappers": 1.0.8
   checksum: 2fab59b40e1ee74bc0eb2dda2e63d9f149b45a328a89b90b3f599d13572c66b19abf3400e6e61eaa9e79c091d6df355aca9a6b2972dbc1ba594b9e030b387592
+  languageName: node
+  linkType: hard
+
+"@exodus/typeforce@npm:^1.18.1":
+  version: 1.18.1
+  resolution: "@exodus/typeforce@npm:1.18.1"
+  checksum: 9acdc0bb4fd3bd377871e1632233c45b032498a05b597ccbf37ed5cf3085f713d8b55332b07d5039caf4173cf8b58ab8c44abe85c623d0e6abc311a1a523534b
   languageName: node
   linkType: hard
 

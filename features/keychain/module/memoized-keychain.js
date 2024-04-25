@@ -1,11 +1,20 @@
+import typeforce from '@exodus/typeforce'
 import BJSON from 'buffer-json'
 import stableStringify from 'json-stable-stringify'
 
 import { Keychain } from './keychain'
 
-const keyIdToCacheKey = stableStringify
+const cacheParamsType = {
+  seedId: 'String',
+  keyId: 'Object',
+}
 
-const CACHE_KEY = 'data'
+const keyIdToCacheKey = (opts) => {
+  typeforce(cacheParamsType, opts, true)
+  return stableStringify(opts)
+}
+
+const CACHE_KEY = 'data1'
 
 const getPublicKeyData = ({ xpub, publicKey }) => ({ xpub, publicKey })
 
@@ -22,29 +31,33 @@ class MemoizedKeychain extends Keychain {
       this.#publicKeys = data ? BJSON.parse(data) : Object.create(null)
     })
 
-    this.#cloneOpts = { storage }
+    this.#cloneOpts = { storage, legacyPrivToPub }
   }
 
-  #getCachedKey = async (keyId) => {
-    const cacheKey = keyIdToCacheKey(keyId)
+  #getCachedKey = async (cacheParams) => {
+    const cacheKey = keyIdToCacheKey(cacheParams)
     return this.#publicKeys[cacheKey]
   }
 
-  #setCachedKey = async (keyId, value) => {
-    this.#publicKeys[keyIdToCacheKey(keyId)] = value
+  #setCachedKey = async (cacheParams, value) => {
+    this.#publicKeys[keyIdToCacheKey(cacheParams)] = value
     await this.#storage.set(CACHE_KEY, BJSON.stringify(this.#publicKeys))
   }
 
-  exportKey = async (keyId, opts) => {
-    if (!opts?.exportPrivate) {
+  async exportKey(opts) {
+    typeforce({ ...cacheParamsType, exportPrivate: '?Boolean' }, opts, true)
+
+    const { seedId, keyId, exportPrivate } = opts
+    const cacheParams = { seedId, keyId }
+    if (!exportPrivate) {
       // take advantage of public key cache
-      const cached = await this.#getCachedKey(keyId)
+      const cached = await this.#getCachedKey(cacheParams)
       if (cached) return cached
     }
 
-    const result = await super.exportKey(keyId, opts)
+    const result = await super.exportKey(opts)
     // don't wait for this to finish
-    this.#setCachedKey(keyId, getPublicKeyData(result))
+    this.#setCachedKey(cacheParams, getPublicKeyData(result))
     return result
   }
 
@@ -53,6 +66,11 @@ class MemoizedKeychain extends Keychain {
   clear = async () => {
     await super.clear()
     await this.#storage.delete(CACHE_KEY)
+  }
+
+  removeAllSeeds = () => {
+    super.removeAllSeeds()
+    this.#publicKeys = Object.create(null)
   }
 }
 
