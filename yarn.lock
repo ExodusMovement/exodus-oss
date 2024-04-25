@@ -1960,7 +1960,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/key-identifier@^1.0.0, @exodus/key-identifier@workspace:libraries/key-identifier":
+"@exodus/key-identifier@^1.0.1, @exodus/key-identifier@workspace:libraries/key-identifier":
   version: 0.0.0-use.local
   resolution: "@exodus/key-identifier@workspace:libraries/key-identifier"
   dependencies:
@@ -2028,7 +2028,7 @@ __metadata:
     "@exodus/basic-utils": ^2.0.0
     "@exodus/bip32": ^2.1.0
     "@exodus/elliptic": ^6.5.4-precomputed
-    "@exodus/key-identifier": ^1.0.0
+    "@exodus/key-identifier": ^1.0.1
     "@exodus/key-ids": ^1.0.0
     "@exodus/key-utils": ^3.0.0
     "@exodus/slip10": ^1.0.0
