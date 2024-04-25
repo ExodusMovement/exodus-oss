@@ -37,11 +37,21 @@ jobs:
         run: yarn install --immutable
       - name: Prepare
         run: yarn prepare
+      - name: Import GPG key
+        id: import-gpg
+        uses: crazy-max/ghaction-import-gpg@1a317071222a9bfb1839df1b58b1f0dcd893b589
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          git_config_global: true
+          git_user_signingkey: true
+          git_commit_gpgsign: true
       - name: Version
         uses: ExodusMovement/lerna-release-action/version@931392d04a637dccb561398add594a6cf61255b8
         with:
           github-token: ${{ secrets.GH_AUTOMATION_PAT }}
           packages: ${{ inputs.packages }}
           assignee: ${{ inputs.assignee }}
+          committer: exodus-github-hydra-bot
           version-strategy: ${{ inputs.version-strategy }}
           auto-merge: true
