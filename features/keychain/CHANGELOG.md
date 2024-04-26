@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.3.0...@exodus/keychain@6.4.0) (2024-04-26)
+
+### Features
+
+- support for schnorr signatures ([#90](https://github.com/ExodusMovement/exodus-oss/issues/90)) ([4c9420d](https://github.com/ExodusMovement/exodus-oss/commit/4c9420d344ac79467a1bd3dff691751eaeaad0e1))
+
 ## [6.3.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.1.1...@exodus/keychain@6.3.0) (2024-04-24)
 
 ### Features
