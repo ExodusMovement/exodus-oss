@@ -47,6 +47,7 @@ const solanaKeyId = new KeyIdentifier({
 // genFixtures()
 
 describe('keychain api', () => {
+  /** @type {import('../').KeychainApi} */
   let api
 
   beforeEach(() => {

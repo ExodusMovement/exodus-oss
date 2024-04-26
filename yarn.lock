@@ -1834,6 +1834,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@exodus/bitcoinerlab-secp256k1@npm:^1.0.5-exodus.1":
+  version: 1.0.5-exodus.1
+  resolution: "@exodus/bitcoinerlab-secp256k1@npm:1.0.5-exodus.1"
+  dependencies:
+    "@noble/hashes": ^1.1.5
+    "@noble/secp256k1": ^1.7.1
+  checksum: b9ba53bdf8eee1af328633fe772f592d0dbbd2a6bc8a7c5518028133d7a26a2f377daa8551ddc27dd1932c808ecac6baff153aec655fc98f0153b4aa707f02e3
+  languageName: node
+  linkType: hard
+
 "@exodus/elliptic@npm:6.5.4-precomputed, @exodus/elliptic@npm:^6.5.4-precomputed":
   version: 6.5.4-precomputed
   resolution: "@exodus/elliptic@npm:6.5.4-precomputed"
@@ -1960,7 +1970,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/key-identifier@^1.0.0, @exodus/key-identifier@workspace:libraries/key-identifier":
+"@exodus/key-identifier@^1.0.1, @exodus/key-identifier@workspace:libraries/key-identifier":
   version: 0.0.0-use.local
   resolution: "@exodus/key-identifier@workspace:libraries/key-identifier"
   dependencies:
@@ -2027,13 +2037,16 @@ __metadata:
   dependencies:
     "@exodus/basic-utils": ^2.0.0
     "@exodus/bip32": ^2.1.0
+    "@exodus/bitcoinerlab-secp256k1": ^1.0.5-exodus.1
     "@exodus/elliptic": ^6.5.4-precomputed
-    "@exodus/key-identifier": ^1.0.0
+    "@exodus/key-identifier": ^1.0.1
     "@exodus/key-ids": ^1.0.0
     "@exodus/key-utils": ^3.0.0
     "@exodus/slip10": ^1.0.0
     "@exodus/sodium-crypto": ^3.1.0
+    "@noble/secp256k1": ^1.7.1
     bip39: 2.6.0
+    bn.js: ^5.2.1
     buffer-json: ^2.0.0
     create-hash: ^1.2.0
     eslint: ^8.44.0
@@ -2610,6 +2623,20 @@ __metadata:
   dependencies:
     eslint-scope: 5.1.1
   checksum: f2e3b2d6a6e2d9f163ca22105910c9f850dc4897af0aea3ef0a5886b63d8e1ba6505b71c99cb78a3bba24a09557d601eb21c8dede3f3213753fcfef364eb0e57
+  languageName: node
+  linkType: hard
+
+"@noble/hashes@npm:^1.1.5":
+  version: 1.4.0
+  resolution: "@noble/hashes@npm:1.4.0"
+  checksum: 8ba816ae26c90764b8c42493eea383716396096c5f7ba6bea559993194f49d80a73c081f315f4c367e51bd2d5891700bcdfa816b421d24ab45b41cb03e4f3342
+  languageName: node
+  linkType: hard
+
+"@noble/secp256k1@npm:^1.7.1":
+  version: 1.7.1
+  resolution: "@noble/secp256k1@npm:1.7.1"
+  checksum: d2301f1f7690368d8409a3152450458f27e54df47e3f917292de3de82c298770890c2de7c967d237eff9c95b70af485389a9695f73eb05a43e2bd562d18b18cb
   languageName: node
   linkType: hard
 
@@ -4374,6 +4401,13 @@ __metadata:
   version: 4.12.0
   resolution: "bn.js@npm:4.12.0"
   checksum: 39afb4f15f4ea537b55eaf1446c896af28ac948fdcf47171961475724d1bb65118cca49fa6e3d67706e4790955ec0e74de584e45c8f1ef89f46c812bee5b5a12
+  languageName: node
+  linkType: hard
+
+"bn.js@npm:^5.2.1":
+  version: 5.2.1
+  resolution: "bn.js@npm:5.2.1"
+  checksum: 3dd8c8d38055fedfa95c1d5fc3c99f8dd547b36287b37768db0abab3c239711f88ff58d18d155dd8ad902b0b0cee973747b7ae20ea12a09473272b0201c9edd3
   languageName: node
   linkType: hard
 
