@@ -1924,9 +1924,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/eslint-plugin-package@npm:^1.6.0":
-  version: 1.6.0
-  resolution: "@exodus/eslint-plugin-package@npm:1.6.0"
+"@exodus/eslint-plugin-package@npm:^1.10.1":
+  version: 1.10.1
+  resolution: "@exodus/eslint-plugin-package@npm:1.10.1"
   dependencies:
     json-estree-ast: ^1.0.1
     jsonc-eslint-parser: ^2.3.0
@@ -1934,7 +1934,7 @@ __metadata:
     traverse: ^0.6.7
   peerDependencies:
     eslint: ">=6"
-  checksum: 66cccf3728bd350777c8604ae1fe35711e68cbe2498757b8daaa091ad5b1abc1b388ebfa7444edc943f6638be870fa09d5f9457789ac78b0528723f874994433
+  checksum: 0fa8e1d0d2ab4d317b91e5792b8b4570d43317e2294e7e73916a304fb054d2c003531386d12af9918da22bc1bb71b8acd6146f85a90d9e779ff593d899acf92f
   languageName: node
   linkType: hard
 
@@ -11086,7 +11086,7 @@ __metadata:
     "@exodus/eslint-plugin-ban-flow": latest
     "@exodus/eslint-plugin-basic-utils": latest
     "@exodus/eslint-plugin-hydra": ^1.0.0
-    "@exodus/eslint-plugin-package": ^1.6.0
+    "@exodus/eslint-plugin-package": ^1.10.1
     "@exodus/eslint-plugin-restricted-imports": ^1.1.1
     "@exodus/prettier": ^1.0.0
     "@nrwl/devkit": ^15.8.5
