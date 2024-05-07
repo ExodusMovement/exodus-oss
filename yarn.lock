@@ -1975,7 +1975,7 @@ __metadata:
   resolution: "@exodus/key-identifier@workspace:libraries/key-identifier"
   dependencies:
     "@exodus/key-ids": ^1.2.0
-    "@exodus/key-utils": ^3.1.0
+    "@exodus/key-utils": ^3.3.0
     "@exodus/keychain": "workspace:^"
     minimalistic-assert: ^1.0.1
   languageName: unknown
@@ -2001,7 +2001,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/key-utils@npm:^3.0.0, @exodus/key-utils@npm:^3.1.0":
+"@exodus/key-utils@npm:^3.0.0":
   version: 3.1.0
   resolution: "@exodus/key-utils@npm:3.1.0"
   dependencies:
@@ -2009,6 +2009,18 @@ __metadata:
     bip32-path: ^0.4.2
     minimalistic-assert: ^1.0.1
   checksum: 58776c9f391e549110e18d48e1ce89b70593b50462e0b1253cd35ffbd2f285014f8cff7ba94c4899493439cbf91d7fb6bf5a16e8f2c10a76b2a57c7abd860eca
+  languageName: node
+  linkType: hard
+
+"@exodus/key-utils@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "@exodus/key-utils@npm:3.3.0"
+  dependencies:
+    "@exodus/bip32": ^2.1.0
+    "@exodus/hdkey": ^2.1.0-exodus.0
+    bip32-path: ^0.4.2
+    minimalistic-assert: ^1.0.1
+  checksum: 741e47ac4e2fe285cd984c41dd27508cf2ece46ad53c7afd2f8a6358b9952ef1cedb05839b4f1a3949da19850f051409829f30e45d3fa137856852239018d953
   languageName: node
   linkType: hard
 

@@ -1,19 +1,37 @@
+type PathIndex = number | string
+type KeyType = 'legacy' | 'nacl' | 'secp2561'
+type DerivationAlgorithm = 'BIP32' | 'SLIP10'
+
 type ConstructorParams = {
-  derivationAlgorithm: 'BIP32' | 'SLIP10'
-  derivationPath: string
+  derivationAlgorithm: DerivationAlgorithm
+  derivationPath: string | PathIndex[]
   assetName?: string
-  keyType: 'legacy' | 'nacl' | 'secp2561'
+  keyType: KeyType
 }
 
 type KeyIdentifierLike = Partial<ConstructorParams>
 
 export default class KeyIdentifier {
-  derivationAlgorithm: ConstructorParams['derivationAlgorithm']
-  derivationPath: ConstructorParams['derivationPath']
-  assetName: ConstructorParams['assetName']
-  keyType: ConstructorParams['keyType']
+  derivationAlgorithm: DerivationAlgorithm
+  keyType: KeyType
+  assetName?: string
 
   constructor(params: ConstructorParams)
+
+  get derivationPath(): string
+
+  /**
+   * Returns a new KeyIdentifier instance that has an updated derivation path extended with
+   * the path indices or partial derivation path supplied to this method
+   */
+  derive(pathLike: string | PathIndex[]): KeyIdentifier
+
+  toJSON(): {
+    assetName?: string
+    derivationAlgorithm: DerivationAlgorithm
+    keyType: KeyType
+    derivationPath: string
+  }
 
   static validate(potentialKeyIdentifier: KeyIdentifierLike): boolean
   static compare(a: KeyIdentifierLike, b: KeyIdentifierLike): boolean

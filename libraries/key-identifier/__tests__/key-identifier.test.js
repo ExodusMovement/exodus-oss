@@ -22,7 +22,6 @@ describe('KeyIdentifier', () => {
         assetName: 0,
         derivationPath: "m/44'/60'/0'/0/0",
       },
-
       // Non-existing assetNames
       // {
       //  derivationAlgorithm: 'BIP32',
@@ -68,6 +67,53 @@ describe('KeyIdentifier', () => {
 
     valid.forEach((item) => expect(KeyIdentifier.validate(item)).toEqual(true))
     invalid.forEach((item) => expect(KeyIdentifier.validate(item)).toEqual(false))
+  })
+
+  it('supports passing the derivation path as array of path indices', () => {
+    const keyId = new KeyIdentifier({
+      derivationAlgorithm: 'BIP32',
+      assetName: 'ethereum',
+      derivationPath: ['m', "44'", "60'", "0'", '0', '0'],
+    })
+
+    expect(keyId.derivationPath).toBe("m/44'/60'/0'/0/0")
+  })
+
+  describe('.extend()', () => {
+    test('extends derivation path', () => {
+      const keyId = new KeyIdentifier({
+        derivationAlgorithm: 'BIP32',
+        assetName: 'ethereum',
+        derivationPath: "m/44'/60'/0'",
+      })
+
+      const derived = keyId.derive([1, 5])
+
+      expect(derived).toEqual({
+        derivationAlgorithm: 'BIP32',
+        assetName: 'ethereum',
+        keyType: 'secp256k1',
+      })
+
+      expect(derived.derivationPath).toBe("m/44'/60'/0'/1/5")
+    })
+  })
+
+  describe('.toJSON()', () => {
+    test('includes derivation path', () => {
+      const keyId = new KeyIdentifier({
+        derivationAlgorithm: 'BIP32',
+        assetName: 'ethereum',
+        derivationPath: "m/44'/60'/0'",
+      })
+
+      expect(keyId.toJSON()).toEqual({
+        derivationAlgorithm: 'BIP32',
+        assetName: 'ethereum',
+        keyType: 'secp256k1',
+        derivationPath: "m/44'/60'/0'",
+      })
+    })
   })
 
   describe('.compare()', () => {
