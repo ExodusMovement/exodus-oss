@@ -48,7 +48,7 @@ export default class KeyIdentifier {
     return this.#derivationPath.toString()
   }
 
-  extend(pathLike) {
+  derive(pathLike) {
     return new KeyIdentifier({
       ...this,
       derivationPath: this.#derivationPath.extend(pathLike),

@@ -87,15 +87,15 @@ describe('KeyIdentifier', () => {
         derivationPath: "m/44'/60'/0'",
       })
 
-      const extended = keyId.extend([1, 5])
+      const derived = keyId.derive([1, 5])
 
-      expect(extended).toEqual({
+      expect(derived).toEqual({
         derivationAlgorithm: 'BIP32',
         assetName: 'ethereum',
         keyType: 'secp256k1',
       })
 
-      expect(extended.derivationPath).toBe("m/44'/60'/0'/1/5")
+      expect(derived.derivationPath).toBe("m/44'/60'/0'/1/5")
     })
   })
 

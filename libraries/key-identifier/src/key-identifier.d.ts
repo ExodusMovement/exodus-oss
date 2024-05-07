@@ -24,7 +24,7 @@ export default class KeyIdentifier {
    * Returns a new KeyIdentifier instance that has an updated derivation path extended with
    * the path indices or partial derivation path supplied to this method
    */
-  extend(pathLike: string | PathIndex[]): KeyIdentifier
+  derive(pathLike: string | PathIndex[]): KeyIdentifier
 
   toJSON(): {
     assetName?: string
