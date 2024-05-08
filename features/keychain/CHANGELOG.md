@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.4.0...@exodus/keychain@6.5.0) (2024-05-08)
+
+### Features
+
+- reject signing with invalid key types ([#101](https://github.com/ExodusMovement/exodus-oss/issues/101)) ([126801d](https://github.com/ExodusMovement/exodus-oss/commit/126801d237d9cfbd9b5e6471b4f142813b89725f))
+
 ## [6.4.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.3.0...@exodus/keychain@6.4.0) (2024-04-26)
 
 ### Features
