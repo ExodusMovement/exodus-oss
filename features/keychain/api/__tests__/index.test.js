@@ -148,7 +148,6 @@ describe('keychain api', () => {
 
   describe('ed25519', () => {
     const keyId = new KeyIdentifier({
-      __proto__: null,
       derivationAlgorithm: 'SLIP10',
       derivationPath: `m/${EXO}'/5'/0'`,
       keyType: 'nacl',
