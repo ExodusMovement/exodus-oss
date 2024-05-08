@@ -14,6 +14,10 @@ export const create = ({ getPrivateHDKey }) => {
 
   const createInstance = () => ({
     signBuffer: async ({ seedId, keyId, data, ecOptions, enc = 'der' }) => {
+      assert(
+        keyId.keyType === 'secp256k1',
+        `ECDSA signatures are not supported for ${keyId.keyType}`
+      )
       assert(['der', 'raw'].includes(enc), 'signBuffer: invalid enc')
       assert(isValidEcOptions(ecOptions), 'signBuffer: invalid EC option')
       const { privateKey } = getPrivateHDKey({ seedId, keyId })
@@ -21,6 +25,10 @@ export const create = ({ getPrivateHDKey }) => {
       return enc === 'der' ? Buffer.from(signature.toDER()) : { ...signature }
     },
     signSchnorr: async ({ seedId, keyId, data, tweak, extraEntropy }) => {
+      assert(
+        keyId.keyType === 'secp256k1',
+        `Schnorr signatures are not supported for ${keyId.keyType}`
+      )
       const hdkey = getPrivateHDKey({ seedId, keyId })
       const privateKey = tweak ? tweakPrivateKey({ hdkey, tweak }) : hdkey.privateKey
       return ecc.signSchnorr(data, privateKey, extraEntropy)

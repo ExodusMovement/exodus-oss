@@ -42,18 +42,19 @@ describe('compatibility', () => {
       message:
         '010001030bc08d0b03ca1bc9e72e91084d4f001c5e13270acb4fc2853efe7e6b6560b2d85fc00ab3d38d5424af5b90ea447f1f474a1144be96a6d871ee39587522da7239000000000000000000000000000000000000000000000000000000000000000058c46d1f0395440b25e73ab095b539a5b45c7746dd713131e2cfe2755d03958701020200010c0200000000f2052a01000000',
       signature:
-        '1102815ed29faa093f8365870c892e82ee2aff0e7ded7e337dee4e206613355c786b769cf48269e08ae1646ca70974b4bbfdeb0fd5f459f3ef8b4845b8dd6b0f',
+        '90ff0a2a3311957e2920223e1c5b495b731f00834ea431769a5b21cc194a6a7aa14377f1736060f5a685202efe152c18b2db87be300f93fd6a75552464567b00',
     }
 
     const keychain = createKeychain({ seed })
     const keyId = new KeyIdentifier({
       assetName: 'solana',
-      derivationAlgorithm: 'BIP32',
-      derivationPath: "m/44'/501'/0'/0/0",
+      derivationAlgorithm: 'SLIP10',
+      derivationPath: "m/44'/501'/0'/0'/0'",
     })
     const signer = keychain.createEd25519Signer(keyId)
     const signature = await signer.signBuffer({
       seedId,
+      keyId,
       data: Buffer.from(tweetnacl.message, 'hex'),
     })
     expect(signature.toString('hex')).toBe(tweetnacl.signature)

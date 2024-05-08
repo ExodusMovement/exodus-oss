@@ -1,5 +1,6 @@
 import sodium from '@exodus/sodium-crypto'
 import { mapValues } from '@exodus/basic-utils'
+import assert from 'minimalistic-assert'
 
 export const create = ({ getPrivateHDKey }) => {
   const getSodiumKeysFromIdentifier = async ({ seedId, keyId }) => {
@@ -9,6 +10,7 @@ export const create = ({ getPrivateHDKey }) => {
 
   const createInstance = () => ({
     signBuffer: async ({ seedId, keyId, data }) => {
+      assert(keyId.keyType === 'nacl', `ED25519 signatures are not supported for ${keyId.keyType}`)
       const { sign } = await getSodiumKeysFromIdentifier({ seedId, keyId })
       return sodium.signDetached({ message: data, privateKey: sign.privateKey })
     },

@@ -1,4 +1,5 @@
 import { create } from '../crypto/secp256k1'
+import KeyIdentifier from '@exodus/key-identifier'
 
 const fixtures = [
   {
@@ -54,6 +55,11 @@ describe('ETH Signer', () => {
       const ethSigner = async (buffer) => {
         const sig = await secp256k1Signer.signBuffer({
           data: buffer,
+          keyId: new KeyIdentifier({
+            keyType: 'secp256k1',
+            derivationPath: 'm/0', // doesn't matter in this fixture as we don't use it
+            derivationAlgorithm: 'BIP32',
+          }),
           ecOptions: { canonical: true },
           enc: 'raw',
         })
