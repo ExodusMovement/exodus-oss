@@ -1,8 +1,8 @@
 import { mnemonicToSeed } from 'bip39'
 
-import { createKeyIdentifierForExodus } from '@exodus/key-ids'
 import createKeychain from './create-keychain'
 import { getSeedId } from '../crypto/seed-id'
+import KeyIdentifier from '@exodus/key-identifier'
 
 const seed = mnemonicToSeed(
   'menu memory fury language physical wonder dog valid smart edge decrease worth'
@@ -14,17 +14,20 @@ const secondSeed = mnemonicToSeed(
   'wine system mean beyond filter human meat rubber episode wash stomach aunt'
 )
 
-const fusionKeyId = createKeyIdentifierForExodus({ exoType: 'FUSION' })
+const keyId = new KeyIdentifier({
+  derivationPath: "m/44'/60'/0'/0/0",
+  derivationAlgorithm: 'BIP32',
+})
 
 describe('EcDSA Signer', () => {
   it('should signBuffer', async () => {
     const keychain = createKeychain({ seed })
 
-    const signer = keychain.createSecp256k1Signer(fusionKeyId)
+    const signer = keychain.createSecp256k1Signer(keyId)
     const plaintext = Buffer.from('I really love keychains')
     const signature = await signer.signBuffer({ seedId, data: plaintext })
     const expected =
-      '3045022100e3c37a346dcb717552e9591a43b3f099898cb0a7d2c5aa37447fb0146926bbec022057a2e393efbd154f55278844f402e05c5bedd6a6c205c4b293e50c83813e67a5'
+      '30460221009288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d022100f63e7591ce6b3bc0bf66fa2948d220e74ea2a74b63fc9dcb20e0f53191550b67'
     expect(signature.toString('hex')).toBe(expected)
   })
 
@@ -33,13 +36,31 @@ describe('EcDSA Signer', () => {
     const plaintext = Buffer.from('I really love keychains')
     const signature = await keychain.secp256k1.signBuffer({
       seedId,
-      keyId: fusionKeyId,
+      keyId,
       data: plaintext,
     })
 
     const expected =
-      '3045022100e3c37a346dcb717552e9591a43b3f099898cb0a7d2c5aa37447fb0146926bbec022057a2e393efbd154f55278844f402e05c5bedd6a6c205c4b293e50c83813e67a5'
+      '30460221009288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d022100f63e7591ce6b3bc0bf66fa2948d220e74ea2a74b63fc9dcb20e0f53191550b67'
     expect(signature.toString('hex')).toBe(expected)
+  })
+
+  it('should throw for keyType != secp256k1', async () => {
+    const keychain = createKeychain({ seed })
+    const plaintext = Buffer.from('I really love keychains')
+    const keyId = new KeyIdentifier({
+      derivationPath: 'm/0',
+      keyType: 'nacl',
+      derivationAlgorithm: 'SLIP10',
+    })
+
+    await expect(
+      keychain.secp256k1.signBuffer({
+        seedId,
+        keyId,
+        data: plaintext,
+      })
+    ).rejects.toThrow('ECDSA signatures are not supported for nacl')
   })
 })
 
@@ -63,12 +84,12 @@ describe.each([
     const plaintext = Buffer.from('I really love keychains')
     const signature = await keychain.secp256k1.signBuffer({
       seedId,
-      keyId: fusionKeyId,
+      keyId,
       data: plaintext,
     })
 
     const expected =
-      '3045022100e3c37a346dcb717552e9591a43b3f099898cb0a7d2c5aa37447fb0146926bbec022057a2e393efbd154f55278844f402e05c5bedd6a6c205c4b293e50c83813e67a5'
+      '30460221009288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d022100f63e7591ce6b3bc0bf66fa2948d220e74ea2a74b63fc9dcb20e0f53191550b67'
     expect(signature.toString('hex')).toBe(expected)
   })
 })

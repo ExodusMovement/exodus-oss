@@ -2,6 +2,7 @@ import { utils } from '@noble/secp256k1'
 import ecc from '@exodus/bitcoinerlab-secp256k1'
 
 import { create } from '../crypto/secp256k1'
+import KeyIdentifier from '@exodus/key-identifier'
 
 const fixtures = [
   {
@@ -47,12 +48,35 @@ describe('Schnorr signer', () => {
       expect(tweak.toString('hex')).toBe(fixture.tweak)
     }
 
+    const keyId = new KeyIdentifier({
+      derivationPath: "m/0'", // doesn't matter in this fixture as we don't use it
+      derivationAlgorithm: 'BIP32',
+    })
+
     const result = await secp256k1Signer.signSchnorr({
+      keyId,
       data: Buffer.from(fixture.buffer, 'hex'),
       tweak,
       extraEntropy: Buffer.from(fixture.entropy, 'hex'),
     })
 
     expect(Buffer.from(result).toString('hex')).toBe(fixture.sig)
+  })
+
+  it('should throw for keyType != secp256k1', async () => {
+    const secp256k1Signer = create({ getPrivateHDKey: jest.fn() })
+
+    const keyId = new KeyIdentifier({
+      derivationPath: 'm/0',
+      keyType: 'nacl',
+      derivationAlgorithm: 'SLIP10',
+    })
+
+    await expect(
+      secp256k1Signer.signSchnorr({
+        keyId,
+        data: Buffer.from('Bruce Wayne', 'utf8'),
+      })
+    ).rejects.toThrow('Schnorr signatures are not supported for nacl')
   })
 })

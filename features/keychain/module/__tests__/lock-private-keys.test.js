@@ -2,6 +2,7 @@ import { mnemonicToSeed } from 'bip39'
 import { createKeyIdentifierForExodus } from '@exodus/key-ids'
 import createKeychain from './create-keychain'
 import { getSeedId } from '../crypto/seed-id'
+import KeyIdentifier from '@exodus/key-identifier'
 
 const seed = mnemonicToSeed(
   'menu memory fury language physical wonder dog valid smart edge decrease worth'
@@ -159,17 +160,30 @@ describe('lockPrivateKeys', () => {
   it('should block ed25519 when locked', async () => {
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
-    await expect(keychain.ed25519.signBuffer({})).rejects.toThrow(/private keys are locked/)
-    await expect(keychain.createEd25519Signer({}).signBuffer({})).rejects.toThrow(
+
+    const keyId = new KeyIdentifier({
+      derivationPath: 'm/0', // doesn't matter in this fixture as we don't use it
+      derivationAlgorithm: 'SLIP10',
+    })
+
+    await expect(keychain.ed25519.signBuffer({ keyId })).rejects.toThrow(/private keys are locked/)
+    await expect(keychain.createEd25519Signer(keyId).signBuffer({})).rejects.toThrow(
       /private keys are locked/
     )
   })
 
   it('should block secp256k1 when locked', async () => {
+    const keyId = new KeyIdentifier({
+      derivationPath: 'm/0', // doesn't matter in this fixture as we don't use it
+      derivationAlgorithm: 'BIP32',
+    })
+
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
-    await expect(keychain.secp256k1.signBuffer({})).rejects.toThrow(/private keys are locked/)
-    await expect(keychain.createSecp256k1Signer({}).signBuffer({})).rejects.toThrow(
+    await expect(keychain.secp256k1.signBuffer({ keyId })).rejects.toThrow(
+      /private keys are locked/
+    )
+    await expect(keychain.createSecp256k1Signer(keyId).signBuffer({})).rejects.toThrow(
       /private keys are locked/
     )
   })

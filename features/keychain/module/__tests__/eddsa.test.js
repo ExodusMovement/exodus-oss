@@ -47,13 +47,13 @@ describe('EdDSA Signer', () => {
     const keychain = createKeychain({ seed })
     const keyId = new KeyIdentifier({
       assetName: 'solana',
-      derivationAlgorithm: 'BIP32',
-      derivationPath: "m/44'/501'/0'/0/0",
+      derivationAlgorithm: 'SLIP10',
+      derivationPath: "m/44'/501'/0'/0'/0'",
     })
     const signer = keychain.createEd25519Signer(keyId)
     const signature = await signer.signBuffer({ seedId, data: plaintextTx })
     const expected =
-      '1102815ed29faa093f8365870c892e82ee2aff0e7ded7e337dee4e206613355c786b769cf48269e08ae1646ca70974b4bbfdeb0fd5f459f3ef8b4845b8dd6b0f'
+      '90ff0a2a3311957e2920223e1c5b495b731f00834ea431769a5b21cc194a6a7aa14377f1736060f5a685202efe152c18b2db87be300f93fd6a75552464567b00'
     expect(signature.toString('hex')).toBe(expected)
   })
 
@@ -61,13 +61,31 @@ describe('EdDSA Signer', () => {
     const keychain = createKeychain({ seed })
     const keyId = new KeyIdentifier({
       assetName: 'solana',
-      derivationAlgorithm: 'BIP32',
-      derivationPath: "m/44'/501'/0'/0/0",
+      derivationAlgorithm: 'SLIP10',
+      derivationPath: "m/44'/501'/0'/0'/0'",
     })
     const signature = await keychain.ed25519.signBuffer({ seedId, keyId, data: plaintextTx })
     const expected =
-      '1102815ed29faa093f8365870c892e82ee2aff0e7ded7e337dee4e206613355c786b769cf48269e08ae1646ca70974b4bbfdeb0fd5f459f3ef8b4845b8dd6b0f'
+      '90ff0a2a3311957e2920223e1c5b495b731f00834ea431769a5b21cc194a6a7aa14377f1736060f5a685202efe152c18b2db87be300f93fd6a75552464567b00'
     expect(signature.toString('hex')).toBe(expected)
+  })
+
+  it('should throw for keyType != nacl', async () => {
+    const keychain = createKeychain({ seed })
+    const plaintext = Buffer.from('I really love keychains')
+    const keyId = new KeyIdentifier({
+      derivationPath: 'm/0',
+      keyType: 'secp256k1',
+      derivationAlgorithm: 'BIP32',
+    })
+
+    await expect(
+      keychain.ed25519.signBuffer({
+        seedId,
+        keyId,
+        data: plaintext,
+      })
+    ).rejects.toThrow('ED25519 signatures are not supported for secp256k1')
   })
 })
 
@@ -86,8 +104,8 @@ describe.each([
 ])('EdDSA Signer (multi-seed-keychain)', ({ primarySeed, secondarySeed, seedId }) => {
   const solanaKeyId = new KeyIdentifier({
     assetName: 'solana',
-    derivationAlgorithm: 'BIP32',
-    derivationPath: "m/44'/501'/0'/0/0",
+    derivationAlgorithm: 'SLIP10',
+    derivationPath: "m/44'/501'/0'/0'/0'",
   })
 
   const keychain = createKeychain({ seed: primarySeed })
@@ -112,7 +130,7 @@ describe.each([
     })
 
     const expected =
-      '1102815ed29faa093f8365870c892e82ee2aff0e7ded7e337dee4e206613355c786b769cf48269e08ae1646ca70974b4bbfdeb0fd5f459f3ef8b4845b8dd6b0f'
+      '90ff0a2a3311957e2920223e1c5b495b731f00834ea431769a5b21cc194a6a7aa14377f1736060f5a685202efe152c18b2db87be300f93fd6a75552464567b00'
     expect(signature.toString('hex')).toBe(expected)
   })
 })
