@@ -1,5 +1,5 @@
 type PathIndex = number | string
-type KeyType = 'legacy' | 'nacl' | 'secp2561'
+type KeyType = 'legacy' | 'nacl' | 'secp256k1'
 type DerivationAlgorithm = 'BIP32' | 'SLIP10'
 
 type ConstructorParams = {
