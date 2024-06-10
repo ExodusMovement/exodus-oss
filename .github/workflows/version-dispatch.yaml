@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ExodusMovement/lerna-release-action/version-dispatch@931392d04a637dccb561398add594a6cf61255b8
+      - uses: ExodusMovement/lerna-release-action/version-dispatch@fba4c3a31f68f4e8d77ccab25be2e01b9bab4dcd
         with:
           version-workflow-id: version.yaml
           github-token: ${{ secrets.GH_AUTOMATION_PAT }}
