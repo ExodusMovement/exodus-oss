@@ -12,6 +12,11 @@ export const create = ({ getPrivateHDKey }) => {
   const EC = elliptic.ec
   const curve = new EC('secp256k1')
 
+  const getUncompressedPublicKey = (privateKey) => {
+    const keyPair = curve.keyFromPrivate(privateKey)
+    return Buffer.from(keyPair.getPublic().encode('array', false))
+  }
+
   const createInstance = () => ({
     signBuffer: async ({ seedId, keyId, data, ecOptions, enc = 'der' }) => {
       assert(
@@ -33,6 +38,12 @@ export const create = ({ getPrivateHDKey }) => {
       const privateKey = tweak ? tweakPrivateKey({ hdkey, tweak }) : hdkey.privateKey
       return ecc.signSchnorr(data, privateKey, extraEntropy)
     },
+    getPublicKey: async ({ seedId, keyId, compressed = true }) => {
+      const { privateKey, publicKey } = getPrivateHDKey({ seedId, keyId })
+      if (compressed) return publicKey
+
+      return getUncompressedPublicKey(privateKey)
+    },
   })
 
   // For backwards compatibility
@@ -43,5 +54,5 @@ export const create = ({ getPrivateHDKey }) => {
     return Object.freeze(signer)
   }
 
-  return Object.freeze({ ...createInstance(), createSigner })
+  return Object.freeze({ ...createInstance(), createSigner, getCompressedPublicKey })
 }

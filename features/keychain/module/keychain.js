@@ -121,9 +121,15 @@ export class Keychain {
         throw new Error(`asset name ${keyId.assetName} has no legacyPrivToPub mapper`)
       }
     } else if (keyId.derivationAlgorithm !== 'SLIP10' && keyId.keyType === 'nacl') {
-      // SLIP10 already produces the correct public key for curve ed25119
+      // SLIP10 already produces the correct public key for curve ed25519
       // so we can safely skip using the privToPub mapper.
       publicKey = await sodium.privToPub(privateKey)
+    } else if (
+      keyId.derivationAlgorithm === 'BIP32' &&
+      keyId.keyType === 'secp256k1' &&
+      keyId.uncompressed
+    ) {
+      publicKey = await this.secp256k1.getUncompressedPublicKey(privateKey)
     }
 
     const { xpriv, xpub } = hdkey.toJSON()
