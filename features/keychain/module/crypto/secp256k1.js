@@ -54,5 +54,5 @@ export const create = ({ getPrivateHDKey }) => {
     return Object.freeze(signer)
   }
 
-  return Object.freeze({ ...createInstance(), createSigner, getCompressedPublicKey })
+  return Object.freeze({ ...createInstance(), createSigner, getUncompressedPublicKey })
 }
