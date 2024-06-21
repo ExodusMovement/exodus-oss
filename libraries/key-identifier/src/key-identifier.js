@@ -13,8 +13,9 @@ export default class KeyIdentifier {
   /** @type {DerivationPath} */
   #derivationPath
 
-  constructor({ derivationAlgorithm, derivationPath, assetName, keyType }) {
+  constructor({ derivationAlgorithm, derivationPath, assetName, keyType, uncompressed = false }) {
     assert(typeof derivationAlgorithm === 'string', 'derivationAlgorithm not a string')
+    assert(typeof uncompressed === 'boolean', 'uncompressed not a boolean')
     assert(
       SUPPORTED_KDFS.has(derivationAlgorithm),
       `${derivationAlgorithm} is not a valid derivationAlgorithm`
@@ -38,6 +39,7 @@ export default class KeyIdentifier {
     this.#derivationPath = isDerivationPath(derivationPath)
       ? derivationPath
       : DerivationPath.from(derivationPath)
+    this.uncompressed = uncompressed
 
     // Freeze the object on construction, disallow tampering with derivation path.
     // Ensures immutability of key identifiers passed to keychain.
@@ -65,6 +67,7 @@ export default class KeyIdentifier {
       assetName: this.assetName,
       keyType: this.keyType,
       derivationPath: this.derivationPath,
+      uncompressed: this.uncompressed,
     }
   }
 
@@ -83,7 +86,7 @@ export default class KeyIdentifier {
       return false
     }
 
-    return !['derivationAlgorithm', 'derivationPath', 'assetName', 'keyType'].some(
+    return !['derivationAlgorithm', 'derivationPath', 'assetName', 'keyType', 'uncompressed'].some(
       (fieldName) => keyIdA[fieldName] !== keyIdB[fieldName]
     )
   }
