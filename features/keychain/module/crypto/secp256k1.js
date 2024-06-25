@@ -8,6 +8,18 @@ import { tweakPrivateKey } from './tweak'
 const isValidEcOptions = (ecOptions) =>
   !ecOptions || Object.keys(ecOptions).every((key) => ['canonical'].includes(key))
 
+const encodeSignature = ({ signature, enc }) => {
+  if (enc === 'der') return Buffer.from(signature.toDER())
+
+  const sig = { ...signature }
+
+  if (enc === 'raw') return sig
+
+  const r = Buffer.from(sig.r.toArray('be', 32))
+  const s = Buffer.from(sig.s.toArray('be', 32))
+  return Buffer.concat([r, s, Buffer.from([sig.recoveryParam])])
+}
+
 export const create = ({ getPrivateHDKey }) => {
   const EC = elliptic.ec
   const curve = new EC('secp256k1')
@@ -18,11 +30,11 @@ export const create = ({ getPrivateHDKey }) => {
         keyId.keyType === 'secp256k1',
         `ECDSA signatures are not supported for ${keyId.keyType}`
       )
-      assert(['der', 'raw'].includes(enc), 'signBuffer: invalid enc')
+      assert(['der', 'raw', 'buff'].includes(enc), 'signBuffer: invalid enc')
       assert(isValidEcOptions(ecOptions), 'signBuffer: invalid EC option')
       const { privateKey } = getPrivateHDKey({ seedId, keyId })
       const signature = curve.sign(data, privateKey, pick(ecOptions, ['canonical']))
-      return enc === 'der' ? Buffer.from(signature.toDER()) : { ...signature }
+      return encodeSignature({ signature, enc })
     },
     signSchnorr: async ({ seedId, keyId, data, tweak, extraEntropy }) => {
       assert(
