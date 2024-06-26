@@ -30,7 +30,7 @@ export const create = ({ getPrivateHDKey }) => {
         keyId.keyType === 'secp256k1',
         `ECDSA signatures are not supported for ${keyId.keyType}`
       )
-      assert(['der', 'raw', 'buff'].includes(enc), 'signBuffer: invalid enc')
+      assert(['der', 'raw', 'binary'].includes(enc), 'signBuffer: invalid enc')
       assert(isValidEcOptions(ecOptions), 'signBuffer: invalid EC option')
       const { privateKey } = getPrivateHDKey({ seedId, keyId })
       const signature = curve.sign(data, privateKey, pick(ecOptions, ['canonical']))
