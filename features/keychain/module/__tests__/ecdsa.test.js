@@ -103,6 +103,7 @@ describe('EcDSA Signer Signature Encoding', () => {
     binary:
       '9288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162df63e7591ce6b3bc0bf66fa2948d220e74ea2a74b63fc9dcb20e0f53191550b6700',
   }
+
   it('Default encoding', async () => {
     const signature = await keychain.secp256k1.signBuffer({ seedId, keyId, data })
     expect(signature instanceof Buffer).toBe(true)
