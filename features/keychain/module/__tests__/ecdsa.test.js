@@ -93,3 +93,46 @@ describe.each([
     expect(signature.toString('hex')).toBe(expected)
   })
 })
+
+describe('EcDSA Signer Signature Encoding', () => {
+  const keychain = createKeychain({ seed })
+  const data = Buffer.from('I really love keychains')
+  const expected = {
+    default:
+      '30460221009288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d022100f63e7591ce6b3bc0bf66fa2948d220e74ea2a74b63fc9dcb20e0f53191550b67',
+    binary:
+      '9288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162df63e7591ce6b3bc0bf66fa2948d220e74ea2a74b63fc9dcb20e0f53191550b6700',
+  }
+  it('Default encoding', async () => {
+    const signature = await keychain.secp256k1.signBuffer({ seedId, keyId, data })
+    expect(signature instanceof Buffer).toBe(true)
+    expect(signature.toString('hex')).toBe(expected.default)
+  })
+
+  it('DER encoding', async () => {
+    const signature = await keychain.secp256k1.signBuffer({ seedId, keyId, data, enc: 'der' })
+    expect(signature instanceof Buffer).toBe(true)
+    expect(signature.toString('hex')).toBe(expected.default)
+  })
+
+  it('Binary encoding', async () => {
+    const signature = await keychain.secp256k1.signBuffer({ seedId, keyId, data, enc: 'binary' })
+    expect(signature instanceof Buffer).toBe(true)
+    expect(signature.toString('hex')).toBe(expected.binary)
+  })
+
+  it('Raw encoding', async () => {
+    const signature = await keychain.secp256k1.signBuffer({ seedId, keyId, data, enc: 'raw' })
+    expect(typeof signature === 'object')
+    expect(Object.getOwnPropertyNames(signature)).toStrictEqual(['r', 's', 'recoveryParam'])
+    const r = Buffer.from(signature.r.toArray('be', 32))
+    const s = Buffer.from(signature.s.toArray('be', 32))
+    const binary = Buffer.concat([r, s, Buffer.from([signature.recoveryParam])])
+    expect(binary.toString('hex')).toBe(expected.binary)
+  })
+
+  it('Invalid encoding', async () => {
+    const sign = () => keychain.secp256k1.signBuffer({ seedId, keyId, data, enc: 'other' })
+    await expect(sign()).rejects.toThrow(/signBuffer: invalid enc/)
+  })
+})
