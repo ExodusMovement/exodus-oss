@@ -11,13 +11,11 @@ const isValidEcOptions = (ecOptions) =>
 const encodeSignature = ({ signature, enc }) => {
   if (enc === 'der') return Buffer.from(signature.toDER())
 
-  const sig = { ...signature }
+  if (enc === 'raw') return { ...signature }
 
-  if (enc === 'raw') return sig
-
-  const r = Buffer.from(sig.r.toArray('be', 32))
-  const s = Buffer.from(sig.s.toArray('be', 32))
-  return Buffer.concat([r, s, Buffer.from([sig.recoveryParam])])
+  const r = Buffer.from(signature.r.toArray('be', 32))
+  const s = Buffer.from(signature.s.toArray('be', 32))
+  return Buffer.concat([r, s, Buffer.from([signature.recoveryParam])])
 }
 
 export const create = ({ getPrivateHDKey }) => {
