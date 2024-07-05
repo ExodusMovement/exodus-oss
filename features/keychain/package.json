@@ -1,6 +1,7 @@
 {
   "name": "@exodus/keychain",
   "version": "6.5.0",
+  "type": "module",
   "description": "A module designed to work more securely with private key material",
   "author": "Exodus Movement, Inc.",
   "homepage": "https://github.com/ExodusMovement/exodus-oss/tree/master/features/keychain",
@@ -9,8 +10,8 @@
     "lib": "src",
     "test": "__tests__"
   },
+  "main": "index.js",
   "files": [
-    "index.js",
     "index.d.ts",
     "module",
     "api",
