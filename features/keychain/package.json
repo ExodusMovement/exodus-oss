@@ -1,6 +1,6 @@
 {
   "name": "@exodus/keychain",
-  "version": "6.5.0",
+  "version": "6.5.1",
   "type": "module",
   "description": "A module designed to work more securely with private key material",
   "author": "Exodus Movement, Inc.",
@@ -34,7 +34,7 @@
     "@exodus/bip32": "^2.1.0",
     "@exodus/bitcoinerlab-secp256k1": "^1.0.5-exodus.1",
     "@exodus/elliptic": "^6.5.4-precomputed",
-    "@exodus/key-identifier": "^1.0.1",
+    "@exodus/key-identifier": "^1.1.2",
     "@exodus/key-utils": "^3.5.1",
     "@exodus/slip10": "^1.0.0",
     "@exodus/sodium-crypto": "^3.1.0",
