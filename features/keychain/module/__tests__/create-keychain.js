@@ -1,4 +1,4 @@
-import keychainDefinition from '..'
+import keychainDefinition from '../index.js'
 
 const createKeychain = ({ seed, ...rest }) => {
   const instance = keychainDefinition.factory(rest)

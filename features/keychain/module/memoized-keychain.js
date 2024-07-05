@@ -1,7 +1,7 @@
 import BJSON from 'buffer-json'
 import stableStringify from 'json-stable-stringify'
 
-import { Keychain } from './keychain'
+import { Keychain } from './keychain.js'
 
 const keyIdToCacheKey = stableStringify
 
