@@ -35,7 +35,7 @@
     "@exodus/bitcoinerlab-secp256k1": "^1.0.5-exodus.1",
     "@exodus/elliptic": "^6.5.4-precomputed",
     "@exodus/key-identifier": "^1.0.1",
-    "@exodus/key-utils": "^3.0.0",
+    "@exodus/key-utils": "^3.5.1",
     "@exodus/slip10": "^1.0.0",
     "@exodus/sodium-crypto": "^3.1.0",
     "buffer-json": "^2.0.0",
