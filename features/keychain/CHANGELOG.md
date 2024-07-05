@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.6.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.5.1...@exodus/keychain@6.6.0) (2024-07-05)
+
+### Features
+
+- add common signature encoding ([#107](https://github.com/ExodusMovement/exodus-oss/issues/107)) ([db4e478](https://github.com/ExodusMovement/exodus-oss/commit/db4e478a587a4945ba4c7908bc07db1086cbf58f))
+
 ## [6.5.1](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.5.0...@exodus/keychain@6.5.1) (2024-07-05)
 
 ### Bug Fixes
