@@ -1,4 +1,4 @@
-import keychainApiDefinition from './api'
+import keychainApiDefinition from './api/index.js'
 
 declare const keychain: () => {
   id: 'keychain'

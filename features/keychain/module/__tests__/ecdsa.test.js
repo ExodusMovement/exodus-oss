@@ -1,7 +1,7 @@
 import { mnemonicToSeed } from 'bip39'
 
-import createKeychain from './create-keychain'
-import { getSeedId } from '../crypto/seed-id'
+import createKeychain from './create-keychain.js'
+import { getSeedId } from '../crypto/seed-id.js'
 import KeyIdentifier from '@exodus/key-identifier'
 
 const seed = mnemonicToSeed(

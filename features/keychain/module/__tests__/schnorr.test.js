@@ -1,7 +1,7 @@
 import { utils } from '@noble/secp256k1'
 import ecc from '@exodus/bitcoinerlab-secp256k1'
 
-import { create } from '../crypto/secp256k1'
+import { create } from '../crypto/secp256k1.js'
 import KeyIdentifier from '@exodus/key-identifier'
 
 const fixtures = [

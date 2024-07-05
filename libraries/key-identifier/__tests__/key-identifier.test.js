@@ -1,5 +1,5 @@
 import { createKeyIdentifierForExodus } from '@exodus/key-ids'
-import KeyIdentifier from '../src/key-identifier'
+import KeyIdentifier from '../src/key-identifier.js'
 
 describe('KeyIdentifier', () => {
   it('should fail on incorrect construction', () => {

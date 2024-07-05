@@ -1,5 +1,5 @@
-import moduleDefinition from './module/keychain'
-import apiDefinition from './api'
+import moduleDefinition from './module/keychain.js'
+import apiDefinition from './api/index.js'
 
 const keychain = ({ cachePublicKeys }) => {
   // TODO: support caching

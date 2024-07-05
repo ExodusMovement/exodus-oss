@@ -5,15 +5,15 @@ import SLIP10 from '@exodus/slip10'
 import { mapValues } from '@exodus/basic-utils'
 import assert from 'minimalistic-assert'
 
-import * as ed25519 from './crypto/ed25519'
-import * as secp256k1 from './crypto/secp256k1'
-import * as sodium from './crypto/sodium'
+import * as ed25519 from './crypto/ed25519.js'
+import * as secp256k1 from './crypto/secp256k1.js'
+import * as sodium from './crypto/sodium.js'
 import {
   throwIfInvalidKeyIdentifier,
   throwIfInvalidMasters,
   throwIfInvalidLegacyPrivToPub,
-} from './validate'
-import { getSeedId } from './crypto/seed-id'
+} from './validate.js'
+import { getSeedId } from './crypto/seed-id.js'
 
 const MAP_KDF = Object.freeze({
   BIP32: bip32FromMasterSeed,

@@ -6,8 +6,8 @@ import { connectAssetsList } from '@exodus/assets'
 import solanaAssets from '@exodus/solana-meta'
 import { mnemonicToSeed } from 'bip39'
 import assert from 'minimalistic-assert'
-import keychainDefinition, { KeyIdentifier } from '..'
-import { getSeedId } from '../crypto/seed-id'
+import keychainDefinition, { KeyIdentifier } from '../index.js'
+import { getSeedId } from '../crypto/seed-id.js'
 
 const seed = mnemonicToSeed(
   'menu memory fury language physical wonder dog valid smart edge decrease worth'

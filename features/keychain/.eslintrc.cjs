@@ -4,7 +4,7 @@ module.exports = {
   parserOptions: {
     tsconfigRootDir: '../../',
     babelOptions: {
-      configFile: path.join(path.dirname(__filename), 'babel.config.js'),
+      configFile: path.join(path.dirname(__filename), 'babel.config.cjs'),
     },
   },
   overrides: [

@@ -1,8 +1,8 @@
 import KeyIdentifier from '@exodus/key-identifier'
 import { mnemonicToSeed } from 'bip39'
-import apiDefinition from '..'
-import moduleDefinition from '../../module'
-import { getSeedId } from '../../module/crypto/seed-id'
+import apiDefinition from '../index.js'
+import moduleDefinition from '../../module/index.js'
+import { getSeedId } from '../../module/crypto/seed-id.js'
 
 const mnemonic = 'cousin access oak tragic entire dynamic marine expand govern enjoy honey tissue'
 const otherMnemonic =

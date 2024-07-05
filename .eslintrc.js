@@ -1,3 +1,5 @@
+const fs = require('node:fs')
+
 const shared = {
   'import/no-cycle': ['error', { ignoreExternal: true }],
   'unicorn/no-array-callback-reference': 'off',
@@ -14,7 +16,13 @@ const shared = {
   ],
 }
 
+const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'))
+const isModule = pkg.type === 'module'
+
 const sourceExts = ['js', 'json', 'ts', 'tsx', 'android.js', 'ios.js']
+const esmConfigs = isModule
+  ? ['plugin:@exodus/require-extensions/recommended', 'plugin:@exodus/hydra/esm']
+  : []
 
 module.exports = {
   extends: [
@@ -23,7 +31,8 @@ module.exports = {
     'plugin:@exodus/basic-utils/recommended',
     'plugin:@exodus/restricted-imports/recommended',
     'plugin:@exodus/hydra/recommended',
-    'plugin:@exodus/eslint-plugin-package/recommended',
+    'plugin:@exodus/package/recommended',
+    ...esmConfigs,
   ],
   rules: shared,
   globals: {

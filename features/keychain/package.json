@@ -1,6 +1,7 @@
 {
   "name": "@exodus/keychain",
   "version": "6.5.0",
+  "type": "module",
   "description": "A module designed to work more securely with private key material",
   "author": "Exodus Movement, Inc.",
   "homepage": "https://github.com/ExodusMovement/exodus-oss/tree/master/features/keychain",
@@ -9,8 +10,8 @@
     "lib": "src",
     "test": "__tests__"
   },
+  "main": "index.js",
   "files": [
-    "index.js",
     "index.d.ts",
     "module",
     "api",
@@ -34,7 +35,7 @@
     "@exodus/bitcoinerlab-secp256k1": "^1.0.5-exodus.1",
     "@exodus/elliptic": "^6.5.4-precomputed",
     "@exodus/key-identifier": "^1.0.1",
-    "@exodus/key-utils": "^3.0.0",
+    "@exodus/key-utils": "^3.5.1",
     "@exodus/slip10": "^1.0.0",
     "@exodus/sodium-crypto": "^3.1.0",
     "buffer-json": "^2.0.0",

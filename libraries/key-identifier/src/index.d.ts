@@ -1,1 +1,1 @@
-export { default } from './key-identifier'
+export { default } from './key-identifier.js'

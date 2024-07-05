@@ -3,7 +3,7 @@ import elliptic from '@exodus/elliptic'
 import { mapValues, pick } from '@exodus/basic-utils'
 import ecc from '@exodus/bitcoinerlab-secp256k1'
 
-import { tweakPrivateKey } from './tweak'
+import { tweakPrivateKey } from './tweak.js'
 
 const isValidEcOptions = (ecOptions) =>
   !ecOptions || Object.keys(ecOptions).every((key) => ['canonical'].includes(key))
