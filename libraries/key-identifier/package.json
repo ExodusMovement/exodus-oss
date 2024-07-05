@@ -26,7 +26,7 @@
     "todo:reenable:test:integration": "jest --testMatch='**/*.integration-test.js'"
   },
   "dependencies": {
-    "@exodus/key-utils": "^3.3.0",
+    "@exodus/key-utils": "^3.5.1",
     "minimalistic-assert": "^1.0.1"
   },
   "devDependencies": {
