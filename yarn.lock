@@ -1981,11 +1981,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/key-identifier@^1.0.1, @exodus/key-identifier@workspace:libraries/key-identifier":
+"@exodus/key-identifier@^1.0.0, @exodus/key-identifier@^1.0.1, @exodus/key-identifier@workspace:libraries/key-identifier":
   version: 0.0.0-use.local
   resolution: "@exodus/key-identifier@workspace:libraries/key-identifier"
   dependencies:
-    "@exodus/key-ids": ^1.2.0
+    "@exodus/key-ids": ^1.2.2
     "@exodus/key-utils": ^3.3.0
     "@exodus/keychain": "workspace:^"
     minimalistic-assert: ^1.0.1
@@ -2002,13 +2002,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/key-ids@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "@exodus/key-ids@npm:1.2.0"
+"@exodus/key-ids@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "@exodus/key-ids@npm:1.2.2"
   dependencies:
-    "@exodus/keychain": ^5.0.1
+    "@exodus/key-identifier": ^1.0.0
     minimalistic-assert: ^1.0.1
-  checksum: c70f9ffb94773f7cef10cf5f90d54651e510e7be78f685fa999871516dc9e9e7488909022eb4db80d079c7b9d21dd72680ba81bc51d65537a8f1c3145cae2abd
+  checksum: 44208650e4c8e94a56e60c29b365ffe4d3c89a4f7bba3bf1af8129f128086bc7fddfe03a5e435cd865b13226e4c6ec0e1ae66eed662f01eb67a81efcb3acfe50
   languageName: node
   linkType: hard
 

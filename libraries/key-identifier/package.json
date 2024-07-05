@@ -1,6 +1,7 @@
 {
   "name": "@exodus/key-identifier",
   "version": "1.1.1",
+  "type": "module",
   "description": "Provides a KeyIdentifier class that helps to define how a key is derived",
   "author": "Exodus Movement, Inc.",
   "repository": {
@@ -29,7 +30,7 @@
     "minimalistic-assert": "^1.0.1"
   },
   "devDependencies": {
-    "@exodus/key-ids": "^1.2.0",
+    "@exodus/key-ids": "^1.2.2",
     "@exodus/keychain": "workspace:^"
   }
 }
