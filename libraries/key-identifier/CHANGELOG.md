@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/key-identifier@1.1.1...@exodus/key-identifier@1.1.2) (2024-07-05)
+
+### Bug Fixes
+
+- use proper ESM ([#109](https://github.com/ExodusMovement/exodus-oss/issues/109)) ([28507b6](https://github.com/ExodusMovement/exodus-oss/commit/28507b6e1494deab2a0d2e5085a900fcf870214a))
+
 ## [1.1.1](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/key-identifier@1.1.0...@exodus/key-identifier@1.1.1) (2024-05-08)
 
 ### Bug Fixes
