@@ -63,4 +63,5 @@ const memoizedKeychainDefinition = {
   dependencies: ['storage', 'legacyPrivToPub'],
 }
 
+// eslint-disable-next-line @exodus/hydra/no-unused-ioc-nodes
 export default memoizedKeychainDefinition

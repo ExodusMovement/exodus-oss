@@ -1904,14 +1904,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/eslint-plugin-hydra@npm:^1.0.0":
-  version: 1.3.0
-  resolution: "@exodus/eslint-plugin-hydra@npm:1.3.0"
+"@exodus/eslint-plugin-hydra@npm:^1.16.0":
+  version: 1.16.0
+  resolution: "@exodus/eslint-plugin-hydra@npm:1.16.0"
   dependencies:
     "@exodus/basic-utils": ^2.1.0
     eslint-module-utils: ^2.8.0
+    eslint-plugin-import: ^2.29.1
+    eslint-rule-composer: ^0.3.0
     lodash: ^4.17.21
-  checksum: 771e42e8a15705259e05286dd0d567df4c0f201f9e2b98c30798b1aac1cc5bde4b9593683e12aaef93a7fee80d76fef148d60869da680cefdb5fac77492add10
+  checksum: fc4750dccf428d7411011ca1d86590559e612d541cbdc01a158e3da66370f70d7ed9efc4de3d88cac51555cda4f8040b310af0a9fdac7a1ee193575699b5919d
   languageName: node
   linkType: hard
 
@@ -1935,6 +1937,15 @@ __metadata:
   peerDependencies:
     eslint: ">=6"
   checksum: 0fa8e1d0d2ab4d317b91e5792b8b4570d43317e2294e7e73916a304fb054d2c003531386d12af9918da22bc1bb71b8acd6146f85a90d9e779ff593d899acf92f
+  languageName: node
+  linkType: hard
+
+"@exodus/eslint-plugin-require-extensions@npm:^0.1.3-exodus.2":
+  version: 0.1.3-exodus.2
+  resolution: "@exodus/eslint-plugin-require-extensions@npm:0.1.3-exodus.2"
+  peerDependencies:
+    eslint: "*"
+  checksum: 32064cb023c7ba7bf03b144e93bc6c33b2c30d0f859cfc51eb39d4810f09d4e5bc8e4b909a1a357e90c4d972d3f8b01580f4005876a54c606145d7306791959e
   languageName: node
   linkType: hard
 
@@ -5835,7 +5846,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-import@npm:^2.24.2":
+"eslint-plugin-import@npm:^2.24.2, eslint-plugin-import@npm:^2.29.1":
   version: 2.29.1
   resolution: "eslint-plugin-import@npm:2.29.1"
   dependencies:
@@ -6001,6 +6012,13 @@ __metadata:
   peerDependencies:
     eslint: ">=8.28.0"
   checksum: 2059aee095a00eedcda8c5407fdb91075549dd468bc26e1e5ca585c0c5c5daf621bc7eaab6159b56ca6d65653705ac139caf8a2a667f777efb425eae6abae61e
+  languageName: node
+  linkType: hard
+
+"eslint-rule-composer@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "eslint-rule-composer@npm:0.3.0"
+  checksum: c2f57cded8d1c8f82483e0ce28861214347e24fd79fd4144667974cd334d718f4ba05080aaef2399e3bbe36f7d6632865110227e6b176ed6daa2d676df9281b1
   languageName: node
   linkType: hard
 
@@ -11097,8 +11115,9 @@ __metadata:
     "@exodus/eslint-config": ^5.22.0
     "@exodus/eslint-plugin-ban-flow": latest
     "@exodus/eslint-plugin-basic-utils": latest
-    "@exodus/eslint-plugin-hydra": ^1.0.0
+    "@exodus/eslint-plugin-hydra": ^1.16.0
     "@exodus/eslint-plugin-package": ^1.10.1
+    "@exodus/eslint-plugin-require-extensions": ^0.1.3-exodus.2
     "@exodus/eslint-plugin-restricted-imports": ^1.1.1
     "@exodus/prettier": ^1.0.0
     "@nrwl/devkit": ^15.8.5
