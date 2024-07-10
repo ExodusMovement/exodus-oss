@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.7.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.6.0...@exodus/keychain@6.7.0) (2024-07-10)
+
+### Features
+
+- **keychain:** default feature config ([#112](https://github.com/ExodusMovement/exodus-oss/issues/112)) ([ac8a86b](https://github.com/ExodusMovement/exodus-oss/commit/ac8a86bb10efdff2849a9577d0b8150c9247b886))
+
 ## [6.6.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.5.1...@exodus/keychain@6.6.0) (2024-07-05)
 
 ### Features
