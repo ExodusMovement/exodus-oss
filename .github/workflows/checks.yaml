@@ -19,6 +19,7 @@ permissions:
 
 env:
   DISABLE_NX_CACHE: ${{ contains(github.event.pull_request.labels.*.name, 'disable-nx-cache') && 'yes' || 'no' }}
+  NX_REJECT_UNKNOWN_LOCAL_CACHE: 0
 
 jobs:
   lint:
