@@ -116,6 +116,18 @@ describe('KeyIdentifier', () => {
     })
   })
 
+  describe('.toStringTag()', () => {
+    test('returns KeyIdentifier', () => {
+      const keyId = new KeyIdentifier({
+        derivationAlgorithm: 'BIP32',
+        assetName: 'ethereum',
+        derivationPath: "m/44'/60'/0'",
+      })
+
+      expect(keyId[Symbol.toStringTag]()).toBe('KeyIdentifier')
+    })
+  })
+
   describe('.compare()', () => {
     it('should return true when equal', () => {
       const keyIdA = new KeyIdentifier({
