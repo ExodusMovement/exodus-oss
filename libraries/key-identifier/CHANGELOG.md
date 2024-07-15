@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/key-identifier@1.2.0...@exodus/key-identifier@1.2.1) (2024-07-15)
+
+### Bug Fixes
+
+- ensure `derivationPath` is spreadable ([#118](https://github.com/ExodusMovement/exodus-oss/issues/118)) ([a27ee3c](https://github.com/ExodusMovement/exodus-oss/commit/a27ee3ce2d4c5266f46bbffa5075ad703a5b66e0))
+
 ## [1.2.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/key-identifier@1.1.2...@exodus/key-identifier@1.2.0) (2024-07-15)
 
 ### Features
