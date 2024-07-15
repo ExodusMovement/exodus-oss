@@ -79,6 +79,31 @@ describe('KeyIdentifier', () => {
     expect(keyId.derivationPath).toBe("m/44'/60'/0'/0/0")
   })
 
+  test('spreads all properties', () => {
+    const properties = {
+      assetName: 'wayne-oin',
+      derivationAlgorithm: 'BIP32',
+      derivationPath: "m/44'/60'/0'",
+      keyType: 'secp256k1',
+    }
+
+    const keyId = new KeyIdentifier(properties)
+
+    expect({ ...keyId }).toEqual(properties)
+  })
+
+  test('cannot write derivationPath', () => {
+    const keyId = new KeyIdentifier({
+      derivationAlgorithm: 'BIP32',
+      assetName: 'ethereum',
+      derivationPath: ['m', "44'", "60'", "0'", '0', '0'],
+    })
+
+    expect(() => {
+      keyId.derivationPath = 'm/44/60/0/0/0'
+    }).toThrow()
+  })
+
   describe('.extend()', () => {
     test('extends derivation path', () => {
       const keyId = new KeyIdentifier({

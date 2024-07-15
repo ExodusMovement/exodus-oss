@@ -39,13 +39,14 @@ export default class KeyIdentifier {
       ? derivationPath
       : DerivationPath.from(derivationPath)
 
+    Object.defineProperty(this, 'derivationPath', {
+      value: this.#derivationPath.toString(),
+      enumerable: true,
+    })
+
     // Freeze the object on construction, disallow tampering with derivation path.
     // Ensures immutability of key identifiers passed to keychain.
     Object.freeze(this)
-  }
-
-  get derivationPath() {
-    return this.#derivationPath.toString()
   }
 
   derive(pathLike) {
