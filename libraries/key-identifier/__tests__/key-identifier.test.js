@@ -81,7 +81,7 @@ describe('KeyIdentifier', () => {
 
   test('spreads all properties', () => {
     const properties = {
-      assetName: 'wayne-oin',
+      assetName: 'wayne-coin',
       derivationAlgorithm: 'BIP32',
       derivationPath: "m/44'/60'/0'",
       keyType: 'secp256k1',
