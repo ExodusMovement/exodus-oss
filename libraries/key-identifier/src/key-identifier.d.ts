@@ -18,7 +18,7 @@ export default class KeyIdentifier {
 
   constructor(params: ConstructorParams)
 
-  get derivationPath(): string
+  readonly derivationPath: string
 
   /**
    * Returns a new KeyIdentifier instance that has an updated derivation path extended with
