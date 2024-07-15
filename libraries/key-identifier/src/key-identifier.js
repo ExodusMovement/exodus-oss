@@ -59,6 +59,10 @@ export default class KeyIdentifier {
     return `${this.derivationPath} (${this.derivationAlgorithm})`
   }
 
+  get [Symbol.toStringTag]() {
+    return 'KeyIdentifier'
+  }
+
   toJSON() {
     return {
       derivationAlgorithm: this.derivationAlgorithm,

@@ -89,13 +89,12 @@ describe('KeyIdentifier', () => {
 
       const derived = keyId.derive([1, 5])
 
-      expect(derived).toEqual({
+      expect(derived.toJSON()).toEqual({
         derivationAlgorithm: 'BIP32',
         assetName: 'ethereum',
+        derivationPath: "m/44'/60'/0'/1/5",
         keyType: 'secp256k1',
       })
-
-      expect(derived.derivationPath).toBe("m/44'/60'/0'/1/5")
     })
   })
 
@@ -113,6 +112,18 @@ describe('KeyIdentifier', () => {
         keyType: 'secp256k1',
         derivationPath: "m/44'/60'/0'",
       })
+    })
+  })
+
+  describe('.toStringTag()', () => {
+    test('returns KeyIdentifier', () => {
+      const keyId = new KeyIdentifier({
+        derivationAlgorithm: 'BIP32',
+        assetName: 'ethereum',
+        derivationPath: "m/44'/60'/0'",
+      })
+
+      expect(keyId[Symbol.toStringTag]).toBe('KeyIdentifier')
     })
   })
 
