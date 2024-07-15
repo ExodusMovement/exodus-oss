@@ -124,7 +124,7 @@ describe('KeyIdentifier', () => {
         derivationPath: "m/44'/60'/0'",
       })
 
-      expect(keyId[Symbol.toStringTag]()).toBe('KeyIdentifier')
+      expect(keyId[Symbol.toStringTag]).toBe('KeyIdentifier')
     })
   })
 
