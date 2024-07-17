@@ -22,6 +22,10 @@ const MAP_KDF = Object.freeze({
 
 export const MODULE_ID = 'keychain'
 
+function isArrayOfStrings(array) {
+  return Array.isArray(array) && array.every((element) => typeof element === 'string')
+}
+
 export class Keychain {
   #masters = Object.create(null)
   #legacyPrivToPub = null
@@ -62,7 +66,7 @@ export class Keychain {
       seeds?.length === Object.values(this.#masters).length,
       'must pass in same number of seeds'
     )
-    const seedIds = new Set(seeds.map((seed) => getSeedId(seed)))
+    const seedIds = new Set(isArrayOfStrings(seeds) ? seeds : seeds.map(getSeedId))
     for (const seedId of Object.keys(this.#masters)) {
       assert(seedIds.has(seedId), 'must pass in existing seed')
     }

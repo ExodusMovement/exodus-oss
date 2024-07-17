@@ -187,4 +187,10 @@ describe('lockPrivateKeys', () => {
       /private keys are locked/
     )
   })
+
+  it('should allow providing seedIds directly', async () => {
+    const keychain = createKeychain({ seed })
+    keychain.lockPrivateKeys()
+    keychain.unlockPrivateKeys([seedId])
+  })
 })
