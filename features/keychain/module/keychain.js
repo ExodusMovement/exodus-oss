@@ -80,9 +80,9 @@ export class Keychain {
   unlockPrivateKeys(seeds = []) {
     const seedIds = getUniqueSeedIds(seeds)
 
-    const existingSeeds = Object.keys(this.#masters)
+    const existingSeedIds = Object.keys(this.#masters)
     for (const seedId of seedIds) {
-      const hasSeed = existingSeeds.includes(seedId)
+      const hasSeed = existingSeedIds.includes(seedId)
       assert(hasSeed, 'must pass in existing seed')
     }
 
