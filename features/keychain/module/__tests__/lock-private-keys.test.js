@@ -96,17 +96,6 @@ describe('lockPrivateKeys', () => {
     expect(Buffer.compare(publicKey, exportedKeys.publicKey)).toBe(0)
   })
 
-  it('should block unlock for wrong seeds length', async () => {
-    const keychain = createKeychain({ seed })
-    keychain.lockPrivateKeys()
-    await expect(async () => keychain.unlockPrivateKeys([])).rejects.toThrow(
-      /must pass in same number of seeds/
-    )
-    await expect(async () => keychain.unlockPrivateKeys([seed, seed])).rejects.toThrow(
-      /must pass in same number of seeds/
-    )
-  })
-
   it('should block unlock when already unlocked', async () => {
     const keychain = createKeychain({ seed })
     await expect(async () => keychain.unlockPrivateKeys([seed])).rejects.toThrow(/already unlocked/)
@@ -115,16 +104,32 @@ describe('lockPrivateKeys', () => {
   it('should block unlock for wrong seed ids', async () => {
     const keychain = createKeychain({ seed })
     keychain.lockPrivateKeys()
-    await expect(async () => keychain.unlockPrivateKeys([seed1])).rejects.toThrow(
+
+    const wrongSeed = mnemonicToSeed('menu'.repeat(12))
+    await expect(async () => keychain.unlockPrivateKeys([wrongSeed])).rejects.toThrow(
       /must pass in existing seed/
     )
 
     const keychain1 = createKeychain({ seed })
     keychain1.addSeed(seed1)
     keychain1.lockPrivateKeys()
-    await expect(async () => keychain1.unlockPrivateKeys([seed, seed])).rejects.toThrow(
+    await expect(async () => keychain1.unlockPrivateKeys([seed, wrongSeed])).rejects.toThrow(
       /must pass in existing seed/
     )
+  })
+
+  it('either unlock all provided seeds or none', async () => {
+    const keychain = createKeychain({ seed })
+
+    keychain.addSeed(seed1)
+    keychain.lockPrivateKeys()
+
+    const wrongSeed = mnemonicToSeed('menu'.repeat(12))
+    await expect(async () => keychain.unlockPrivateKeys([seed, wrongSeed])).rejects.toThrow(
+      /must pass in existing seed/
+    )
+
+    expect(keychain.arePrivateKeysLocked([seed])).toBe(true)
   })
 
   it('should block exportKey for private keys when locked', async () => {
