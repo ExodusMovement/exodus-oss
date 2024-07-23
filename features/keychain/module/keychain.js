@@ -101,6 +101,7 @@ export class Keychain {
 
     const seedId = getSeedId(seed)
     this.#masters[seedId] = masters
+    // manually unlock here since unlockPrivateKeys requires seed to already exist
     this.#seedLockStatus[seedId] = false
     return seedId
   }
