@@ -12,7 +12,10 @@ const seed1 = mnemonicToSeed(
   'menu memory fury language physical wonder dog valid smart edge decrease test'
 )
 
+const otherSeed = mnemonicToSeed('language'.repeat(12))
+
 const seedId = getSeedId(seed)
+const otherSeedId = getSeedId(otherSeed)
 
 describe('lockPrivateKeys', () => {
   it('should allow private key usage when unlocked', async () => {
@@ -76,10 +79,26 @@ describe('lockPrivateKeys', () => {
     keychain.clone()
   })
 
-  it('should allow exportKeys after lock/unlock', async () => {
+  it('allows unlocking seeds in batches', () => {
     const keychain = createKeychain({ seed })
+    keychain.addSeed(otherSeed)
+
     keychain.lockPrivateKeys()
     keychain.unlockPrivateKeys([seed])
+
+    expect(keychain.arePrivateKeysLocked()).toBe(true)
+    expect(keychain.arePrivateKeysLocked([seed])).toBe(false)
+
+    keychain.unlockPrivateKeys([otherSeed])
+    expect(keychain.arePrivateKeysLocked()).toBe(false)
+  })
+
+  it('should allow exportKeys after lock/unlock', async () => {
+    const keychain = createKeychain({ seed })
+
+    keychain.lockPrivateKeys()
+    keychain.unlockPrivateKeys([seed])
+    keychain.addSeed(otherSeed)
 
     const keyId = createKeyIdentifierForExodus({ exoType: 'FUSION' })
     const exportedKeys = await keychain.exportKey({
@@ -94,6 +113,23 @@ describe('lockPrivateKeys', () => {
       sign: { publicKey },
     } = await sodiumEncryptor.getSodiumKeysFromSeed({ seedId })
     expect(Buffer.compare(publicKey, exportedKeys.publicKey)).toBe(0)
+  })
+
+  it('should block exporting seeds that still locked', async () => {
+    const keychain = createKeychain({ seed })
+    const keyId = createKeyIdentifierForExodus({ exoType: 'FUSION' })
+
+    keychain.addSeed(otherSeed)
+    keychain.lockPrivateKeys()
+    keychain.unlockPrivateKeys([seed])
+
+    await expect(
+      keychain.exportKey({
+        seedId: otherSeedId,
+        keyId,
+        exportPrivate: true,
+      })
+    ).rejects.toThrow(/private keys are locked/)
   })
 
   it('should block unlock when already unlocked', async () => {
