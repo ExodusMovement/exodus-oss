@@ -6,6 +6,6 @@ export const getManySeedIds = (seeds) => seeds.map(getSeedId)
 
 export const getUniqueSeedIds = (seeds) => {
   const seedIds = getManySeedIds(seeds)
-  const uniqueSeeIds = new Set(seedIds)
-  return [...uniqueSeeIds]
+  const uniqueSeedIds = new Set(seedIds)
+  return [...uniqueSeedIds]
 }
