@@ -4,6 +4,7 @@ import apiDefinition from '../index.js'
 import moduleDefinition from '../../module/index.js'
 import { getSeedId } from '../../module/crypto/seed-id.js'
 
+let keychain
 const mnemonic = 'cousin access oak tragic entire dynamic marine expand govern enjoy honey tissue'
 const otherMnemonic =
   'menu memory fury language physical wonder dog valid smart edge decrease worth'
@@ -53,7 +54,7 @@ describe('keychain api', () => {
   beforeEach(() => {
     jest.clearAllMocks()
 
-    const keychain = moduleDefinition.factory()
+    keychain = moduleDefinition.factory()
     api = apiDefinition.factory({ keychain }).keychain
     keychain.addSeed(seed)
     keychain.addSeed(otherSeed)
@@ -112,6 +113,29 @@ describe('keychain api', () => {
       ),
       xpriv: null,
       xpub: 'xpub6GZDo9NGhuCMi1tATK1mrkcCmsJkS7byjwVgjqp1pZxD1EQ4GMf9vD42r1jAM7teWuk63fPXDvWA8sBxrdVM9sEdhsbGH7jfCEgTg7mvVNh',
+    })
+  })
+
+  describe('arePrivateKeysLocked', () => {
+    test('returns false if no seeds are locked', async () => {
+      expect(api.arePrivateKeysLocked()).toBe(false)
+    })
+
+    test('returns true if all seeds are locked', async () => {
+      keychain.lockPrivateKeys()
+      expect(api.arePrivateKeysLocked([])).toBe(true)
+    })
+
+    test('returns true if some seeds are locked', async () => {
+      keychain.lockPrivateKeys()
+      keychain.unlockPrivateKeys([seed])
+      expect(api.arePrivateKeysLocked()).toBe(true)
+    })
+
+    test('returns false if targetted seed is unlocked', async () => {
+      keychain.lockPrivateKeys()
+      keychain.unlockPrivateKeys([seed])
+      expect(api.arePrivateKeysLocked([seed])).toBe(false)
     })
   })
 
