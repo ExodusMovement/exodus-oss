@@ -13,7 +13,7 @@ import {
   throwIfInvalidMasters,
   throwIfInvalidLegacyPrivToPub,
 } from './validate.js'
-import { getSeedId } from './crypto/seed-id.js'
+import { getManySeedIds, getSeedId } from './crypto/seed-id.js'
 
 const MAP_KDF = Object.freeze({
   BIP32: bip32FromMasterSeed,
@@ -25,7 +25,7 @@ export const MODULE_ID = 'keychain'
 export class Keychain {
   #masters = Object.create(null)
   #legacyPrivToPub = null
-  #privateKeysAreLocked = false
+  #seedLockStatus = Object.create(null)
   #getPrivateHDKeySymbol = Symbol('getPrivateHDKey')
 
   // TODO: remove default param. Use it temporarily for backward compatibility.
@@ -44,30 +44,50 @@ export class Keychain {
     this.secp256k1 = secp256k1.create({ getPrivateHDKey: this.#getPrivateHDKey })
   }
 
-  #assertPrivateKeysUnlocked() {
-    assert(!this.#privateKeysAreLocked, 'private keys are locked')
+  #assertPrivateKeysUnlocked(seeds) {
+    const isLocked = this.arePrivateKeysLocked(seeds)
+    assert(!isLocked, 'private keys are locked')
   }
 
-  arePrivateKeysLocked() {
-    return this.#privateKeysAreLocked
+  arePrivateKeysLocked(seeds) {
+    if (!seeds) {
+      return Object.values(this.#seedLockStatus).some((isLocked) => isLocked)
+    }
+
+    const seedIds = getManySeedIds(seeds)
+    const existingSeedIds = Object.entries(this.#seedLockStatus).filter(([seedId]) =>
+      seedIds.has(seedId)
+    )
+
+    assert(existingSeedIds.length === seedIds.size, 'must pass in existing seeds')
+    return Object.entries(this.#seedLockStatus)
+      .filter(([seedId]) => seedIds.has(seedId))
+      .some(([, isLocked]) => isLocked)
   }
 
   lockPrivateKeys() {
-    this.#privateKeysAreLocked = true
+    const seedIds = Object.keys(this.#masters)
+    this.#seedLockStatus = seedIds.reduce((acc, seedId) => {
+      acc[seedId] = true
+      return acc
+    }, Object.create(null))
   }
 
   unlockPrivateKeys(seeds) {
-    assert(this.#privateKeysAreLocked, 'already unlocked')
-    assert(
-      seeds?.length === Object.values(this.#masters).length,
-      'must pass in same number of seeds'
-    )
-    const seedIds = new Set(seeds.map((seed) => getSeedId(seed)))
-    for (const seedId of Object.keys(this.#masters)) {
-      assert(seedIds.has(seedId), 'must pass in existing seed')
+    const seedIds = getManySeedIds(seeds)
+    const isLocked = this.arePrivateKeysLocked(seeds)
+    assert(isLocked, 'already unlocked')
+
+    const existingSeeds = Object.keys(this.#masters)
+    for (const seedId of seedIds) {
+      const hasSeed = existingSeeds.includes(seedId)
+      assert(hasSeed, 'must pass in existing seed')
     }
 
-    this.#privateKeysAreLocked = false
+    // Unlock seeds after verifying they exist
+    for (const seedId of seedIds) {
+      this.#seedLockStatus[seedId] = false
+    }
   }
 
   addSeed(seed) {
@@ -80,12 +100,13 @@ export class Keychain {
 
     const seedId = getSeedId(seed)
     this.#masters[seedId] = masters
+    this.#seedLockStatus[seedId] = false
     return seedId
   }
 
   removeAllSeeds() {
     this.#masters = Object.create(null)
-    this.#privateKeysAreLocked = false
+    this.#seedLockStatus = Object.create(null)
   }
 
   #getPrivateHDKey = ({ seedId, keyId, getPrivateHDKeySymbol }) => {
@@ -102,7 +123,10 @@ export class Keychain {
   }
 
   async exportKey({ seedId, keyId, exportPrivate }) {
-    if (exportPrivate) this.#assertPrivateKeysUnlocked()
+    if (exportPrivate) {
+      this.#assertPrivateKeysUnlocked()
+    }
+
     keyId = new KeyIdentifier(keyId)
 
     const hdkey = this.#getPrivateHDKey({
