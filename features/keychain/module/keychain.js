@@ -13,7 +13,7 @@ import {
   throwIfInvalidMasters,
   throwIfInvalidLegacyPrivToPub,
 } from './validate.js'
-import { getManySeedIds, getSeedId } from './crypto/seed-id.js'
+import { getSeedId, getUniqueSeedIds } from './crypto/seed-id.js'
 
 const MAP_KDF = Object.freeze({
   BIP32: bip32FromMasterSeed,
@@ -50,7 +50,7 @@ export class Keychain {
   }
 
   #checkPrivateKeysLocked(seedIds) {
-    if (!seedIds?.size) {
+    if (!seedIds?.length) {
       return Object.values(this.#seedLockStatus).some(Boolean)
     }
 
@@ -64,7 +64,8 @@ export class Keychain {
   }
 
   arePrivateKeysLocked(seeds = []) {
-    const seedIds = getManySeedIds(seeds)
+    assert(Array.isArray(seeds), 'seeds must be an array')
+    const seedIds = getUniqueSeedIds(seeds)
     return this.#checkPrivateKeysLocked(seedIds)
   }
 
@@ -77,7 +78,7 @@ export class Keychain {
   }
 
   unlockPrivateKeys(seeds = []) {
-    const seedIds = getManySeedIds(seeds)
+    const seedIds = getUniqueSeedIds(seeds)
 
     const existingSeeds = Object.keys(this.#masters)
     for (const seedId of seedIds) {
@@ -111,7 +112,7 @@ export class Keychain {
 
   #getPrivateHDKey = ({ seedId, keyId, getPrivateHDKeySymbol }) => {
     if (getPrivateHDKeySymbol !== this.#getPrivateHDKeySymbol) {
-      this.#assertPrivateKeysUnlocked(seedId ? new Set([seedId]) : undefined)
+      this.#assertPrivateKeysUnlocked(seedId ? [seedId] : undefined)
     }
 
     throwIfInvalidKeyIdentifier(keyId)
@@ -126,7 +127,7 @@ export class Keychain {
 
   async exportKey({ seedId, keyId, exportPrivate }) {
     if (exportPrivate) {
-      this.#assertPrivateKeysUnlocked(seedId ? new Set([seedId]) : undefined)
+      this.#assertPrivateKeysUnlocked(seedId ? [seedId] : undefined)
     }
 
     keyId = new KeyIdentifier(keyId)
@@ -162,7 +163,7 @@ export class Keychain {
   }
 
   async signTx({ seedId, keyIds, signTxCallback, unsignedTx }) {
-    this.#assertPrivateKeysUnlocked(seedId ? new Set([seedId]) : undefined)
+    this.#assertPrivateKeysUnlocked(seedId ? [seedId] : undefined)
     assert(typeof signTxCallback === 'function', 'signTxCallback must be a function')
     const hdkeys = Object.fromEntries(
       keyIds.map((keyId) => {
