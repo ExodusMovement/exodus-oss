@@ -75,7 +75,7 @@ export class Keychain {
     }, Object.create(null))
   }
 
-  unlockPrivateKeys(seeds) {
+  unlockPrivateKeys(seeds = []) {
     const seedIds = getManySeedIds(seeds)
     const locked = this.#checkPrivateKeysLocked(seedIds)
     assert(locked, 'already unlocked')
