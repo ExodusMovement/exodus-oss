@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.8.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.7.0...@exodus/keychain@6.8.0) (2024-07-23)
+
+### Features
+
+- implement seed-specific locked boolean flag ([#123](https://github.com/ExodusMovement/exodus-oss/issues/123)) ([2f9dd29](https://github.com/ExodusMovement/exodus-oss/commit/2f9dd29a6b770088756d2decbd51cfa1bda9fdfe))
+
 ## [6.7.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.6.0...@exodus/keychain@6.7.0) (2024-07-10)
 
 ### Features
