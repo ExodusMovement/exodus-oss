@@ -111,7 +111,7 @@ export class Keychain {
 
   #getPrivateHDKey = ({ seedId, keyId, getPrivateHDKeySymbol }) => {
     if (getPrivateHDKeySymbol !== this.#getPrivateHDKeySymbol) {
-      this.#assertPrivateKeysUnlocked(new Set([seedId]))
+      this.#assertPrivateKeysUnlocked(seedId ? new Set([seedId]) : undefined)
     }
 
     throwIfInvalidKeyIdentifier(keyId)
@@ -126,7 +126,7 @@ export class Keychain {
 
   async exportKey({ seedId, keyId, exportPrivate }) {
     if (exportPrivate) {
-      this.#assertPrivateKeysUnlocked(new Set([seedId]))
+      this.#assertPrivateKeysUnlocked(seedId ? new Set([seedId]) : undefined)
     }
 
     keyId = new KeyIdentifier(keyId)
@@ -162,7 +162,7 @@ export class Keychain {
   }
 
   async signTx({ seedId, keyIds, signTxCallback, unsignedTx }) {
-    this.#assertPrivateKeysUnlocked(new Set([seedId]))
+    this.#assertPrivateKeysUnlocked(seedId ? new Set([seedId]) : undefined)
     assert(typeof signTxCallback === 'function', 'signTxCallback must be a function')
     const hdkeys = Object.fromEntries(
       keyIds.map((keyId) => {
