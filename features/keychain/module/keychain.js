@@ -51,7 +51,7 @@ export class Keychain {
 
   #checkPrivateKeysLocked(seedIds) {
     if (!seedIds?.size) {
-      return Object.values(this.#seedLockStatus).some((locked) => locked)
+      return Object.values(this.#seedLockStatus).some(Boolean)
     }
 
     const existingSeeds = Object.entries(this.#seedLockStatus)
