@@ -86,7 +86,6 @@ export class Keychain {
       assert(hasSeed, 'must pass in existing seed')
     }
 
-    // Unlock seeds after verifying they exist
     for (const seedId of seedIds) {
       this.#seedLockStatus[seedId] = false
     }
