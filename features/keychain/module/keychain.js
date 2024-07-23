@@ -50,13 +50,12 @@ export class Keychain {
   }
 
   #checkPrivateKeysLocked(seedIds) {
-    if (!seedIds?.length) {
+    if (!seedIds?.size) {
       return Object.values(this.#seedLockStatus).some((locked) => locked)
     }
 
-    const checkingSeeds = Object.entries(this.#seedLockStatus).filter(([seedId]) =>
-      seedIds.has(seedId)
-    )
+    const existingSeeds = Object.entries(this.#seedLockStatus)
+    const checkingSeeds = existingSeeds.filter(([seedId]) => seedIds.has(seedId))
 
     assert(checkingSeeds.length === seedIds.size, 'must pass in existing seeds')
     return checkingSeeds.some(([, locked]) => locked)
