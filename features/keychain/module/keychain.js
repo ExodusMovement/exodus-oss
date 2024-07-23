@@ -127,8 +127,10 @@ export class Keychain {
   }
 
   async exportKey({ seedId, keyId, exportPrivate }) {
+    assert(typeof seedId === 'string', 'seedId must be a string')
+
     if (exportPrivate) {
-      this.#assertPrivateKeysUnlocked(seedId ? [seedId] : undefined)
+      this.#assertPrivateKeysUnlocked([seedId])
     }
 
     keyId = new KeyIdentifier(keyId)
