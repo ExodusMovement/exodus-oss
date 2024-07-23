@@ -44,25 +44,27 @@ export class Keychain {
     this.secp256k1 = secp256k1.create({ getPrivateHDKey: this.#getPrivateHDKey })
   }
 
-  #assertPrivateKeysUnlocked(seeds) {
-    const isLocked = this.arePrivateKeysLocked(seeds)
-    assert(!isLocked, 'private keys are locked')
+  #assertPrivateKeysUnlocked(seedIds) {
+    const locked = this.#checkPrivateKeysLocked(seedIds)
+    assert(!locked, 'private keys are locked')
   }
 
-  arePrivateKeysLocked(seeds) {
-    if (!seeds) {
-      return Object.values(this.#seedLockStatus).some((isLocked) => isLocked)
+  #checkPrivateKeysLocked(seedIds) {
+    if (!seedIds?.length) {
+      return Object.values(this.#seedLockStatus).some((locked) => locked)
     }
 
-    const seedIds = getManySeedIds(seeds)
-    const existingSeedIds = Object.entries(this.#seedLockStatus).filter(([seedId]) =>
+    const checkingSeeds = Object.entries(this.#seedLockStatus).filter(([seedId]) =>
       seedIds.has(seedId)
     )
 
-    assert(existingSeedIds.length === seedIds.size, 'must pass in existing seeds')
-    return Object.entries(this.#seedLockStatus)
-      .filter(([seedId]) => seedIds.has(seedId))
-      .some(([, isLocked]) => isLocked)
+    assert(checkingSeeds.length === seedIds.size, 'must pass in existing seeds')
+    return checkingSeeds.some(([, locked]) => locked)
+  }
+
+  arePrivateKeysLocked(seeds = []) {
+    const seedIds = getManySeedIds(seeds)
+    return this.#checkPrivateKeysLocked(seedIds)
   }
 
   lockPrivateKeys() {
@@ -75,8 +77,8 @@ export class Keychain {
 
   unlockPrivateKeys(seeds) {
     const seedIds = getManySeedIds(seeds)
-    const isLocked = this.arePrivateKeysLocked(seeds)
-    assert(isLocked, 'already unlocked')
+    const locked = this.#checkPrivateKeysLocked(seedIds)
+    assert(locked, 'already unlocked')
 
     const existingSeeds = Object.keys(this.#masters)
     for (const seedId of seedIds) {
@@ -110,9 +112,11 @@ export class Keychain {
   }
 
   #getPrivateHDKey = ({ seedId, keyId, getPrivateHDKeySymbol }) => {
-    if (getPrivateHDKeySymbol !== this.#getPrivateHDKeySymbol) this.#assertPrivateKeysUnlocked()
-    throwIfInvalidKeyIdentifier(keyId)
+    if (getPrivateHDKeySymbol !== this.#getPrivateHDKeySymbol) {
+      this.#assertPrivateKeysUnlocked(new Set([seedId]))
+    }
 
+    throwIfInvalidKeyIdentifier(keyId)
     assert(typeof seedId === 'string', 'seedId must be a BIP32 key identifier in hex encoding')
     assert(this.#masters[seedId], `seed "${seedId}" is not initialized`)
 
@@ -124,7 +128,7 @@ export class Keychain {
 
   async exportKey({ seedId, keyId, exportPrivate }) {
     if (exportPrivate) {
-      this.#assertPrivateKeysUnlocked()
+      this.#assertPrivateKeysUnlocked(new Set([seedId]))
     }
 
     keyId = new KeyIdentifier(keyId)
@@ -160,7 +164,7 @@ export class Keychain {
   }
 
   async signTx({ seedId, keyIds, signTxCallback, unsignedTx }) {
-    this.#assertPrivateKeysUnlocked()
+    this.#assertPrivateKeysUnlocked(new Set([seedId]))
     assert(typeof signTxCallback === 'function', 'signTxCallback must be a function')
     const hdkeys = Object.fromEntries(
       keyIds.map((keyId) => {
