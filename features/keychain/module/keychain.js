@@ -54,8 +54,11 @@ export class Keychain {
       return Object.values(this.#seedLockStatus).some(Boolean)
     }
 
-    return seedIds.some((seedId) => { 
-      assert(Object.hasOwn(this.#seedLockStatus, seedId), `cannot check lock state for unknown seed "${seedId}"`)
+    return seedIds.some((seedId) => {
+      assert(
+        Object.hasOwn(this.#seedLockStatus, seedId),
+        `cannot check lock state for unknown seed "${seedId}"`
+      )
       return this.#seedLockStatus[seedId]
     })
   }
@@ -75,8 +78,6 @@ export class Keychain {
 
   unlockPrivateKeys(seeds = []) {
     const seedIds = getManySeedIds(seeds)
-    const locked = this.#checkPrivateKeysLocked(seedIds)
-    assert(locked, 'already unlocked')
 
     const existingSeeds = Object.keys(this.#masters)
     for (const seedId of seedIds) {
