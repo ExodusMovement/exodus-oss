@@ -59,6 +59,7 @@ class MemoizedKeychain extends Keychain {
 const memoizedKeychainDefinition = {
   id: 'keychain',
   type: 'module',
+  public: true,
   factory: (opts) => new MemoizedKeychain(opts),
   dependencies: ['storage', 'legacyPrivToPub'],
 }
