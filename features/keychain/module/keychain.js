@@ -212,6 +212,7 @@ const createKeychain = (args = Object.create(null)) => new Keychain({ ...args })
 const keychainDefinition = {
   id: MODULE_ID,
   type: 'module',
+  public: true,
   factory: createKeychain,
   dependencies: ['legacyPrivToPub'],
 }
