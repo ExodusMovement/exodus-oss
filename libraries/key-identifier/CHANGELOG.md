@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.2](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/key-identifier@1.2.1...@exodus/key-identifier@1.2.2) (2024-07-30)
+
+### Bug Fixes
+
+- `DerivationPath` predicate using `Symbol.toStringTag` getter ([#128](https://github.com/ExodusMovement/exodus-oss/issues/128)) ([4590f79](https://github.com/ExodusMovement/exodus-oss/commit/4590f79c23189a51e92f454664a34901b9e3f03e))
+
 ## [1.2.1](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/key-identifier@1.2.0...@exodus/key-identifier@1.2.1) (2024-07-15)
 
 ### Bug Fixes
