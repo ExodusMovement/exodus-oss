@@ -8,7 +8,8 @@ const isDerivationPath = (derivationPath) =>
   typeof derivationPath === 'object' &&
   Symbol.toStringTag in derivationPath &&
   (derivationPath[Symbol.toStringTag] === 'DerivationPath' ||
-    derivationPath[Symbol.toStringTag]() === 'DerivationPath') // an older version of DerivationPath incorrectly used a method instead of a getter
+    (typeof derivationPath[Symbol.toStringTag] === 'function' &&
+      derivationPath[Symbol.toStringTag]() === 'DerivationPath')) // an older version of DerivationPath incorrectly used a method instead of a getter
 
 export default class KeyIdentifier {
   /** @type {DerivationPath} */
