@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/key-identifier@1.2.2...@exodus/key-identifier@1.3.0) (2024-07-31)
+
+### Features
+
+- expose `DerivationPath` instance via getPath ([#130](https://github.com/ExodusMovement/exodus-oss/issues/130)) ([b624c54](https://github.com/ExodusMovement/exodus-oss/commit/b624c546b1a4d7ff4cdce10933a24ab50981dfcd))
+
 ## [1.2.2](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/key-identifier@1.2.1...@exodus/key-identifier@1.2.2) (2024-07-30)
 
 ### Bug Fixes
