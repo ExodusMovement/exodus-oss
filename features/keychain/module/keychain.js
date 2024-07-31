@@ -113,7 +113,9 @@ export class Keychain {
 
   removeSeeds(seeds = []) {
     const seedIds = getUniqueSeedIds(seeds)
-    const existingSeedIds = Object.keys(this.#masters)
+    const existingSeedIds = [
+      ...new Set([...Object.keys(this.#masters), ...Object.keys(this.#seedLockStatus)]),
+    ]
     const seedIdsToRemove = seedIds.filter((seedId) => existingSeedIds.includes(seedId))
 
     for (const id of seedIdsToRemove) {
