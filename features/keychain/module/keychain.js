@@ -113,12 +113,15 @@ export class Keychain {
 
   removeSeeds(seeds = []) {
     const seedIds = getUniqueSeedIds(seeds)
-    for (const id of seedIds) {
+    const existingSeedIds = Object.keys(this.#masters)
+    const seedIdsToRemove = seedIds.filter((seedId) => existingSeedIds.includes(seedId))
+
+    for (const id of seedIdsToRemove) {
       delete this.#masters[id]
       delete this.#seedLockStatus[id]
     }
 
-    return seedIds
+    return seedIdsToRemove
   }
 
   #getPrivateHDKey = ({ seedId, keyId, getPrivateHDKeySymbol }) => {
