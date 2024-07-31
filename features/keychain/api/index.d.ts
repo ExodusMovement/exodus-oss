@@ -1,10 +1,10 @@
 import KeyIdentifier from '@exodus/key-identifier'
+import { UnsignedTransaction } from '@exodus/tx-signer'
 import BN from 'bn.js'
 
 type SeedId = string
 type KeySource = { seedId: SeedId; keyId: KeyIdentifier }
 
-type Tx = Record<string, unknown>
 type HdKeys = { privateKey: Buffer; publicKey: Buffer }
 
 type SignTxCallback = (params: {
@@ -13,7 +13,7 @@ type SignTxCallback = (params: {
   privateKey: Buffer
 }) => void | Promise<void>
 
-type TxSignParams = KeySource & { signTxCallback: SignTxCallback; unsignedTx: Tx }
+type TxSignParams = KeySource & { signTxCallback: SignTxCallback; unsignedTx: UnsignedTransaction }
 
 type EcOptions = {
   canonical?: boolean
@@ -39,41 +39,41 @@ type PubKeyWrapper = {
   publicKey: Buffer
 }
 
-type SignerInput = { seedId: string; keyId: string; data: Buffer }
+type SignerParam = KeychainSignerParams & { seedId: string }
 
 type Encryptor = {
   getSodiumKeysFromSeed: (
     args: KeySource
   ) => Promise<{ box: PubKeyWrapper; sign: PubKeyWrapper; secret: Buffer }>
-  sign: (args: SignerInput) => Promise<Buffer>
-  signOpen: (args: SignerInput) => Promise<Buffer>
-  signDetached: (args: SignerInput) => Promise<Buffer>
+  sign: (args: SignerParam) => Promise<Buffer>
+  signOpen: (args: SignerParam) => Promise<Buffer>
+  signDetached: (args: SignerParam) => Promise<Buffer>
   verifyDetached: (
-    args: SignerInput & {
+    args: SignerParam & {
       signature: Buffer
     }
   ) => Promise<boolean>
-  encryptSecretBox: (args: SignerInput) => Promise<Buffer>
-  decryptSecretBox: (args: SignerInput) => Promise<Buffer>
-  encryptBox: (args: SignerInput & { toPublicKey: Buffer }) => Promise<Buffer>
+  encryptSecretBox: (args: SignerParam) => Promise<Buffer>
+  decryptSecretBox: (args: SignerParam) => Promise<Buffer>
+  encryptBox: (args: SignerParam & { toPublicKey: Buffer }) => Promise<Buffer>
   decryptBox: (
-    args: SignerInput & {
+    args: SignerParam & {
       fromPublicKey: Buffer
     }
   ) => Promise<Buffer>
   encryptSealedBox: (args: { data: Buffer; toPublicKey: Buffer }) => Promise<Buffer>
-  decryptSealedBox: (args: SignerInput) => Promise<Buffer>
+  decryptSealedBox: (args: SignerParam) => Promise<Buffer>
 }
 
 type KeyId = Record<string, string>
 
 type Ed25519Signer = {
-  signBuffer: (args: SignerInput) => Promise<Buffer>
+  signBuffer: (args: SignerParam) => Promise<Buffer>
 }
 
 type Secp256k1Signer = {
-  signBuffer: (args: SignerInput) => Promise<Buffer>
-  signSchnorr: (args: SignerInput & { tweak: Buffer; extraEntropy: Buffer }) => Promise<Buffer>
+  signBuffer: (args: SignerParam) => Promise<Buffer>
+  signSchnorr: (args: SignerParam) => Promise<Buffer>
 }
 
 type CreateSignerArgs = {
