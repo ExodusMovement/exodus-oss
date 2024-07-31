@@ -111,7 +111,7 @@ export class Keychain {
     this.#seedLockStatus = Object.create(null)
   }
 
-  removeManySeeds(seeds = []) {
+  removeSeeds(seeds = []) {
     const seedIds = getUniqueSeedIds(seeds)
     for (const id of seedIds) {
       delete this.#masters[id]

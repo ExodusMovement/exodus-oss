@@ -68,7 +68,7 @@ test('lock', async () => {
   await expect(keychain.exportKey(solanaKeyId)).rejects.toThrow()
 })
 
-describe('removeManySeeds', () => {
+describe('removeSeeds', () => {
   const extraSeed = mnemonicToSeed('menu'.repeat(12))
   const extraSeedId = getSeedId(extraSeed)
 
@@ -80,7 +80,7 @@ describe('removeManySeeds', () => {
 
     keychain.addSeed(seed)
     keychain.addSeed(extraSeed)
-    keychain.removeManySeeds([extraSeed])
+    keychain.removeSeeds([extraSeed])
 
     await expect(keychain.exportKey(seed)).resolves.toBe([extraSeedId])
     await expect(keychain.exportKey(extraSeed)).rejects.toThrow()
