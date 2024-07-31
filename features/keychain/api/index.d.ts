@@ -29,6 +29,7 @@ export interface KeychainApi {
   exportKey(params: { exportPrivate: false } & KeySource): Promise<PublicKeys>
   exportKey(params: { exportPrivate: true } & KeySource): Promise<PublicKeys & PrivateKeys>
   arePrivateKeysLocked(seeds: Buffer[]): boolean
+  removeSeeds(seeds: Buffer[]): string[]
   sodium: {
     signDetached(params: { data: Buffer } & KeySource): Promise<Buffer>
     getKeysFromSeed(
