@@ -58,6 +58,10 @@ export default class KeyIdentifier {
     })
   }
 
+  getPath() {
+    return this.#derivationPath
+  }
+
   toString() {
     return `${this.derivationPath} (${this.derivationAlgorithm})`
   }
