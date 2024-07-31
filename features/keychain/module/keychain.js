@@ -111,6 +111,16 @@ export class Keychain {
     this.#seedLockStatus = Object.create(null)
   }
 
+  removeManySeeds(seeds = []) {
+    const seedIds = getUniqueSeedIds(seeds)
+    for (const id of seedIds) {
+      delete this.#masters[id]
+      delete this.#seedLockStatus[id]
+    }
+
+    return seedIds
+  }
+
   #getPrivateHDKey = ({ seedId, keyId, getPrivateHDKeySymbol }) => {
     if (getPrivateHDKeySymbol !== this.#getPrivateHDKeySymbol) {
       this.#assertPrivateKeysUnlocked(seedId ? [seedId] : undefined)
