@@ -68,6 +68,25 @@ test('lock', async () => {
   await expect(keychain.exportKey(solanaKeyId)).rejects.toThrow()
 })
 
+describe('removeManySeeds', () => {
+  const extraSeed = mnemonicToSeed('menu'.repeat(12))
+  const extraSeedId = getSeedId(extraSeed)
+
+  it('removes seeds from the keychain', async () => {
+    const keychain = keychainDefinition.factory({
+      logger: console,
+      legacyPrivToPub: Object.create(null),
+    })
+
+    keychain.addSeed(seed)
+    keychain.addSeed(extraSeed)
+    keychain.removeManySeeds([extraSeed])
+
+    await expect(keychain.exportKey(seed)).resolves.toBe([extraSeedId])
+    await expect(keychain.exportKey(extraSeed)).rejects.toThrow()
+  })
+})
+
 test('signTx', async () => {
   const unsignedTx = await createUnsignedSolanaTx({
     asset,
