@@ -1,3 +1,5 @@
+import type { DerivationPath } from '@exodus/key-utils'
+
 type PathIndex = number | string
 type KeyType = 'legacy' | 'nacl' | 'secp256k1'
 type DerivationAlgorithm = 'BIP32' | 'SLIP10'
@@ -25,6 +27,8 @@ export default class KeyIdentifier {
    * the path indices or partial derivation path supplied to this method
    */
   derive(pathLike: string | PathIndex[]): KeyIdentifier
+
+  getPath(): DerivationPath
 
   toJSON(): {
     assetName?: string

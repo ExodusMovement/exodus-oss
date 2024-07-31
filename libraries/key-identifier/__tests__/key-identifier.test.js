@@ -1,5 +1,6 @@
 import { createKeyIdentifierForExodus } from '@exodus/key-ids'
 import KeyIdentifier from '../src/key-identifier.js'
+import { DerivationPath } from '@exodus/key-utils'
 
 describe('KeyIdentifier', () => {
   it('should fail on incorrect construction', () => {
@@ -102,6 +103,20 @@ describe('KeyIdentifier', () => {
     expect(() => {
       keyId.derivationPath = 'm/44/60/0/0/0'
     }).toThrow()
+  })
+
+  describe('getPath', () => {
+    test('returns derivation path', () => {
+      const keyId = new KeyIdentifier({
+        derivationAlgorithm: 'BIP32',
+        assetName: 'ethereum',
+        derivationPath: 'm/44/60/0/0/0',
+      })
+
+      const derivationPath = keyId.getPath()
+      expect(derivationPath).toBeInstanceOf(DerivationPath)
+      expect(derivationPath.toPathArray()).toEqual([44, 60, 0, 0, 0])
+    })
   })
 
   describe('.extend()', () => {
