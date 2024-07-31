@@ -87,18 +87,16 @@ describe('removeSeeds', () => {
   })
 
   it('return the ids of the removed seeds only', async () => {
-    {
-      const keychain = keychainDefinition.factory({
-        logger: console,
-        legacyPrivToPub: Object.create(null),
-      })
+    const keychain = keychainDefinition.factory({
+      logger: console,
+      legacyPrivToPub: Object.create(null),
+    })
 
-      keychain.addSeed(seed)
-      keychain.addSeed(extraSeed)
-      keychain.removeSeeds([extraSeed, 'missingSeed'])
+    keychain.addSeed(seed)
+    keychain.addSeed(extraSeed)
+    keychain.removeSeeds([extraSeed, 'missingSeed'])
 
-      await expect(keychain.exportKey(seed)).resolves.toBe([extraSeedId])
-    }
+    await expect(keychain.exportKey(seed)).resolves.toBe([extraSeedId])
   })
 })
 
