@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.9.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.8.0...@exodus/keychain@6.9.0) (2024-07-31)
+
+### Features
+
+- **keychain:** implement removing specific seeds ([#131](https://github.com/ExodusMovement/exodus-oss/issues/131)) ([e3856d4](https://github.com/ExodusMovement/exodus-oss/commit/e3856d43c45a2a40312f62dda7d0a2bf30698c12))
+
 ## [6.8.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.7.0...@exodus/keychain@6.8.0) (2024-07-24)
 
 ### Features
