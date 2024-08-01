@@ -1,5 +1,5 @@
-import KeyIdentifier from '@exodus/key-identifier'
-import { UnsignedTransaction } from '@exodus/tx-signer'
+import type KeyIdentifier from '@exodus/key-identifier'
+import type { UnsignedTransaction } from '@exodus/tx-signer'
 import BN from 'bn.js'
 
 type SeedId = string
