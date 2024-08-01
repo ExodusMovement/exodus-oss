@@ -1801,12 +1801,47 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@exodus/asset-lib@npm:^4.1.0":
+  version: 4.2.1
+  resolution: "@exodus/asset-lib@npm:4.2.1"
+  dependencies:
+    "@exodus/basic-utils": ^1.4.0
+    "@exodus/currency": ^2.3.2
+    "@exodus/timer": ^1.0.0
+    events: ^1.1.1
+    lodash: ^4.17.11
+    lru-cache: ^6.0.0
+    make-concurrent: ^4.0.0
+    minimalistic-assert: ^1.0.1
+    ms: ^2.1.3
+  checksum: 7692e05fb6ca68ec5900787b0dc0d2bbb79626abf5b5e099e165d2ea7492a015d0f5907e255b760859032f8e31f6f122107235c2518a88c7743e3e31ee20d03b
+  languageName: node
+  linkType: hard
+
+"@exodus/basic-utils@npm:^1.4.0":
+  version: 1.5.0
+  resolution: "@exodus/basic-utils@npm:1.5.0"
+  dependencies:
+    minimalistic-assert: ^1.0.1
+  checksum: 5b08e817c953953ba27a185a684a6a6ec5deb1505fd518ce0879db477652f3c67876a26a80207f179e53b0dac93066778aed3cfce14e81f5687f4dc5ff835d92
+  languageName: node
+  linkType: hard
+
 "@exodus/basic-utils@npm:^2.0.0, @exodus/basic-utils@npm:^2.0.1, @exodus/basic-utils@npm:^2.1.0":
   version: 2.1.1
   resolution: "@exodus/basic-utils@npm:2.1.1"
   dependencies:
     minimalistic-assert: ^1.0.1
   checksum: 1b7193d3a98e59f881f31e7ac779e8f95c036593e9dba7a585a850902eff05214fd1e6c55b03d5199685da8fa81de3eeecc7ab299f9a3908a2828262549e5f5d
+  languageName: node
+  linkType: hard
+
+"@exodus/basic-utils@npm:^2.3.0":
+  version: 2.5.2
+  resolution: "@exodus/basic-utils@npm:2.5.2"
+  dependencies:
+    minimalistic-assert: ^1.0.1
+  checksum: 236c4808515757f7da97d1db4f124e6c38d5b99d6e3be07df03ef2c588f97878736e359959a3c3255e5ad18d21f1254e8092be56224dd2baef2d48d175e0c333
   languageName: node
   linkType: hard
 
@@ -1841,6 +1876,17 @@ __metadata:
     "@noble/hashes": ^1.1.5
     "@noble/secp256k1": ^1.7.1
   checksum: b9ba53bdf8eee1af328633fe772f592d0dbbd2a6bc8a7c5518028133d7a26a2f377daa8551ddc27dd1932c808ecac6baff153aec655fc98f0153b4aa707f02e3
+  languageName: node
+  linkType: hard
+
+"@exodus/currency@npm:^2.1.2, @exodus/currency@npm:^2.3.2":
+  version: 2.3.3
+  resolution: "@exodus/currency@npm:2.3.3"
+  dependencies:
+    bn.js: ^5.2.1
+    lodash: ^4.17.11
+    minimalistic-assert: ^1.0.1
+  checksum: 8af2c0ded87ae7e6e467affe7a3ace7f1e3b38b6c9bc38e7e40f768dddf68fbc262d64f72456f56423f6ffb00a7229e030ebd2de19d960c430f90da36976b522
   languageName: node
   linkType: hard
 
@@ -1981,7 +2027,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/key-identifier@^1.0.0, @exodus/key-identifier@^1.1.2, @exodus/key-identifier@workspace:libraries/key-identifier":
+"@exodus/key-identifier@^1.0.0, @exodus/key-identifier@^1.1.2, @exodus/key-identifier@^1.2.1, @exodus/key-identifier@workspace:libraries/key-identifier":
   version: 0.0.0-use.local
   resolution: "@exodus/key-identifier@workspace:libraries/key-identifier"
   dependencies:
@@ -2023,6 +2069,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@exodus/key-utils@npm:^3.2.1, @exodus/key-utils@npm:^3.6.1":
+  version: 3.6.1
+  resolution: "@exodus/key-utils@npm:3.6.1"
+  dependencies:
+    "@exodus/bip32": ^2.1.0
+    "@exodus/hdkey": ^2.1.0-exodus.0
+    bip32-path: ^0.4.2
+    minimalistic-assert: ^1.0.1
+  checksum: d3e8e9832f28ea93188bde94a22be248d4a5bc46bc62dd54d79a783fbc7eb233dbbef3b8f6bf47539a9ac808adca9ea8cd5465a6307f1790fdefda0b9832d4da
+  languageName: node
+  linkType: hard
+
 "@exodus/key-utils@npm:^3.5.1":
   version: 3.5.1
   resolution: "@exodus/key-utils@npm:3.5.1"
@@ -2032,18 +2090,6 @@ __metadata:
     bip32-path: ^0.4.2
     minimalistic-assert: ^1.0.1
   checksum: 491642eaf40c29805e149273a6853dae00036278af48f9afff8978776a212bebb1becbb22b38954a2d528c7a8a475116694029f5027932b4a488512cd28cd686
-  languageName: node
-  linkType: hard
-
-"@exodus/key-utils@npm:^3.6.1":
-  version: 3.6.1
-  resolution: "@exodus/key-utils@npm:3.6.1"
-  dependencies:
-    "@exodus/bip32": ^2.1.0
-    "@exodus/hdkey": ^2.1.0-exodus.0
-    bip32-path: ^0.4.2
-    minimalistic-assert: ^1.0.1
-  checksum: d3e8e9832f28ea93188bde94a22be248d4a5bc46bc62dd54d79a783fbc7eb233dbbef3b8f6bf47539a9ac808adca9ea8cd5465a6307f1790fdefda0b9832d4da
   languageName: node
   linkType: hard
 
@@ -2079,6 +2125,7 @@ __metadata:
     "@exodus/key-utils": ^3.5.1
     "@exodus/slip10": ^1.0.0
     "@exodus/sodium-crypto": ^3.1.0
+    "@exodus/tx-signer": ^2.4.1
     "@noble/secp256k1": ^1.7.1
     bip39: 2.6.0
     bn.js: ^5.2.1
@@ -2108,6 +2155,20 @@ __metadata:
   dependencies:
     "@exodus/react-native-crypto-shim": ^1.0.0
   checksum: 3264588b6f13e1ae72c0a3e0dba21f466370e8cfe7a95392c2210e6e68b8520f7ea61a47086741e068387b35ccb2fcef4116aef8c96dc2ae09609fb79e6bbef0
+  languageName: node
+  linkType: hard
+
+"@exodus/models@npm:^11.7.0":
+  version: 11.19.0
+  resolution: "@exodus/models@npm:11.19.0"
+  dependencies:
+    "@exodus/currency": ^2.1.2
+    "@exodus/serialization": ^1.0.0
+    bip32-path: ^0.4.2
+    lodash: ^4.17.11
+    minimalistic-assert: ^1.0.1
+    proxy-freeze: ^1.0.0
+  checksum: 24fdbbd61e0ac0b8e79f6615753a7194d5a1a0ba705543d67431fd46373ff26cf7e4eaf6f0a731f8964f8924a022ef5e81013694029a3688329e0c57ed726e0c
   languageName: node
   linkType: hard
 
@@ -2149,6 +2210,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@exodus/serialization@npm:^1.0.0":
+  version: 1.1.2
+  resolution: "@exodus/serialization@npm:1.1.2"
+  dependencies:
+    lodash: ^4.17.11
+  checksum: ac8017202f71b2b3ffd964e70eac53d57bc73d9e8c538b0741738e24d6b32d7643f866b913ad65098cfa50d3ac377e2804c40e6ec3529dd21ec92be50e6475b8
+  languageName: node
+  linkType: hard
+
 "@exodus/slip10@npm:^1.0.0":
   version: 1.0.0
   resolution: "@exodus/slip10@npm:1.0.0"
@@ -2166,6 +2236,27 @@ __metadata:
   dependencies:
     "@exodus/libsodium-wrappers": 1.0.8
   checksum: 2fab59b40e1ee74bc0eb2dda2e63d9f149b45a328a89b90b3f599d13572c66b19abf3400e6e61eaa9e79c091d6df355aca9a6b2972dbc1ba594b9e030b387592
+  languageName: node
+  linkType: hard
+
+"@exodus/timer@npm:^1.0.0":
+  version: 1.1.0
+  resolution: "@exodus/timer@npm:1.1.0"
+  checksum: 4543a5007ea76f148bb0515348558cd27a5b269ab2781d3b90dc6454bb7923e21c389c9c4ddf5e526f929fea669c225af6b10c31117b0b19be83151468214647
+  languageName: node
+  linkType: hard
+
+"@exodus/tx-signer@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "@exodus/tx-signer@npm:2.4.1"
+  dependencies:
+    "@exodus/asset-lib": ^4.1.0
+    "@exodus/basic-utils": ^2.3.0
+    "@exodus/key-identifier": ^1.2.1
+    "@exodus/key-utils": ^3.2.1
+    "@exodus/models": ^11.7.0
+    minimalistic-assert: ^1.0.1
+  checksum: 5ef8f087b51958199bb507266f25b44d293947ae04a056c4f0c99049b61e6da53741eb56e9e4e3b8206a2c88f478623d301062380802d56cbf076e80b13a04b9
   languageName: node
   linkType: hard
 
@@ -6226,6 +6317,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"events@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "events@npm:1.1.1"
+  checksum: 40431eb005cc4c57861b93d44c2981a49e7feb99df84cf551baed299ceea4444edf7744733f6a6667e942af687359b1f4a87ec1ec4f21d5127dac48a782039b9
+  languageName: node
+  linkType: hard
+
 "events@npm:^3.3.0":
   version: 3.3.0
   resolution: "events@npm:3.3.0"
@@ -8980,6 +9078,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"make-concurrent@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "make-concurrent@npm:4.0.0"
+  checksum: 92fa77aa9fd9bda92b84f82961b1f431ff3022ed7e82405ffacf3125cabe2f7977d02974d6ce5cc461d92e18c96ac4535ef6c4eb5aad4e06447855d00ab91d9e
+  languageName: node
+  linkType: hard
+
 "make-dir@npm:4.0.0, make-dir@npm:^4.0.0":
   version: 4.0.0
   resolution: "make-dir@npm:4.0.0"
@@ -9433,7 +9538,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ms@npm:^2.0.0, ms@npm:^2.1.1":
+"ms@npm:^2.0.0, ms@npm:^2.1.1, ms@npm:^2.1.3":
   version: 2.1.3
   resolution: "ms@npm:2.1.3"
   checksum: aa92de608021b242401676e35cfa5aa42dd70cbdc082b916da7fb925c542173e36bce97ea3e804923fe92c0ad991434e4a38327e15a1b5b5f945d66df615ae6d
