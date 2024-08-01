@@ -1959,7 +1959,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/hd-key-slip-10@npm:~2.0.0":
+"@exodus/hd-key-slip-10@npm:^2.0.0, @exodus/hd-key-slip-10@npm:~2.0.0":
   version: 2.0.1
   resolution: "@exodus/hd-key-slip-10@npm:2.0.1"
   dependencies:
@@ -2077,7 +2077,7 @@ __metadata:
     "@exodus/key-identifier": ^1.1.2
     "@exodus/key-ids": ^1.0.0
     "@exodus/key-utils": ^3.5.1
-    "@exodus/slip10": ^1.0.0
+    "@exodus/slip10": ^2.0.0
     "@exodus/sodium-crypto": ^3.1.0
     "@noble/secp256k1": ^1.7.1
     bip39: 2.6.0
@@ -2157,6 +2157,17 @@ __metadata:
     "@exodus/hd-key-slip-10": ~2.0.0
     lodash: ^4.17.11
   checksum: 0851fad3301496301ef067565ab86a8cb63053b98fddd9f598805309de46853958dad769186b286f48f16be4ee6b307636d06b97974896069f4b5ecf1e03db2d
+  languageName: node
+  linkType: hard
+
+"@exodus/slip10@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "@exodus/slip10@npm:2.0.1"
+  dependencies:
+    "@exodus/elliptic": ^6.5.4-precomputed
+    "@exodus/hd-key-slip-10": ^2.0.0
+    lodash: ^4.17.11
+  checksum: b2014da72e93797cb20d18aab830ca37d43afe90728bdd869c4f1cfebd76c9f127882aa9fdcddf994fb9619a64c614652b99cc7ba87bf9299d084208501b6df0
   languageName: node
   linkType: hard
 
