@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.9.1](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.9.0...@exodus/keychain@6.9.1) (2024-08-16)
+
+### Bug Fixes
+
+- upgrade slip10 to fix esm ([#127](https://github.com/ExodusMovement/exodus-oss/issues/127)) ([5658119](https://github.com/ExodusMovement/exodus-oss/commit/565811913bfb15dc78c2c98eb954ccc83c3a7c90))
+
 ## [6.9.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.8.0...@exodus/keychain@6.9.0) (2024-07-31)
 
 ### Features
