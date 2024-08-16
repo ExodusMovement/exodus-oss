@@ -32,6 +32,7 @@ const untranspiledModulePatterns = [
   '@exodus/dependency-preprocessors',
   '@exodus/osmosis-*',
   '@exodus/key-utils',
+  '@exodus/slip10',
   '@exodus/module',
   '@exodus/atoms',
   '@exodus/storage-memory',
