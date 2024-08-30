@@ -7,22 +7,29 @@ const cloneBuffer = (buf) => {
   return newBuffer
 }
 
+const cloneKeypair = ({ keys, exportPrivate }) => {
+  return {
+    publicKey: cloneBuffer(keys.publicKey),
+    privateKey: exportPrivate ? cloneBuffer(keys.privateKey) : null,
+  }
+}
+
 export const create = ({ getPrivateHDKey }) => {
   // Sodium encryptor caches the private key and the return value holds
   // not refences to keychain internals, allowing the seed to be safely
   // garbage collected, clearing it from memory.
-  const getSodiumKeysFromIdentifier = async ({ seedId, keyId }) => {
-    const { privateKey: sodiumSeed } = getPrivateHDKey({ seedId, keyId })
+  const getSodiumKeysFromIdentifier = async ({ seedId, keyId, exportPrivate }) => {
+    const { privateKey: sodiumSeed } = getPrivateHDKey({ seedId, keyId, exportPrivate })
     return sodium.getSodiumKeysFromSeed(sodiumSeed)
   }
 
   const createInstance = () => ({
-    getSodiumKeysFromSeed: async ({ seedId, keyId }) => {
+    getSodiumKeysFromSeed: async ({ seedId, keyId, exportPrivate }) => {
       const { box, sign, secret } = await getSodiumKeysFromIdentifier({ seedId, keyId })
 
       return {
-        box: { publicKey: cloneBuffer(box.publicKey) },
-        sign: { publicKey: cloneBuffer(sign.publicKey) },
+        box: cloneKeypair({ keys: box, exportPrivate }),
+        sign: cloneKeypair({ keys: sign, exportPrivate }),
         secret: cloneBuffer(secret),
       }
     },
