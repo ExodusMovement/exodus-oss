@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.10.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.9.1...@exodus/keychain@6.10.0) (2024-09-04)
+
+### Features
+
+- **keychain:** allow exporting sodium private keys ([#135](https://github.com/ExodusMovement/exodus-oss/issues/135)) ([33400c8](https://github.com/ExodusMovement/exodus-oss/commit/33400c83e8a207086c8ce32ec89ecfe0409849fc))
+
 ## [6.9.1](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.9.0...@exodus/keychain@6.9.1) (2024-08-16)
 
 ### Bug Fixes
