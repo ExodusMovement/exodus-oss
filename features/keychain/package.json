@@ -30,7 +30,7 @@
     "todo:reenable:test:integration": "yarn run -T exodus-test --jest '**/*.integration-test.js'"
   },
   "dependencies": {
-    "@exodus/basic-utils": "^2.0.0",
+    "@exodus/basic-utils": "^3.0.1",
     "@exodus/bip32": "^2.1.0",
     "@exodus/bitcoinerlab-secp256k1": "^1.0.5-exodus.1",
     "@exodus/elliptic": "^6.5.4-precomputed",

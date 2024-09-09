@@ -2318,12 +2318,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/basic-utils@npm:^2.0.0, @exodus/basic-utils@npm:^2.0.1, @exodus/basic-utils@npm:^2.1.0":
+"@exodus/basic-utils@npm:^2.1.0":
   version: 2.1.1
   resolution: "@exodus/basic-utils@npm:2.1.1"
   dependencies:
     minimalistic-assert: ^1.0.1
   checksum: 1b7193d3a98e59f881f31e7ac779e8f95c036593e9dba7a585a850902eff05214fd1e6c55b03d5199685da8fa81de3eeecc7ab299f9a3908a2828262549e5f5d
+  languageName: node
+  linkType: hard
+
+"@exodus/basic-utils@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@exodus/basic-utils@npm:3.0.1"
+  dependencies:
+    minimalistic-assert: ^1.0.1
+  checksum: 2ce98610da5c85f2d2fb450d9e4b86274cb8a4e7392a3aeb07ed94c1d85fef4843e12c1682bbc0a84d41bc72f43f33ea7c657d96e9e03420ff3966ddd04e14fd
   languageName: node
   linkType: hard
 
@@ -2534,7 +2543,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@exodus/keychain@workspace:features/keychain"
   dependencies:
-    "@exodus/basic-utils": ^2.0.0
+    "@exodus/basic-utils": ^3.0.1
     "@exodus/bip32": ^2.1.0
     "@exodus/bitcoinerlab-secp256k1": ^1.0.5-exodus.1
     "@exodus/elliptic": ^6.5.4-precomputed
@@ -2729,7 +2738,7 @@ __metadata:
     "@actions/core": ^1.10.0
     "@actions/github": ^5.1.1
     "@angular-devkit/schematics": ^14.0.6
-    "@exodus/basic-utils": ^2.0.1
+    "@exodus/basic-utils": ^3.0.1
     "@exodus/lerna-utils": ^1.3.0
     "@octokit/plugin-rest-endpoint-methods": ^6.7.0
     "@phenomnomnominal/tsquery": ^5.0.0
