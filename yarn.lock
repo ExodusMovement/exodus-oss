@@ -2560,7 +2560,6 @@ __metadata:
     eslint: ^8.44.0
     events: ^3.3.0
     json-stable-stringify: ^1.0.1
-    lodash: ^4.17.21
     minimalistic-assert: ^1.0.1
   languageName: unknown
   linkType: soft
@@ -2748,7 +2747,6 @@ __metadata:
     fs-extra: ^11.1.0
     jest: ^29.1.2
     jest-when: ^3.5.2
-    lodash: ^4.17.21
     memfs: ^3.4.7
   peerDependencies:
     "@nrwl/devkit": ">=14.0.0"

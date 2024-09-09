@@ -41,7 +41,6 @@
     "buffer-json": "^2.0.0",
     "create-hash": "^1.2.0",
     "json-stable-stringify": "^1.0.1",
-    "lodash": "^4.17.21",
     "minimalistic-assert": "^1.0.1"
   },
   "devDependencies": {
