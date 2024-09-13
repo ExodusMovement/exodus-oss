@@ -18,8 +18,8 @@ export const create = ({ getPrivateHDKey }) => {
   // Sodium encryptor caches the private key and the return value holds
   // not refences to keychain internals, allowing the seed to be safely
   // garbage collected, clearing it from memory.
-  const getSodiumKeysFromIdentifier = async ({ seedId, keyId, exportPrivate }) => {
-    const { privateKey: sodiumSeed } = getPrivateHDKey({ seedId, keyId, exportPrivate })
+  const getSodiumKeysFromIdentifier = async ({ seedId, keyId }) => {
+    const { privateKey: sodiumSeed } = getPrivateHDKey({ seedId, keyId })
     return sodium.getSodiumKeysFromSeed(sodiumSeed)
   }
 
