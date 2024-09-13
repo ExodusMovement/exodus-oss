@@ -40,10 +40,12 @@ describe('libsodium', () => {
     const {
       sign: { privateKey: signPrivateKey },
       box: { privateKey: boxPrivateKey },
+      secret,
     } = await keychain.sodium.getSodiumKeysFromSeed({ seedId, keyId: ALICE_KEY })
 
     expect(signPrivateKey).toBeNull()
     expect(boxPrivateKey).toBeNull()
+    expect(secret).toBeNull()
   })
 
   it('should allow exporting private keys', async () => {
@@ -52,6 +54,7 @@ describe('libsodium', () => {
     const {
       sign: { privateKey: signPrivateKey },
       box: { privateKey: boxPrivateKey },
+      secret,
     } = await keychain.sodium.getSodiumKeysFromSeed({
       seedId,
       keyId: ALICE_KEY,
@@ -60,6 +63,7 @@ describe('libsodium', () => {
 
     expect(signPrivateKey).toBeDefined()
     expect(boxPrivateKey).toBeDefined()
+    expect(secret).toBeDefined()
   })
 
   it('should have sign keys compatibility with SLIP10 (using sodium instance)', async () => {
