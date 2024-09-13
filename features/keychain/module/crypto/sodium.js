@@ -30,7 +30,7 @@ export const create = ({ getPrivateHDKey }) => {
       return {
         box: cloneKeypair({ keys: box, exportPrivate }),
         sign: cloneKeypair({ keys: sign, exportPrivate }),
-        secret: cloneBuffer(secret),
+        secret: exportPrivate ? cloneBuffer(secret) : null,
       }
     },
     sign: async ({ seedId, keyId, data }) => {
