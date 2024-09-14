@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.10.0...@exodus/keychain@7.0.0) (2024-09-13)
+
+### ⚠ BREAKING CHANGES
+
+- **keychain:** only export secret if "exportPrivate" flag is set (#139)
+
+### Bug Fixes
+
+- **keychain:** only export secret if "exportPrivate" flag is set ([#139](https://github.com/ExodusMovement/exodus-oss/issues/139)) ([7a01522](https://github.com/ExodusMovement/exodus-oss/commit/7a01522ba75a123a415f0cabbb625df3e953067b))
+
 ## [6.10.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@6.9.1...@exodus/keychain@6.10.0) (2024-09-04)
 
 ### Features
