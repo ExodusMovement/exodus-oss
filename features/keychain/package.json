@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@exodus/key-ids": "^1.0.0",
+    "@exodus/tx-signer": "^2.4.1",
     "@noble/secp256k1": "^1.7.1",
     "bip39": "2.6.0",
     "bn.js": "^5.2.1",
