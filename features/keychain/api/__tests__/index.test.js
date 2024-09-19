@@ -148,6 +148,16 @@ describe('keychain api', () => {
       keyType: 'secp256k1',
     })
 
+    test('should encrypt and decrypt data', async () => {
+      const data = Buffer.from("Batman's is Harvey Dent")
+      const encrypted = await api.sodium.encryptSecretBox({ seedId, keyId, data })
+
+      expect(encrypted).toBeInstanceOf(Buffer)
+
+      const decrypted = await api.sodium.decryptSecretBox({ seedId, keyId, data: encrypted })
+      expect(data.compare(decrypted)).toBe(0)
+    })
+
     test('signDetached signs data', async () => {
       const data = Buffer.from("Batman's identity was revealed as Harvey Dent")
       const signature = await api.sodium.signDetached({ seedId, keyId, data })
