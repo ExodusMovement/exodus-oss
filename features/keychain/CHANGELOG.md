@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.1.0...@exodus/keychain@7.2.0) (2024-09-24)
+
+### Features
+
+- allow "pers" EC option ([#146](https://github.com/ExodusMovement/exodus-oss/issues/146)) ([326e5ab](https://github.com/ExodusMovement/exodus-oss/commit/326e5ab6d9af1fcd69df4ae6818c30b8a94b93e7))
+
 ## [7.1.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.0.0...@exodus/keychain@7.1.0) (2024-09-19)
 
 ### Features
