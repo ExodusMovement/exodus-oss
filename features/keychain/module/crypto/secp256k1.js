@@ -1,12 +1,12 @@
 import assert from 'minimalistic-assert'
 import elliptic from '@exodus/elliptic'
-import { mapValues, pick } from '@exodus/basic-utils'
+import { mapValues } from '@exodus/basic-utils'
 import ecc from '@exodus/bitcoinerlab-secp256k1'
 
 import { tweakPrivateKey } from './tweak.js'
 
 const isValidEcOptions = (ecOptions) =>
-  !ecOptions || Object.keys(ecOptions).every((key) => ['canonical'].includes(key))
+  !ecOptions || Object.keys(ecOptions).every((key) => ['canonical', 'pers'].includes(key))
 
 const encodeSignature = ({ signature, enc }) => {
   if (enc === 'der') return Buffer.from(signature.toDER())
@@ -31,7 +31,7 @@ export const create = ({ getPrivateHDKey }) => {
       assert(['der', 'raw', 'binary'].includes(enc), 'signBuffer: invalid enc')
       assert(isValidEcOptions(ecOptions), 'signBuffer: invalid EC option')
       const { privateKey } = getPrivateHDKey({ seedId, keyId })
-      const signature = curve.sign(data, privateKey, pick(ecOptions, ['canonical']))
+      const signature = curve.sign(data, privateKey, ecOptions)
       return encodeSignature({ signature, enc })
     },
     signSchnorr: async ({ seedId, keyId, data, tweak, extraEntropy }) => {
