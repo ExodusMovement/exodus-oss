@@ -2327,6 +2327,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@exodus/basic-utils@npm:^2.5.2":
+  version: 2.5.2
+  resolution: "@exodus/basic-utils@npm:2.5.2"
+  dependencies:
+    minimalistic-assert: ^1.0.1
+  checksum: 236c4808515757f7da97d1db4f124e6c38d5b99d6e3be07df03ef2c588f97878736e359959a3c3255e5ad18d21f1254e8092be56224dd2baef2d48d175e0c333
+  languageName: node
+  linkType: hard
+
 "@exodus/basic-utils@npm:^3.0.1":
   version: 3.0.1
   resolution: "@exodus/basic-utils@npm:3.0.1"
@@ -12452,6 +12461,7 @@ __metadata:
     "@babel/preset-env": ^7.20.2
     "@babel/preset-flow": ^7.18.6
     "@babel/preset-react": ^7.18.6
+    "@exodus/basic-utils": ^2.5.2
     "@exodus/eslint-config": ^5.22.0
     "@exodus/eslint-plugin-ban-flow": latest
     "@exodus/eslint-plugin-basic-utils": latest
