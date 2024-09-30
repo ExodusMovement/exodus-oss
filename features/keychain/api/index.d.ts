@@ -39,12 +39,8 @@ export interface KeychainApi {
   }
   secp256k1: {
     signBuffer(params: { data: Buffer } & KeySource): Promise<Buffer>
-    signBuffer(
-      params: { data: Buffer; enc: 'der' } & KeySource
-    ): Promise<Buffer>
-    signBuffer(
-      params: { data: Buffer; enc: 'raw' } & KeySource
-    ): Promise<EcSignature>
+    signBuffer(params: { data: Buffer; enc: 'der' } & KeySource): Promise<Buffer>
+    signBuffer(params: { data: Buffer; enc: 'raw' } & KeySource): Promise<EcSignature>
   }
 }
 
