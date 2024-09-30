@@ -4,6 +4,22 @@ import ecc from '@exodus/bitcoinerlab-secp256k1'
 import { create } from '../crypto/secp256k1.js'
 import KeyIdentifier from '@exodus/key-identifier'
 
+import { createHmac, createHash } from 'crypto'
+
+if (!utils.hmacSha256Sync) {
+  utils.hmacSha256Sync = (k, ...m) =>
+    createHmac('sha256', k)
+      .update(utils.concatBytes(...m))
+      .digest()
+}
+
+if (!utils.sha256Sync) {
+  utils.sha256Sync = (...m) =>
+    createHash('sha256')
+      .update(utils.concatBytes(...m))
+      .digest()
+}
+
 const fixtures = [
   {
     // fixtures created by logging inside toAsyncSigner: https://github.com/ExodusMovement/assets/blob/5f93b19e7537f92519ec9bb7fe2514db9b4507e0/bitcoin/bitcoin-api/src/tx-sign/taproot.js#L48
