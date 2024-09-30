@@ -1,5 +1,4 @@
 import KeyIdentifier from '@exodus/key-identifier'
-import BN from 'bn.js'
 
 type SeedId = string
 type KeySource = { seedId: SeedId; keyId: KeyIdentifier }
