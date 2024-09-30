@@ -1,24 +1,8 @@
 import { utils } from '@noble/secp256k1'
-import ecc from '@exodus/bitcoinerlab-secp256k1'
+import { publicKeyToX } from '@exodus/crypto/secp256k1'
 
 import { create } from '../crypto/secp256k1.js'
 import KeyIdentifier from '@exodus/key-identifier'
-
-import { createHmac, createHash } from 'crypto'
-
-if (!utils.hmacSha256Sync) {
-  utils.hmacSha256Sync = (k, ...m) =>
-    createHmac('sha256', k)
-      .update(utils.concatBytes(...m))
-      .digest()
-}
-
-if (!utils.sha256Sync) {
-  utils.sha256Sync = (...m) =>
-    createHash('sha256')
-      .update(utils.concatBytes(...m))
-      .digest()
-}
 
 const fixtures = [
   {
@@ -44,7 +28,7 @@ const fixtures = [
 ]
 
 const tapTweakHash = (publicKey, h) => {
-  const xOnlyPoint = ecc.xOnlyPointFromPoint(publicKey)
+  const xOnlyPoint = publicKeyToX({ publicKey })
   const hash = utils.taggedHashSync('TapTweak', Buffer.concat(h ? [xOnlyPoint, h] : [xOnlyPoint]))
   return Buffer.from(hash)
 }
