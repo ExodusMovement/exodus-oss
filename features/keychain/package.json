@@ -30,7 +30,7 @@
     "todo:reenable:test:integration": "yarn run -T exodus-test --jest '**/*.integration-test.js'"
   },
   "dependencies": {
-    "@exodus/basic-utils": "^2.0.0",
+    "@exodus/basic-utils": "^3.0.1",
     "@exodus/bip32": "^2.1.0",
     "@exodus/crypto": "^1.0.0-rc.13",
     "@exodus/elliptic": "^6.5.4-precomputed",
@@ -41,7 +41,6 @@
     "buffer-json": "^2.0.0",
     "create-hash": "^1.2.0",
     "json-stable-stringify": "^1.0.1",
-    "lodash": "^4.17.21",
     "minimalistic-assert": "^1.0.1"
   },
   "devDependencies": {
