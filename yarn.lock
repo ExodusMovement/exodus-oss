@@ -2546,7 +2546,6 @@ __metadata:
     bip39: 2.6.0
     bn.js: ^5.2.1
     buffer-json: ^2.0.0
-    create-hash: ^1.2.0
     eslint: ^8.44.0
     events: ^3.3.0
     json-stable-stringify: ^1.0.1
