@@ -5,9 +5,6 @@ import { mapValues } from '@exodus/basic-utils'
 
 import { tweakPrivateKey } from './tweak.js'
 
-const isValidEcOptions = (ecOptions) =>
-  !ecOptions || Object.keys(ecOptions).every((key) => ['canonical'].includes(key))
-
 const encodeSignature = ({ signature, enc }) => {
   if (enc === 'der') return Buffer.from(signature.toDER())
 
@@ -23,15 +20,14 @@ export const create = ({ getPrivateHDKey }) => {
   const curve = new EC('secp256k1')
 
   const createInstance = () => ({
-    signBuffer: async ({ seedId, keyId, data, ecOptions, enc = 'der' }) => {
+    signBuffer: async ({ seedId, keyId, data, enc = 'der' }) => {
       assert(
         keyId.keyType === 'secp256k1',
         `ECDSA signatures are not supported for ${keyId.keyType}`
       )
       assert(['der', 'raw', 'binary'].includes(enc), 'signBuffer: invalid enc')
-      assert(isValidEcOptions(ecOptions), 'signBuffer: invalid EC option')
       const { privateKey } = getPrivateHDKey({ seedId, keyId })
-      const signature = curve.sign(data, privateKey, { canonical: true, ...ecOptions })
+      const signature = curve.sign(data, privateKey, { canonical: true })
       return encodeSignature({ signature, enc })
     },
     signSchnorr: async ({ seedId, keyId, data, tweak, extraEntropy }) => {
