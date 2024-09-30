@@ -2537,7 +2537,6 @@ __metadata:
     "@exodus/basic-utils": ^2.0.0
     "@exodus/bip32": ^2.1.0
     "@exodus/crypto": ^1.0.0-rc.13
-    "@exodus/elliptic": ^6.5.4-precomputed
     "@exodus/key-identifier": ^1.1.2
     "@exodus/key-ids": ^1.0.0
     "@exodus/key-utils": ^3.5.1
