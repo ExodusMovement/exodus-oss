@@ -31,7 +31,7 @@ export const create = ({ getPrivateHDKey }) => {
       assert(['der', 'raw', 'binary'].includes(enc), 'signBuffer: invalid enc')
       assert(isValidEcOptions(ecOptions), 'signBuffer: invalid EC option')
       const { privateKey } = getPrivateHDKey({ seedId, keyId })
-      const signature = curve.sign(data, privateKey, ecOptions)
+      const signature = curve.sign(data, privateKey, { canonical: true, ...ecOptions })
       return encodeSignature({ signature, enc })
     },
     signSchnorr: async ({ seedId, keyId, data, tweak, extraEntropy }) => {

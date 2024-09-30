@@ -60,7 +60,6 @@ describe('ETH Signer', () => {
             derivationPath: 'm/0', // doesn't matter in this fixture as we don't use it
             derivationAlgorithm: 'BIP32',
           }),
-          ecOptions: { canonical: true },
           enc: 'raw',
         })
         const signature = new Uint8Array(64)

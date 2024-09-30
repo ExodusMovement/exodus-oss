@@ -27,7 +27,7 @@ describe('EcDSA Signer', () => {
     const plaintext = Buffer.from('I really love keychains')
     const signature = await signer.signBuffer({ seedId, data: plaintext })
     const expected =
-      '30460221009288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d022100f63e7591ce6b3bc0bf66fa2948d220e74ea2a74b63fc9dcb20e0f53191550b67'
+      '30450221009288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d022009c18a6e3194c43f409905d6b72ddf176c0c359b4b4c02709ef1695b3ee135da'
     expect(signature.toString('hex')).toBe(expected)
   })
 
@@ -41,7 +41,7 @@ describe('EcDSA Signer', () => {
     })
 
     const expected =
-      '30460221009288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d022100f63e7591ce6b3bc0bf66fa2948d220e74ea2a74b63fc9dcb20e0f53191550b67'
+      '30450221009288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d022009c18a6e3194c43f409905d6b72ddf176c0c359b4b4c02709ef1695b3ee135da'
     expect(signature.toString('hex')).toBe(expected)
   })
 
@@ -89,7 +89,7 @@ describe.each([
     })
 
     const expected =
-      '30460221009288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d022100f63e7591ce6b3bc0bf66fa2948d220e74ea2a74b63fc9dcb20e0f53191550b67'
+      '30450221009288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d022009c18a6e3194c43f409905d6b72ddf176c0c359b4b4c02709ef1695b3ee135da'
     expect(signature.toString('hex')).toBe(expected)
   })
 })
@@ -99,9 +99,9 @@ describe('EcDSA Signer Signature Encoding', () => {
   const data = Buffer.from('I really love keychains')
   const expected = {
     default:
-      '30460221009288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d022100f63e7591ce6b3bc0bf66fa2948d220e74ea2a74b63fc9dcb20e0f53191550b67',
+      '30450221009288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d022009c18a6e3194c43f409905d6b72ddf176c0c359b4b4c02709ef1695b3ee135da',
     binary:
-      '9288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162df63e7591ce6b3bc0bf66fa2948d220e74ea2a74b63fc9dcb20e0f53191550b6700',
+      '9288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d09c18a6e3194c43f409905d6b72ddf176c0c359b4b4c02709ef1695b3ee135da01',
   }
 
   it('Default encoding', async () => {
