@@ -2338,13 +2338,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/bitcoinerlab-secp256k1@npm:^1.0.5-exodus.1":
-  version: 1.0.5-exodus.1
-  resolution: "@exodus/bitcoinerlab-secp256k1@npm:1.0.5-exodus.1"
+"@exodus/crypto@npm:^1.0.0-rc.13":
+  version: 1.0.0-rc.13
+  resolution: "@exodus/crypto@npm:1.0.0-rc.13"
   dependencies:
-    "@noble/hashes": ^1.1.5
+    "@noble/hashes": ^1.3.3
     "@noble/secp256k1": ^1.7.1
-  checksum: b9ba53bdf8eee1af328633fe772f592d0dbbd2a6bc8a7c5518028133d7a26a2f377daa8551ddc27dd1932c808ecac6baff153aec655fc98f0153b4aa707f02e3
+  checksum: 06b3e73a745ed6766471052bb5571d9bf2d3c4cbabd9c21fa2bab0f1ffba63f8b41e84660cda22991ba8d90e516114dc9515da220d4ff12e5c12e5c03bd2e6d1
   languageName: node
   linkType: hard
 
@@ -2536,7 +2536,7 @@ __metadata:
   dependencies:
     "@exodus/basic-utils": ^2.0.0
     "@exodus/bip32": ^2.1.0
-    "@exodus/bitcoinerlab-secp256k1": ^1.0.5-exodus.1
+    "@exodus/crypto": ^1.0.0-rc.13
     "@exodus/elliptic": ^6.5.4-precomputed
     "@exodus/key-identifier": ^1.1.2
     "@exodus/key-ids": ^1.0.0
@@ -3196,10 +3196,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/hashes@npm:^1.1.5":
-  version: 1.4.0
-  resolution: "@noble/hashes@npm:1.4.0"
-  checksum: 8ba816ae26c90764b8c42493eea383716396096c5f7ba6bea559993194f49d80a73c081f315f4c367e51bd2d5891700bcdfa816b421d24ab45b41cb03e4f3342
+"@noble/hashes@npm:^1.3.3":
+  version: 1.5.0
+  resolution: "@noble/hashes@npm:1.5.0"
+  checksum: 9cc031d5c888c455bfeef76af649b87f75380a4511405baea633c1e4912fd84aff7b61e99716f0231d244c9cfeda1fafd7d718963e6a0c674ed705e9b1b4f76b
   languageName: node
   linkType: hard
 

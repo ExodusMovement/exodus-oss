@@ -1,7 +1,7 @@
 import assert from 'minimalistic-assert'
+import * as secp256k1 from '@exodus/crypto/secp256k1'
 import elliptic from '@exodus/elliptic'
 import { mapValues } from '@exodus/basic-utils'
-import ecc from '@exodus/bitcoinerlab-secp256k1'
 
 import { tweakPrivateKey } from './tweak.js'
 
@@ -41,7 +41,7 @@ export const create = ({ getPrivateHDKey }) => {
       )
       const hdkey = getPrivateHDKey({ seedId, keyId })
       const privateKey = tweak ? tweakPrivateKey({ hdkey, tweak }) : hdkey.privateKey
-      return ecc.signSchnorr(data, privateKey, extraEntropy)
+      return secp256k1.schnorrSign({ data, privateKey, extraEntropy })
     },
   })
 
