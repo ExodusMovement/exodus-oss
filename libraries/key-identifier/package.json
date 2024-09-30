@@ -22,8 +22,8 @@
   "scripts": {
     "lint": "yarn run -T eslint . --ignore-path ../../.gitignore",
     "lint:fix": "yarn lint --fix",
-    "test": "yarn run -T jest",
-    "todo:reenable:test:integration": "jest --testMatch='**/*.integration-test.js'"
+    "test": "yarn run -T exodus-test --jest",
+    "todo:reenable:test:integration": "yarn run -T exodus-test --jest '**/*.integration-test.js'"
   },
   "dependencies": {
     "@exodus/key-utils": "^3.6.1",

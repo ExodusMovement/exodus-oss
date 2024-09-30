@@ -26,8 +26,8 @@
   "scripts": {
     "lint": "eslint . --ignore-path ../../.gitignore",
     "lint:fix": "yarn lint --fix",
-    "test": "jest",
-    "todo:reenable:test:integration": "jest --testMatch='**/*.integration-test.js'"
+    "test": "yarn run -T exodus-test --jest",
+    "todo:reenable:test:integration": "yarn run -T exodus-test --jest '**/*.integration-test.js'"
   },
   "dependencies": {
     "@exodus/basic-utils": "^2.0.0",
@@ -50,8 +50,7 @@
     "bip39": "2.6.0",
     "bn.js": "^5.2.1",
     "eslint": "^8.44.0",
-    "events": "^3.3.0",
-    "jest": "^29.1.2"
+    "events": "^3.3.0"
   },
   "bugs": {
     "url": "https://github.com/ExodusMovement/exodus-oss/issues?q=is%3Aissue+is%3Aopen+label%3Akeychain"
