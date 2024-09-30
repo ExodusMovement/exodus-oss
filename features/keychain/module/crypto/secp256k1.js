@@ -6,7 +6,7 @@ import { mapValues } from '@exodus/basic-utils'
 import { tweakPrivateKey } from './tweak.js'
 
 const isValidEcOptions = (ecOptions) =>
-  !ecOptions || Object.keys(ecOptions).every((key) => ['canonical', 'pers'].includes(key))
+  !ecOptions || Object.keys(ecOptions).every((key) => ['canonical'].includes(key))
 
 const encodeSignature = ({ signature, enc }) => {
   if (enc === 'der') return Buffer.from(signature.toDER())
