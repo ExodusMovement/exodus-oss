@@ -4,12 +4,6 @@ import BN from 'bn.js'
 type SeedId = string
 type KeySource = { seedId: SeedId; keyId: KeyIdentifier }
 
-type EcSignature = {
-  r: BN
-  s: BN
-  recoveryParam?: number
-}
-
 type PublicKeys = {
   publicKey: Buffer
   xpub: string
@@ -40,7 +34,6 @@ export interface KeychainApi {
   secp256k1: {
     signBuffer(params: { data: Buffer } & KeySource): Promise<Buffer>
     signBuffer(params: { data: Buffer; enc: 'der' } & KeySource): Promise<Buffer>
-    signBuffer(params: { data: Buffer; enc: 'raw' } & KeySource): Promise<EcSignature>
   }
 }
 
