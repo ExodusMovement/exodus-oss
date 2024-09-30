@@ -19,7 +19,7 @@ const shared = {
 const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'))
 const isModule = pkg.type === 'module'
 
-const sourceExts = ['js', 'json', 'ts', 'tsx', 'android.js', 'ios.js']
+const sourceExts = ['js', 'mjs', 'cjs', 'json', 'ts', 'tsx', 'android.js', 'ios.js']
 const esmConfigs = isModule
   ? ['plugin:@exodus/require-extensions/recommended', 'plugin:@exodus/hydra/esm']
   : []
