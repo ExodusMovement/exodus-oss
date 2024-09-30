@@ -1,3 +1,4 @@
+import { hash } from '@exodus/crypto/hash'
 import KeyIdentifier from '@exodus/key-identifier'
 import { mnemonicToSeed } from 'bip39'
 import apiDefinition from '../index.js'
@@ -205,11 +206,11 @@ describe('keychain api', () => {
     })
 
     test('signBuffer signs binary data', async () => {
-      const data = Buffer.from("Batman's identity was revealed as Harvey Dent")
+      const data = await hash('sha256', "Batman's identity was revealed as Harvey Dent")
       const signature = await api.secp256k1.signBuffer({ seedId, keyId, data })
 
       expect(signature.toString('hex')).toBe(
-        '3044022012305c1fbb450372c3e83217f97f86a5289c8f3e295f61ec65d0acec3393ba8102201714227763f27039e62fc66144db9c1684865574f538dead27d3f0f1e727f328'
+        '3045022100f3aab0f6b44f62ef387050c86fb79bacabb36b254d3017d83dc801b8e72ad58602202339bf7576cb07eadd82c9ce97d5c117ceeaa3d0b990695ae9f6e7659f535fac'
       )
     })
   })

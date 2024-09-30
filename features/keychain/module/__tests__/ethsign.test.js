@@ -54,7 +54,7 @@ describe('ETH Signer', () => {
 
       const ethSigner = async (buffer) => {
         const sig = await secp256k1Signer.signBuffer({
-          data: buffer,
+          data: Buffer.from(buffer, 'hex'),
           keyId: new KeyIdentifier({
             keyType: 'secp256k1',
             derivationPath: 'm/0', // doesn't matter in this fixture as we don't use it

@@ -2,6 +2,7 @@ import { mnemonicToSeed } from 'bip39'
 
 import createKeychain from './create-keychain.js'
 import { getSeedId } from '../crypto/seed-id.js'
+import { hash, hashSync } from '@exodus/crypto/hash'
 import KeyIdentifier from '@exodus/key-identifier'
 
 const seed = mnemonicToSeed(
@@ -25,9 +26,9 @@ describe('EcDSA Signer', () => {
 
     const signer = keychain.createSecp256k1Signer(keyId)
     const plaintext = Buffer.from('I really love keychains')
-    const signature = await signer.signBuffer({ seedId, data: plaintext })
+    const signature = await signer.signBuffer({ seedId, data: await hash('sha256', plaintext) })
     const expected =
-      '30450221009288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d022009c18a6e3194c43f409905d6b72ddf176c0c359b4b4c02709ef1695b3ee135da'
+      '30440220722491f3d490960c4fc16b56b8dacafa9d446e17d9321dbbe3b216da845adc9802203afd466c1450c60f7ef0fcdf55b1e3bb206d9f989530996059890a9d92ab1ef9'
     expect(signature.toString('hex')).toBe(expected)
   })
 
@@ -37,11 +38,11 @@ describe('EcDSA Signer', () => {
     const signature = await keychain.secp256k1.signBuffer({
       seedId,
       keyId,
-      data: plaintext,
+      data: await hash('sha256', plaintext),
     })
 
     const expected =
-      '30450221009288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d022009c18a6e3194c43f409905d6b72ddf176c0c359b4b4c02709ef1695b3ee135da'
+      '30440220722491f3d490960c4fc16b56b8dacafa9d446e17d9321dbbe3b216da845adc9802203afd466c1450c60f7ef0fcdf55b1e3bb206d9f989530996059890a9d92ab1ef9'
     expect(signature.toString('hex')).toBe(expected)
   })
 
@@ -58,7 +59,7 @@ describe('EcDSA Signer', () => {
       keychain.secp256k1.signBuffer({
         seedId,
         keyId,
-        data: plaintext,
+        data: await hash('sha256', plaintext),
       })
     ).rejects.toThrow('ECDSA signatures are not supported for nacl')
   })
@@ -85,23 +86,23 @@ describe.each([
     const signature = await keychain.secp256k1.signBuffer({
       seedId,
       keyId,
-      data: plaintext,
+      data: await hash('sha256', plaintext),
     })
 
     const expected =
-      '30450221009288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d022009c18a6e3194c43f409905d6b72ddf176c0c359b4b4c02709ef1695b3ee135da'
+      '30440220722491f3d490960c4fc16b56b8dacafa9d446e17d9321dbbe3b216da845adc9802203afd466c1450c60f7ef0fcdf55b1e3bb206d9f989530996059890a9d92ab1ef9'
     expect(signature.toString('hex')).toBe(expected)
   })
 })
 
 describe('EcDSA Signer Signature Encoding', () => {
   const keychain = createKeychain({ seed })
-  const data = Buffer.from('I really love keychains')
+  const data = hashSync('sha256', 'I really love keychains')
   const expected = {
     default:
-      '30450221009288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d022009c18a6e3194c43f409905d6b72ddf176c0c359b4b4c02709ef1695b3ee135da',
+      '30440220722491f3d490960c4fc16b56b8dacafa9d446e17d9321dbbe3b216da845adc9802203afd466c1450c60f7ef0fcdf55b1e3bb206d9f989530996059890a9d92ab1ef9',
     binary:
-      '9288b22525674d76b0d5b8b20f333d4de4f4f88340a7d0a4cadd54b719e6162d09c18a6e3194c43f409905d6b72ddf176c0c359b4b4c02709ef1695b3ee135da01',
+      '722491f3d490960c4fc16b56b8dacafa9d446e17d9321dbbe3b216da845adc983afd466c1450c60f7ef0fcdf55b1e3bb206d9f989530996059890a9d92ab1ef900',
   }
 
   it('Default encoding', async () => {
