@@ -123,9 +123,32 @@ describe('EcDSA Signer Signature Encoding', () => {
     expect(signature.toString('hex')).toBe(expected.binary)
   })
 
+  it('sig|rec encoding', async () => {
+    const signature = await keychain.secp256k1.signBuffer({ seedId, keyId, data, enc: 'sig|rec' })
+    expect(signature instanceof Buffer).toBe(true)
+    expect(signature.toString('hex')).toBe(expected.binary)
+  })
+
+  it('rec|sig encoding', async () => {
+    const signature = await keychain.secp256k1.signBuffer({ seedId, keyId, data, enc: 'rec|sig' })
+    expect(signature instanceof Buffer).toBe(true)
+    const recsig = expected.binary.slice(128) + expected.binary.slice(0, 128)
+    expect(signature.toString('hex')).toBe(recsig)
+  })
+
+  it('sig,rec encoding', async () => {
+    const res = await keychain.secp256k1.signBuffer({ seedId, keyId, data, enc: 'sig,rec' })
+    expect(typeof res === 'object').toBe(true)
+    const { signature, recovery } = res
+    expect(signature instanceof Buffer).toBe(true)
+    expect(signature.toString('hex')).toBe(expected.binary.slice(0, 128))
+    expect(recovery === 0 || recovery === 1).toBe(true)
+    expect(recovery).toBe(Buffer.from(expected.binary, 'hex')[64])
+  })
+
   it('Raw encoding', async () => {
     const signature = await keychain.secp256k1.signBuffer({ seedId, keyId, data, enc: 'raw' })
-    expect(typeof signature === 'object')
+    expect(typeof signature === 'object').toBe(true)
     expect(Object.getOwnPropertyNames(signature)).toStrictEqual(['r', 's', 'recoveryParam'])
     const r = Buffer.from(signature.r.toArray('be', 32))
     const s = Buffer.from(signature.s.toArray('be', 32))

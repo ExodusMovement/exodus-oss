@@ -2555,7 +2555,6 @@ __metadata:
     "@exodus/basic-utils": ^3.0.1
     "@exodus/bip32": ^2.1.0
     "@exodus/crypto": ^1.0.0-rc.13
-    "@exodus/elliptic": ^6.5.4-precomputed
     "@exodus/key-identifier": ^1.1.2
     "@exodus/key-ids": ^1.0.0
     "@exodus/key-utils": ^3.5.1
@@ -2565,7 +2564,6 @@ __metadata:
     bip39: 2.6.0
     bn.js: ^5.2.1
     buffer-json: ^2.0.0
-    create-hash: ^1.2.0
     eslint: ^8.44.0
     events: ^3.3.0
     json-stable-stringify: ^1.0.1

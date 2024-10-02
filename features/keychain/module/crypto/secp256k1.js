@@ -1,34 +1,45 @@
 import assert from 'minimalistic-assert'
 import * as secp256k1 from '@exodus/crypto/secp256k1'
-import elliptic from '@exodus/elliptic'
 import { mapValues } from '@exodus/basic-utils'
+import BN from 'bn.js'
 
 import { tweakPrivateKey } from './tweak.js'
 
-const encodeSignature = ({ signature, enc }) => {
-  if (enc === 'der') return Buffer.from(signature.toDER())
-
-  if (enc === 'raw') return { ...signature }
-
-  const r = Buffer.from(signature.r.toArray('be', 32))
-  const s = Buffer.from(signature.s.toArray('be', 32))
-  return Buffer.concat([r, s, Buffer.from([signature.recoveryParam])])
-}
-
 export const create = ({ getPrivateHDKey }) => {
-  const EC = elliptic.ec
-  const curve = new EC('secp256k1')
-
   const createInstance = () => ({
-    signBuffer: async ({ seedId, keyId, data, enc = 'der' }) => {
+    signBuffer: async ({ seedId, keyId, data, enc = 'der', extraEntropy = null }) => {
       assert(
         keyId.keyType === 'secp256k1',
         `ECDSA signatures are not supported for ${keyId.keyType}`
       )
-      assert(['der', 'raw', 'binary'].includes(enc), 'signBuffer: invalid enc')
+      if (enc === 'binary') enc = 'sig|rec'
+      assert(
+        ['der', 'raw', 'sig', 'sig|rec', 'rec|sig', 'sig,rec'].includes(enc),
+        'signBuffer: invalid enc'
+      )
       const { privateKey } = getPrivateHDKey({ seedId, keyId })
-      const signature = curve.sign(data, privateKey, { canonical: true })
-      return encodeSignature({ signature, enc })
+      const res = await secp256k1.ecdsaSignHash({
+        hash: data,
+        privateKey,
+        extraEntropy,
+        der: enc === 'der',
+        recovery: enc !== 'der' && enc !== 'sig',
+        format: 'buffer',
+      })
+      if (enc === 'der' || enc === 'sig' || enc === 'sig,rec') return res
+      const { signature, recovery } = res
+      if (enc === 'sig|rec') return Buffer.concat([signature, new Uint8Array([recovery])])
+      if (enc === 'rec|sig') return Buffer.concat([new Uint8Array([recovery]), signature])
+      if (enc === 'raw') {
+        // Deprecated, compatibility mode with manual signature encoding
+        return {
+          r: new BN(signature.subarray(0, signature.length / 2)),
+          s: new BN(signature.subarray(signature.length / 2)),
+          recoveryParam: recovery,
+        }
+      }
+
+      throw new Error('Unreachable')
     },
     signSchnorr: async ({ seedId, keyId, data, tweak, extraEntropy }) => {
       assert(
