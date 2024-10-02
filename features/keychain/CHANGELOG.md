@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.2.0...@exodus/keychain@7.3.0) (2024-10-02)
+
+### Features
+
+- switch to exodus/crypto for secp256k1 ([#152](https://github.com/ExodusMovement/exodus-oss/issues/152)) ([292dd33](https://github.com/ExodusMovement/exodus-oss/commit/292dd33249b9501c9469e05546d4f42786c38f9a))
+
 ## [7.2.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.1.0...@exodus/keychain@7.2.0) (2024-09-30)
 
 ### Features
