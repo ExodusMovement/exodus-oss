@@ -2345,18 +2345,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/bip32@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "@exodus/bip32@npm:2.1.0"
+"@exodus/bip32@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "@exodus/bip32@npm:3.3.0"
   dependencies:
-    "@exodus/hdkey": ^2.1.0-exodus.0
-    lodash: ^4.17.11
+    "@exodus/basic-utils": ^3.0.1
+    "@exodus/crypto": ^1.0.0-rc.11
+    bs58check: ^2.1.2
     minimalistic-assert: ^1.0.1
-  checksum: c9ffa61fc41154d9188fc371eb11d56786c3284e61eebdd7d20ed19ff53b389a09eb6cdaf3dcbad63df440c63a83cd6cfe591cf60c84f0b62113dff5af6665e0
+  checksum: 8af7c793371ccdd92143a5769692c89ca314d2eb08abf9accc6d7948ddb16e880ee48aaf4d910fa81da0de000de30e97b78b1cadbbfdc42ad11339c1f3fb0d4d
   languageName: node
   linkType: hard
 
-"@exodus/crypto@npm:^1.0.0-rc.13":
+"@exodus/crypto@npm:^1.0.0-rc.11, @exodus/crypto@npm:^1.0.0-rc.13":
   version: 1.0.0-rc.13
   resolution: "@exodus/crypto@npm:1.0.0-rc.13"
   dependencies:
@@ -2481,34 +2482,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/hd-key-slip-10@npm:^2.0.0":
-  version: 2.0.1
-  resolution: "@exodus/hd-key-slip-10@npm:2.0.1"
-  dependencies:
-    bip32-path: 0.4.2
-    create-hmac: 1.1.7
-  checksum: b4bd9145ca932e7be0e5296a68aa5a117aab3813023bddb52772e471bda7e7c2b688c4e9c0be0376cb342f72045b069e204436b817ca83ed53d05b698ddf5d46
-  languageName: node
-  linkType: hard
-
-"@exodus/hdkey@npm:^2.1.0-exodus.0":
-  version: 2.1.0-exodus.0
-  resolution: "@exodus/hdkey@npm:2.1.0-exodus.0"
-  dependencies:
-    "@exodus/secp256k1": ^4.0.2-exodus.0
-    bs58check: ^2.1.2
-    ripemd160: ^2.0.2
-    safe-buffer: ^5.1.1
-  checksum: 9d5c8ed7554bdc8aebd22bd3eae70aea67474fe98cf0c9f2af03775eb0208341b92cead70000865d904ba53e9bcf6171a3f7b5fa59cb44bc73a2103457fb1a9f
-  languageName: node
-  linkType: hard
-
 "@exodus/key-identifier@^1.0.0, @exodus/key-identifier@^1.1.2, @exodus/key-identifier@workspace:libraries/key-identifier":
   version: 0.0.0-use.local
   resolution: "@exodus/key-identifier@workspace:libraries/key-identifier"
   dependencies:
     "@exodus/key-ids": ^1.2.2
-    "@exodus/key-utils": ^3.6.1
+    "@exodus/key-utils": ^3.7.0
     "@exodus/keychain": "workspace:^"
     minimalistic-assert: ^1.0.1
   languageName: unknown
@@ -2524,27 +2503,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/key-utils@npm:^3.5.1":
-  version: 3.5.1
-  resolution: "@exodus/key-utils@npm:3.5.1"
+"@exodus/key-utils@npm:^3.7.0":
+  version: 3.7.0
+  resolution: "@exodus/key-utils@npm:3.7.0"
   dependencies:
-    "@exodus/bip32": ^2.1.0
-    "@exodus/hdkey": ^2.1.0-exodus.0
+    "@exodus/bip32": ^3.3.0
     bip32-path: ^0.4.2
     minimalistic-assert: ^1.0.1
-  checksum: 491642eaf40c29805e149273a6853dae00036278af48f9afff8978776a212bebb1becbb22b38954a2d528c7a8a475116694029f5027932b4a488512cd28cd686
-  languageName: node
-  linkType: hard
-
-"@exodus/key-utils@npm:^3.6.1":
-  version: 3.6.1
-  resolution: "@exodus/key-utils@npm:3.6.1"
-  dependencies:
-    "@exodus/bip32": ^2.1.0
-    "@exodus/hdkey": ^2.1.0-exodus.0
-    bip32-path: ^0.4.2
-    minimalistic-assert: ^1.0.1
-  checksum: d3e8e9832f28ea93188bde94a22be248d4a5bc46bc62dd54d79a783fbc7eb233dbbef3b8f6bf47539a9ac808adca9ea8cd5465a6307f1790fdefda0b9832d4da
+  checksum: 8d76e28814b592b7fa5e1bfe684547acfe14c76943edce896768cd0cab4af433310eb21ce02606bd7fb2d31c0545fd1f6ce179b9d5672d7051703f8624a4afd1
   languageName: node
   linkType: hard
 
@@ -2553,12 +2519,12 @@ __metadata:
   resolution: "@exodus/keychain@workspace:features/keychain"
   dependencies:
     "@exodus/basic-utils": ^3.0.1
-    "@exodus/bip32": ^2.1.0
+    "@exodus/bip32": ^3.3.0
     "@exodus/crypto": ^1.0.0-rc.13
     "@exodus/key-identifier": ^1.1.2
     "@exodus/key-ids": ^1.0.0
-    "@exodus/key-utils": ^3.5.1
-    "@exodus/slip10": ^2.0.0
+    "@exodus/key-utils": ^3.7.0
+    "@exodus/slip10": ^2.1.0
     "@exodus/sodium-crypto": ^3.1.0
     "@noble/secp256k1": ^1.7.1
     bip39: 2.6.0
@@ -2612,24 +2578,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@exodus/secp256k1@npm:^4.0.2-exodus.0":
-  version: 4.0.2-exodus.0
-  resolution: "@exodus/secp256k1@npm:4.0.2-exodus.0"
+"@exodus/slip10@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@exodus/slip10@npm:2.1.0"
   dependencies:
-    elliptic: ^6.5.2
-    node-gyp: latest
-  checksum: 7f712318969d5f31a470ed697f9c6c77b0de9fb7338aa90d0afb19bd8a3d91536d1cd68e05a20c4357b3187151a939862c0636d6377fcfa8d222b571ee60a00a
-  languageName: node
-  linkType: hard
-
-"@exodus/slip10@npm:^2.0.0":
-  version: 2.0.1
-  resolution: "@exodus/slip10@npm:2.0.1"
-  dependencies:
+    "@exodus/crypto": ^1.0.0-rc.13
     "@exodus/elliptic": ^6.5.4-precomputed
-    "@exodus/hd-key-slip-10": ^2.0.0
+    bip32-path: ^0.4.2
     lodash: ^4.17.11
-  checksum: b2014da72e93797cb20d18aab830ca37d43afe90728bdd869c4f1cfebd76c9f127882aa9fdcddf994fb9619a64c614652b99cc7ba87bf9299d084208501b6df0
+  checksum: cd3442e6ede320515cc5feeec1fa2ee5cdb098825deb18e5cadf09714e4c3a20a011ecaa9231535e79fb34ef09419d9f15a308e00e9c59a129d7fecb40d10372
   languageName: node
   linkType: hard
 
@@ -4979,7 +4936,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bip32-path@npm:0.4.2, bip32-path@npm:^0.4.2":
+"bip32-path@npm:^0.4.2":
   version: 0.4.2
   resolution: "bip32-path@npm:0.4.2"
   checksum: 4d5ad2e6f235b79f7552ab4c46f8238cd5f453993889b87935b3cf4c5dec281c145afe0e96f029c094a61a7c96ad45793988e31a83bc4bd7fceabd3aee188917
@@ -5942,7 +5899,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"create-hmac@npm:1.1.7, create-hmac@npm:^1.1.0, create-hmac@npm:^1.1.4, create-hmac@npm:^1.1.7":
+"create-hmac@npm:^1.1.0, create-hmac@npm:^1.1.4, create-hmac@npm:^1.1.7":
   version: 1.1.7
   resolution: "create-hmac@npm:1.1.7"
   dependencies:
@@ -6333,21 +6290,6 @@ __metadata:
   version: 1.5.29
   resolution: "electron-to-chromium@npm:1.5.29"
   checksum: c1de62aaea88c9b3ba32f8f2703b9d77a81633099a8f61365eaf9855d36e72189dcd99b9c3b8b2804afa403ac2ce0b00c23affa6f19d17b04ce0076f66a546b6
-  languageName: node
-  linkType: hard
-
-"elliptic@npm:^6.5.2":
-  version: 6.5.4
-  resolution: "elliptic@npm:6.5.4"
-  dependencies:
-    bn.js: ^4.11.9
-    brorand: ^1.1.0
-    hash.js: ^1.0.0
-    hmac-drbg: ^1.0.1
-    inherits: ^2.0.4
-    minimalistic-assert: ^1.0.1
-    minimalistic-crypto-utils: ^1.0.1
-  checksum: d56d21fd04e97869f7ffcc92e18903b9f67f2d4637a23c860492fbbff5a3155fd9ca0184ce0c865dd6eb2487d234ce9551335c021c376cd2d3b7cb749c7d10f4
   languageName: node
   linkType: hard
 
@@ -12438,7 +12380,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ripemd160@npm:^2.0.0, ripemd160@npm:^2.0.1, ripemd160@npm:^2.0.2":
+"ripemd160@npm:^2.0.0, ripemd160@npm:^2.0.1":
   version: 2.0.2
   resolution: "ripemd160@npm:2.0.2"
   dependencies:
