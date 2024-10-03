@@ -26,7 +26,7 @@
     "todo:reenable:test:integration": "yarn run -T exodus-test --jest '**/*.integration-test.js'"
   },
   "dependencies": {
-    "@exodus/key-utils": "^3.6.1",
+    "@exodus/key-utils": "^3.7.0",
     "minimalistic-assert": "^1.0.1"
   },
   "devDependencies": {
