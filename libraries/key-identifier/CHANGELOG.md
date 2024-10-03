@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/key-identifier@1.2.2...@exodus/key-identifier@1.3.0) (2024-10-03)
+
+### Features
+
+- bump dependencies for unified secp256k1 impl ([#155](https://github.com/ExodusMovement/exodus-oss/issues/155)) ([0c17562](https://github.com/ExodusMovement/exodus-oss/commit/0c17562650812567927a83063a8b4a163bb3c1b7))
+- expose `DerivationPath` instance via getPath ([#130](https://github.com/ExodusMovement/exodus-oss/issues/130)) ([b624c54](https://github.com/ExodusMovement/exodus-oss/commit/b624c546b1a4d7ff4cdce10933a24ab50981dfcd))
+
 ## [1.2.2](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/key-identifier@1.2.1...@exodus/key-identifier@1.2.2) (2024-07-30)
 
 ### Bug Fixes
