@@ -32,6 +32,7 @@ export const create = ({ getPrivateHDKey }) => {
       if (enc === 'rec|sig') return Buffer.concat([new Uint8Array([recovery]), signature])
       if (enc === 'raw') {
         // Deprecated, compatibility mode with manual signature encoding
+        // TODO: remove in next semver-major together with bn.js dep, see https://github.com/ExodusMovement/exodus-oss/pull/159
         return {
           r: new BN(signature.subarray(0, signature.length / 2)),
           s: new BN(signature.subarray(signature.length / 2)),
