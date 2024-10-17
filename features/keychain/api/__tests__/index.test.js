@@ -4,7 +4,6 @@ import { mnemonicToSeed } from 'bip39'
 import apiDefinition from '../index.js'
 import moduleDefinition from '../../module/index.js'
 import { getSeedId } from '../../module/crypto/seed-id.js'
-import createKeychain from '../../module/__tests__/create-keychain.js'
 
 let keychain
 const mnemonic = 'cousin access oak tragic entire dynamic marine expand govern enjoy honey tissue'
