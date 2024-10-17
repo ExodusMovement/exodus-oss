@@ -4,6 +4,7 @@ import { mnemonicToSeed } from 'bip39'
 import apiDefinition from '../index.js'
 import moduleDefinition from '../../module/index.js'
 import { getSeedId } from '../../module/crypto/seed-id.js'
+import createKeychain from '../../module/__tests__/create-keychain.js'
 
 let keychain
 const mnemonic = 'cousin access oak tragic entire dynamic marine expand govern enjoy honey tissue'
@@ -157,6 +158,14 @@ describe('keychain api', () => {
 
       const decrypted = await api.sodium.decryptSecretBox({ seedId, keyId, data: encrypted })
       expect(data.compare(decrypted)).toBe(0)
+    })
+
+    test('sign signs data', async () => {
+      const data = Buffer.from("Batman's identity was revealed as Harvey Dent")
+      const signed = await api.sodium.sign({ seedId, keyId, data })
+      expect(signed.toString('hex')).toBe(
+        'f491a1264bd310c3cc0d412d4dcf2ba144cf99659a025d39b73586fcde6c4e103ccf82574a339f6f9410c57409bbb4b2df723b3bbeadc0a4d7ff3630192cb0014261746d616e2773206964656e74697479207761732072657665616c6564206173204861727665792044656e74'
+      )
     })
 
     test('signDetached signs data', async () => {

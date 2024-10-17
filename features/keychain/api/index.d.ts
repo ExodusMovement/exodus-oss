@@ -20,6 +20,7 @@ export interface KeychainApi {
   arePrivateKeysLocked(seeds: Buffer[]): boolean
   removeSeeds(seeds: Buffer[]): string[]
   sodium: {
+    sign(params: { data: Buffer } & KeySource): Promise<Buffer>
     signDetached(params: { data: Buffer } & KeySource): Promise<Buffer>
     getKeysFromSeed(
       params: KeySource
