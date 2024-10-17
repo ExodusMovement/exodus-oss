@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.4.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.3.0...@exodus/keychain@7.4.0) (2024-10-17)
+
+### Features
+
+- add `sodium.getKeysFromSeed` ([#160](https://github.com/ExodusMovement/exodus-oss/issues/160)) ([96496f2](https://github.com/ExodusMovement/exodus-oss/commit/96496f2b4cb693f05c888137c2d1220c4a49e201))
+- expose `sodium.sign` ([#161](https://github.com/ExodusMovement/exodus-oss/issues/161)) ([457d201](https://github.com/ExodusMovement/exodus-oss/commit/457d201cf3d5bfd2361f198f2b062bc680b15e58))
+
 ## [7.3.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.2.0...@exodus/keychain@7.3.0) (2024-10-03)
 
 ### Features
