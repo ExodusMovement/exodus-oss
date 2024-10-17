@@ -159,6 +159,14 @@ describe('keychain api', () => {
       expect(data.compare(decrypted)).toBe(0)
     })
 
+    test('sign signs data', async () => {
+      const data = Buffer.from("Batman's identity was revealed as Harvey Dent")
+      const signed = await api.sodium.sign({ seedId, keyId, data })
+      expect(signed.toString('hex')).toBe(
+        'f491a1264bd310c3cc0d412d4dcf2ba144cf99659a025d39b73586fcde6c4e103ccf82574a339f6f9410c57409bbb4b2df723b3bbeadc0a4d7ff3630192cb0014261746d616e2773206964656e74697479207761732072657665616c6564206173204861727665792044656e74'
+      )
+    })
+
     test('signDetached signs data', async () => {
       const data = Buffer.from("Batman's identity was revealed as Harvey Dent")
       const signature = await api.sodium.signDetached({ seedId, keyId, data })

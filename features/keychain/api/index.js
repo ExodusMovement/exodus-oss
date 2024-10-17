@@ -4,6 +4,7 @@ const createKeychainApi = ({ keychain }) => {
       exportKey: (...args) => keychain.exportKey(...args),
       arePrivateKeysLocked: (seeds) => keychain.arePrivateKeysLocked(seeds),
       sodium: {
+        sign: keychain.sodium.sign,
         signDetached: keychain.sodium.signDetached,
         encryptSecretBox: keychain.sodium.encryptSecretBox,
         decryptSecretBox: keychain.sodium.decryptSecretBox,
