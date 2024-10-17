@@ -23,16 +23,20 @@ export const create = ({ getPrivateHDKey }) => {
     return sodium.getSodiumKeysFromSeed(sodiumSeed)
   }
 
-  const createInstance = () => ({
-    getSodiumKeysFromSeed: async ({ seedId, keyId, exportPrivate }) => {
-      const { box, sign, secret } = await getSodiumKeysFromIdentifier({ seedId, keyId })
+  const getKeysFromSeed = async ({ seedId, keyId, exportPrivate }) => {
+    const { box, sign, secret } = await getSodiumKeysFromIdentifier({ seedId, keyId })
 
-      return {
-        box: cloneKeypair({ keys: box, exportPrivate }),
-        sign: cloneKeypair({ keys: sign, exportPrivate }),
-        secret: exportPrivate ? cloneBuffer(secret) : null,
-      }
-    },
+    return {
+      box: cloneKeypair({ keys: box, exportPrivate }),
+      sign: cloneKeypair({ keys: sign, exportPrivate }),
+      secret: exportPrivate ? cloneBuffer(secret) : null,
+    }
+  }
+
+  const createInstance = () => ({
+    getKeysFromSeed,
+    /** @deprecated use getKeysFromSeed instead */
+    getSodiumKeysFromSeed: getKeysFromSeed,
     sign: async ({ seedId, keyId, data }) => {
       const { sign } = await getSodiumKeysFromIdentifier({ seedId, keyId })
       return sodium.sign({ message: data, privateKey: sign.privateKey })
