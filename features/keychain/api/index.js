@@ -8,7 +8,7 @@ const createKeychainApi = ({ keychain }) => {
         encryptSecretBox: keychain.sodium.encryptSecretBox,
         decryptSecretBox: keychain.sodium.decryptSecretBox,
         getKeysFromSeed: (...args) =>
-          keychain.sodium.getSodiumKeysFromSeed(...args).then(({ box, sign }) => ({ box, sign })),
+          keychain.sodium.getKeysFromSeed(...args).then(({ box, sign }) => ({ box, sign })),
       },
       ed25519: {
         signBuffer: keychain.ed25519.signBuffer,
