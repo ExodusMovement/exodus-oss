@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.4.0...@exodus/keychain@7.5.0) (2024-10-28)
+
+### Features
+
+- use exodus/crypto instead of sodium where possible ([#164](https://github.com/ExodusMovement/exodus-oss/issues/164)) ([fbaf8ae](https://github.com/ExodusMovement/exodus-oss/commit/fbaf8aedecfca8e91fe377925db8e843c1bf623b))
+
 ## [7.4.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.3.0...@exodus/keychain@7.4.0) (2024-10-17)
 
 ### Features
