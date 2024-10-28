@@ -1,5 +1,7 @@
 import sodium from '@exodus/sodium-crypto'
 import { mapValues } from '@exodus/basic-utils'
+import * as curve25519 from '@exodus/crypto/curve25519'
+import { getSodiumKeysFromSeed } from '@exodus/crypto/sodium'
 
 const cloneBuffer = (buf) => {
   const newBuffer = Buffer.alloc(buf.length)
@@ -20,7 +22,7 @@ export const create = ({ getPrivateHDKey }) => {
   // garbage collected, clearing it from memory.
   const getSodiumKeysFromIdentifier = async ({ seedId, keyId }) => {
     const { privateKey: sodiumSeed } = getPrivateHDKey({ seedId, keyId })
-    return sodium.getSodiumKeysFromSeed(sodiumSeed)
+    return getSodiumKeysFromSeed(sodiumSeed)
   }
 
   const getKeysFromSeed = async ({ seedId, keyId, exportPrivate }) => {
@@ -38,20 +40,20 @@ export const create = ({ getPrivateHDKey }) => {
     /** @deprecated use getKeysFromSeed instead */
     getSodiumKeysFromSeed: getKeysFromSeed,
     sign: async ({ seedId, keyId, data }) => {
-      const { sign } = await getSodiumKeysFromIdentifier({ seedId, keyId })
-      return sodium.sign({ message: data, privateKey: sign.privateKey })
+      const { privateKey } = getPrivateHDKey({ seedId, keyId })
+      return curve25519.signAttached({ message: data, privateKey, format: 'buffer' })
     },
     signOpen: async ({ seedId, keyId, data }) => {
-      const { sign } = await getSodiumKeysFromIdentifier({ seedId, keyId })
-      return sodium.signOpen({ signed: data, publicKey: sign.publicKey })
+      const { publicKey } = getPrivateHDKey({ seedId, keyId })
+      return curve25519.signOpen({ signed: data, publicKey, format: 'buffer' })
     },
     signDetached: async ({ seedId, keyId, data }) => {
-      const { sign } = await getSodiumKeysFromIdentifier({ seedId, keyId })
-      return sodium.signDetached({ message: data, privateKey: sign.privateKey })
+      const { privateKey } = getPrivateHDKey({ seedId, keyId })
+      return curve25519.signDetached({ message: data, privateKey, format: 'buffer' })
     },
     verifyDetached: async ({ seedId, keyId, data, signature }) => {
-      const { sign } = await getSodiumKeysFromIdentifier({ seedId, keyId })
-      return sodium.verifyDetached({ message: data, sig: signature, publicKey: sign.publicKey })
+      const { publicKey } = getPrivateHDKey({ seedId, keyId })
+      return curve25519.verifyDetached({ message: data, signature, publicKey })
     },
     encryptSecretBox: async ({ seedId, keyId, data }) => {
       const { privateKey: sodiumSeed } = getPrivateHDKey({ seedId, keyId })
@@ -90,8 +92,5 @@ export const create = ({ getPrivateHDKey }) => {
 }
 
 export const privToPub = async (sodiumSeed) => {
-  const {
-    sign: { publicKey },
-  } = await sodium.getSodiumKeysFromSeed(sodiumSeed)
-  return Buffer.from(publicKey)
+  return curve25519.edwardsToPublic({ privateKey: sodiumSeed, format: 'buffer' })
 }
