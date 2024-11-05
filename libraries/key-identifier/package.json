@@ -32,5 +32,8 @@
   "devDependencies": {
     "@exodus/key-ids": "^1.2.2",
     "@exodus/keychain": "workspace:^"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
