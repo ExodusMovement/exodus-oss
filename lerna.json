@@ -2,5 +2,18 @@
   "packages": ["modules/*", "libraries/*", "features/*"],
   "version": "independent",
   "npmClient": "yarn",
-  "changelogPreset": "conventionalcommits"
+  "changelogPreset": {
+    "name": "conventionalcommits",
+    "types": [
+      { "type": "feat", "section": "Features" },
+      { "type": "fix", "section": "Bug Fixes" },
+      { "type": "perf", "section": "Performance" },
+      { "type": "license", "section": "License" },
+      { "type": "chore", "hidden": true },
+      { "type": "docs", "hidden": true },
+      { "type": "style", "hidden": true },
+      { "type": "refactor", "hidden": true },
+      { "type": "test", "hidden": true }
+    ]
+  }
 }
