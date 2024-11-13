@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.1](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.5.0...@exodus/keychain@7.5.1) (2024-11-13)
+
+### Bug Fixes
+
+- add signSchnorr to keychain api ([#171](https://github.com/ExodusMovement/exodus-oss/issues/171)) ([2da2b05](https://github.com/ExodusMovement/exodus-oss/commit/2da2b05fdcc382042d3084cf63eb7f2931699fa4))
+
 ## [7.5.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.4.0...@exodus/keychain@7.5.0) (2024-11-03)
 
 ### Features
