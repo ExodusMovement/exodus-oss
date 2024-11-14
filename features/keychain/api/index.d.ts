@@ -27,6 +27,8 @@ export interface KeychainApi {
     ): Promise<{ box: { publicKey: Buffer }; sign: { publicKey: Buffer } }>
     encryptSecretBox(params: { data: Buffer } & KeySource): Promise<Buffer>
     decryptSecretBox(params: { data: Buffer } & KeySource): Promise<Buffer>
+    encryptBox(params: { data: Buffer; toPublicKey: Buffer } & KeySource): Promise<Buffer>
+    decryptBox(params: { data: Buffer; fromPublicKey: Buffer } & KeySource): Promise<Buffer>
   }
   ed25519: {
     signBuffer(params: { data: Buffer } & KeySource): Promise<Buffer>
