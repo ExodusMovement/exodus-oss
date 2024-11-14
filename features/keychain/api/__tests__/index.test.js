@@ -221,5 +221,21 @@ describe('keychain api', () => {
         '3045022100f3aab0f6b44f62ef387050c86fb79bacabb36b254d3017d83dc801b8e72ad58602202339bf7576cb07eadd82c9ce97d5c117ceeaa3d0b990695ae9f6e7659f535fac'
       )
     })
+
+    test('signSchnorr signs binary data', async () => {
+      const data = await hash('sha256', "Batman's identity was revealed as Harvey Dent")
+      const signature = await api.secp256k1.signSchnorr({
+        seedId,
+        keyId,
+        data,
+        extraEntropy: Buffer.from(
+          '1230000000000000000000000000000000000000000000000000000000000000',
+          'hex'
+        ),
+      })
+      expect(Buffer.from(signature).toString('hex')).toBe(
+        'd8a41b022fab008d1d8bc32ce99dd16a4edae37da691047b3729d626c47d6e0850f78245656bc0edccf6002936b96fe04bb4553be5334cf425ac94ca2da33a2e'
+      )
+    })
   })
 })
