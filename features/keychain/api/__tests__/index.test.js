@@ -159,6 +159,29 @@ describe('keychain api', () => {
       expect(data.compare(decrypted)).toBe(0)
     })
 
+    test('should encrypt and decrypt data with external keypair', async () => {
+      const {
+        box: { publicKey: toPublicKey },
+      } = await api.sodium.getKeysFromSeed({ seedId: otherSeedId, keyId })
+
+      const data = Buffer.from("Harvey Dent's identity was revealed as the Riddler")
+      const encrypted = await api.sodium.encryptBox({ seedId, keyId, data, toPublicKey })
+
+      expect(encrypted).toBeInstanceOf(Buffer)
+
+      const {
+        box: { publicKey: fromPublicKey },
+      } = await api.sodium.getKeysFromSeed({ seedId, keyId })
+
+      const decrypted = await api.sodium.decryptBox({
+        seedId: otherSeedId,
+        keyId,
+        data: encrypted,
+        fromPublicKey,
+      })
+      expect(data.compare(decrypted)).toBe(0)
+    })
+
     test('sign signs data', async () => {
       const data = Buffer.from("Batman's identity was revealed as Harvey Dent")
       const signed = await api.sodium.sign({ seedId, keyId, data })
