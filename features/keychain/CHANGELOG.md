@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.5.1...@exodus/keychain@7.6.0) (2024-11-15)
+
+### Features
+
+- expose sodium encrypt/decrypt box in keychain api ([#174](https://github.com/ExodusMovement/exodus-oss/issues/174)) ([618bc35](https://github.com/ExodusMovement/exodus-oss/commit/618bc357ce470e1d26c79b5b85e7bcacfc89a332))
+
 ## [7.5.1](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.5.0...@exodus/keychain@7.5.1) (2024-11-13)
 
 ### Bug Fixes
