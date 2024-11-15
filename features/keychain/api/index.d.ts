@@ -36,7 +36,7 @@ export interface KeychainApi {
   secp256k1: {
     signBuffer(params: { data: Buffer } & KeySource): Promise<Buffer>
     signBuffer(params: { data: Buffer; enc: 'der' } & KeySource): Promise<Buffer>
-    signSchnorr(params: { data: Buffer; tweak?: Buffer } & KeySource): Promise<Buffer>
+    signSchnorr(params: { data: Buffer; extraEntropy?: Buffer } & KeySource): Promise<Buffer>
   }
 }
 
