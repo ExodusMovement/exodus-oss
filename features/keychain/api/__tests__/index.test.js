@@ -256,7 +256,7 @@ describe('keychain api', () => {
           'hex'
         ),
       })
-      expect(Buffer.from(signature).toString('hex')).toBe(
+      expect(signature.toString('hex')).toBe(
         'd8a41b022fab008d1d8bc32ce99dd16a4edae37da691047b3729d626c47d6e0850f78245656bc0edccf6002936b96fe04bb4553be5334cf425ac94ca2da33a2e'
       )
     })
