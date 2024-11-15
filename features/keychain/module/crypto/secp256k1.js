@@ -49,7 +49,7 @@ export const create = ({ getPrivateHDKey }) => {
       )
       const hdkey = getPrivateHDKey({ seedId, keyId })
       const privateKey = tweak ? tweakPrivateKey({ hdkey, tweak }) : hdkey.privateKey
-      return Buffer.from(await secp256k1.schnorrSign({ data, privateKey, extraEntropy }))
+      return secp256k1.schnorrSign({ data, privateKey, extraEntropy, format: 'buffer' })
     },
   })
 
