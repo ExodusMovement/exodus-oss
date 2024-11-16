@@ -60,7 +60,7 @@ describe('Schnorr signer', () => {
       extraEntropy: Buffer.from(fixture.entropy, 'hex'),
     })
 
-    expect(Buffer.from(result).toString('hex')).toBe(fixture.sig)
+    expect(result.toString('hex')).toBe(fixture.sig)
   })
 
   it('should throw for keyType != secp256k1', async () => {
