@@ -1,6 +1,7 @@
 {
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
   "packages": ["modules/*", "libraries/*", "features/*"],
   "version": "independent",
   "npmClient": "yarn",
-  "changelogPreset": "conventionalcommits"
+  "changelogPreset": "./changelog.config.js"
 }

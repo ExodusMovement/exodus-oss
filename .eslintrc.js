@@ -25,6 +25,7 @@ const esmConfigs = isModule
   : []
 
 module.exports = {
+  ignorePatterns: ['**/coverage/**'],
   extends: [
     '@exodus/eslint-config/javascript-babel',
     'plugin:@exodus/ban-flow/recommended',
@@ -68,6 +69,12 @@ module.exports = {
       rules: {
         'no-restricted-syntax': 'off',
         'no-restricted-imports': 'off',
+      },
+    },
+    {
+      files: ['changelog.config.js'],
+      rules: {
+        'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
       },
     },
   ],
