@@ -95,7 +95,10 @@ export default class KeyIdentifier {
     }
 
     return !['derivationAlgorithm', 'derivationPath', 'assetName', 'keyType'].some(
-      (fieldName) => keyIdA[fieldName] !== keyIdB[fieldName]
+      (fieldName) =>
+        Object.prototype.hasOwnProperty.call(keyIdA, fieldName) &&
+        Object.prototype.hasOwnProperty.call(keyIdB, fieldName) &&
+        keyIdA[fieldName] !== keyIdB[fieldName]
     )
   }
 }
