@@ -1,6 +1,6 @@
 {
   "name": "@exodus/key-identifier",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "type": "module",
   "description": "Provides a KeyIdentifier class that helps to define how a key is derived",
   "author": "Exodus Movement, Inc.",
