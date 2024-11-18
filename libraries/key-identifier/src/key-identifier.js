@@ -90,7 +90,11 @@ export default class KeyIdentifier {
   }
 
   static compare = (keyIdA, keyIdB) => {
-    if (typeof keyIdA !== 'object' || typeof keyIdB !== 'object') {
+    if (
+      typeof keyIdA !== 'object' ||
+      typeof keyIdB !== 'object' ||
+      [keyIdA, keyIdB].includes(null)
+    ) {
       return false
     }
 

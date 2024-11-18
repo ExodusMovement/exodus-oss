@@ -200,6 +200,26 @@ describe('KeyIdentifier', () => {
       expect(KeyIdentifier.compare(keyIdA, keyIdB)).toBe(false)
       expect(KeyIdentifier.compare('not-an-object', keyIdB)).toBe(false)
     })
+
+    it('should return false when key identifier A is null', () => {
+      const keyIdA = new KeyIdentifier({
+        derivationAlgorithm: 'BIP32',
+        assetName: 'ethereum',
+        derivationPath: "m/44'/60'/0'/0/0",
+      })
+
+      expect(KeyIdentifier.compare(keyIdA, null)).toBe(false)
+    })
+
+    it('should return false when key identifier B is null', () => {
+      const keyIdB = new KeyIdentifier({
+        derivationAlgorithm: 'BIP32',
+        assetName: 'ethereum',
+        derivationPath: "m/44'/60'/0'/0/0",
+      })
+
+      expect(KeyIdentifier.compare(null, keyIdB)).toBe(false)
+    })
   })
 
   describe('.toString()', () => {
