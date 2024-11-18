@@ -75,7 +75,7 @@ module.exports = {
       files: ['changelog.config.js'],
       rules: {
         'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-      }
-    }
+      },
+    },
   ],
 }
