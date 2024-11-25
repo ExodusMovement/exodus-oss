@@ -37,6 +37,7 @@
     "@exodus/key-utils": "^3.7.0",
     "@exodus/slip10": "^2.2.0",
     "@exodus/sodium-crypto": "^3.1.0",
+    "@noble/secp256k1": "^1.7.1",
     "bn.js": "^5.2.1",
     "buffer-json": "^2.0.0",
     "json-stable-stringify": "^1.0.1",
@@ -44,7 +45,6 @@
   },
   "devDependencies": {
     "@exodus/key-ids": "^1.0.0",
-    "@noble/secp256k1": "^1.7.1",
     "bip39": "2.6.0",
     "eslint": "^8.44.0",
     "events": "^3.3.0"
