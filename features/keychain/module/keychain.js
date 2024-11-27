@@ -142,7 +142,7 @@ export class Keychain {
     return this.#masters[seedId][derivationAlgorithm].derive(derivationPath)
   }
 
-  async exportKey({ seedId, keyId, exportPrivate }) {
+  async exportKey({ seedId, keyId, exportPrivate, exportPublic = true }) {
     assert(typeof seedId === 'string', 'seedId must be a string')
 
     if (exportPrivate) {
@@ -157,24 +157,27 @@ export class Keychain {
       getPrivateHDKeySymbol: this.#getPrivateHDKeySymbol,
     })
     const privateKey = hdkey.privateKey
-    let publicKey = hdkey.publicKey
+    let publicKey = null
 
-    if (keyId.keyType === 'legacy') {
-      if (keyId.assetName in this.#legacyPrivToPub) {
-        const legacyPrivToPub = this.#legacyPrivToPub[keyId.assetName]
-        publicKey = await legacyPrivToPub(privateKey)
-      } else {
-        throw new Error(`asset name ${keyId.assetName} has no legacyPrivToPub mapper`)
+    if (exportPublic) {
+      publicKey = hdkey.publicKey
+      if (keyId.keyType === 'legacy') {
+        if (keyId.assetName in this.#legacyPrivToPub) {
+          const legacyPrivToPub = this.#legacyPrivToPub[keyId.assetName]
+          publicKey = await legacyPrivToPub(privateKey)
+        } else {
+          throw new Error(`asset name ${keyId.assetName} has no legacyPrivToPub mapper`)
+        }
+      } else if (keyId.derivationAlgorithm !== 'SLIP10' && keyId.keyType === 'nacl') {
+        // SLIP10 already produces the correct public key for curve ed25119
+        // so we can safely skip using the privToPub mapper.
+        publicKey = await sodium.privToPub(privateKey)
       }
-    } else if (keyId.derivationAlgorithm !== 'SLIP10' && keyId.keyType === 'nacl') {
-      // SLIP10 already produces the correct public key for curve ed25119
-      // so we can safely skip using the privToPub mapper.
-      publicKey = await sodium.privToPub(privateKey)
     }
 
     const { xpriv, xpub } = hdkey.toJSON()
     return {
-      xpub,
+      xpub: exportPublic ? xpub : null,
       xpriv: exportPrivate ? xpriv : null,
       publicKey,
       privateKey: exportPrivate ? privateKey : null,

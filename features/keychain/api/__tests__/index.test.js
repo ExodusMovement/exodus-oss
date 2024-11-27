@@ -95,6 +95,38 @@ describe('keychain api', () => {
     })
   })
 
+  test('export privateKey without publicKey', async () => {
+    await expect(
+      api.exportKey({ seedId, keyId: solanaKeyId, exportPrivate: true, exportPublic: false })
+    ).resolves.toEqual({
+      privateKey: Buffer.from(
+        '89e0d7573648f0e08d62491cf8cf01404b198e5316789089845e0f9349f06e21',
+        'hex'
+      ),
+      publicKey: null,
+      xpriv:
+        'xprvA3aSZco2ba6qU2FmVowiad82ZHahVhAo6RA9XX7APo9aCMhaJhEjJxRRAwCB6mojPMJKvuZmG1nKmuLZb2VgZF8WpjNA9QtBgAxnNshT1iN',
+      xpub: null,
+    })
+    await expect(
+      api.exportKey({
+        seedId: otherSeedId,
+        keyId: solanaKeyId,
+        exportPrivate: true,
+        exportPublic: false,
+      })
+    ).resolves.toEqual({
+      privateKey: Buffer.from(
+        '107bfcb5d268f0c8a6d5ade844607a96e42796fcc4410e49f5438f517f82ea1a',
+        'hex'
+      ),
+      publicKey: null,
+      xpriv:
+        'xprvA3ZsPdqNsXe4VXohMHUmVcfUDqUG2et8Nia5wTQQGERE8S4uipLuNQjYzhMrN32rquhFhCoBZwHB1HuYw9p16UxF36DwJmiaDL3xDjfAZVD',
+      xpub: null,
+    })
+  })
+
   test('export publicKey', async () => {
     await expect(api.exportKey({ seedId, keyId: solanaKeyId })).resolves.toEqual({
       privateKey: null,
