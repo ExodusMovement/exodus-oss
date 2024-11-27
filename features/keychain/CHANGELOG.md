@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.7.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.6.1...@exodus/keychain@7.7.0) (2024-11-27)
+
+### Features
+
+- feat: add ability to skip public key generation (#186)
+
 ## [7.6.1](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.6.0...@exodus/keychain@7.6.1) (2024-11-19)
 
 ### Bug Fixes
