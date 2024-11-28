@@ -1,17 +1,17 @@
-import { hashSync } from '@exodus/crypto/hash'
-import { hmacSync } from '@exodus/crypto/hmac'
+import { hash } from '@exodus/crypto/hash'
+import { hmac } from '@exodus/crypto/hmac'
 import { randomBytes } from '@exodus/crypto/randomBytes'
 import * as secp256k1 from '@noble/secp256k1'
 
-function singleRoundHmacDRBG(nonce) {
+async function singleRoundHmacDRBG(nonce) {
   const seed = randomBytes(32)
   let K = Buffer.alloc(32, 0)
   let V = Buffer.alloc(32, 1)
-  K = hmacSync('sha256', K, [V, new Uint8Array([0]), seed, nonce])
-  V = hmacSync('sha256', K, V)
-  K = hmacSync('sha256', K, [V, new Uint8Array([1]), seed, nonce])
-  V = hmacSync('sha256', K, V)
-  return hmacSync('sha256', K, V)
+  K = await hmac('sha256', K, [V, new Uint8Array([0]), seed, nonce])
+  V = await hmac('sha256', K, V)
+  K = await hmac('sha256', K, [V, new Uint8Array([1]), seed, nonce])
+  V = await hmac('sha256', K, V)
+  return hmac('sha256', K, V)
 }
 
 /**
@@ -33,7 +33,7 @@ function singleRoundHmacDRBG(nonce) {
  * @param {Buffer} privateKey
  * @returns {string}
  */
-export function schnorrZ({ data, privateKey }) {
+export async function schnorrZ({ data, privateKey }) {
   const { utils, Signature, CURVE, getPublicKey } = secp256k1
   const big = (buf) => BigInt('0x' + buf.toString('hex'))
 
@@ -42,13 +42,13 @@ export function schnorrZ({ data, privateKey }) {
   // eslint-disable-next-line no-constant-condition
   while (true) {
     // 1. k comes from drbg until satisfies 0 < k < n
-    const k = singleRoundHmacDRBG(data)
+    const k = await singleRoundHmacDRBG(data)
     const kn = big(k)
     if (!(kn > BigInt(0) && kn < CURVE.n)) continue // this is rechecked below
 
     const Q = getPublicKey(k, true) // 2. This is Q = G * k multiplication. Also checks 0 < k < n and throws
-
-    const r = utils.mod(big(hashSync('sha256', [Q, pk, data])), CURVE.n) // 3
+    const H = await hash('sha256', [Q, pk, data])
+    const r = utils.mod(big(H), CURVE.n) // 3
     if (r === BigInt(0)) continue // 4
 
     const s = utils.mod(kn - r * big(privateKey), CURVE.n) // 5
