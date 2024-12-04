@@ -23,7 +23,7 @@ jobs:
         run: yarn install --immutable
       - name: Build
         run: yarn build
-      - uses: ExodusMovement/lerna-release-action/publish@f7bb33dbbd7a57206eea2fcb79d7fcc2a61bcbb9
+      - uses: ExodusMovement/lerna-release-action/publish@5332b447e1e14840caa5adcc85640def76c255a7
         id: publish
         with:
           github-token: ${{ secrets.GH_AUTOMATION_PAT }}
