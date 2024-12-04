@@ -181,6 +181,7 @@ export class Keychain {
     }
   }
 
+  // @deprecated use keychain.(secp256k1|ed25519|sodium).sign* instead
   async signTx({ seedId, keyIds, signTxCallback, unsignedTx }) {
     this.#assertPrivateKeysUnlocked(seedId ? [seedId] : undefined)
     assert(typeof signTxCallback === 'function', 'signTxCallback must be a function')
