@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.4.1-alpha.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.4.0...@exodus/keychain@7.4.1-alpha.0) (2024-12-06)
+
+
+### Features
+
+* add zilliqa schnorr signing (again) ([#189](https://github.com/ExodusMovement/exodus-oss/issues/189)) ([d9746b5](https://github.com/ExodusMovement/exodus-oss/commit/d9746b53de661d075e63c90dbff258dcdd761963))
+
+
+
 ## [7.4.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.3.0...@exodus/keychain@7.4.0) (2024-10-17)
 
 ### Features
