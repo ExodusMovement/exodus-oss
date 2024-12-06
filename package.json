@@ -26,7 +26,8 @@
     ]
   },
   "engines": {
-    "yarn": ">=3"
+    "yarn": ">=3",
+    "node": "22.4.1"
   },
   "scripts": {
     "prepare": "command -v husky && (echo 'running husky' && husky install) || (echo 'skipping husky' && true)",
