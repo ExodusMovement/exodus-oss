@@ -1,6 +1,6 @@
 {
   "name": "@exodus/keychain",
-  "version": "7.4.0",
+  "version": "7.4.1-alpha.0",
   "type": "module",
   "description": "A module designed to work more securely with private key material",
   "author": "Exodus Movement, Inc.",
@@ -33,7 +33,7 @@
     "@exodus/basic-utils": "^3.0.1",
     "@exodus/bip32": "^3.3.0",
     "@exodus/crypto": "^1.0.0-rc.13",
-    "@exodus/key-identifier": "^1.3.0",
+    "@exodus/key-identifier": "^1.3.1-alpha.0",
     "@exodus/key-utils": "^3.7.0",
     "@exodus/slip10": "^2.1.0",
     "@exodus/sodium-crypto": "^3.1.0",
