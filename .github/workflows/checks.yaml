@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
         with:
           fetch-depth: 0
-      - uses: ExodusMovement/actions/setup/lerna@06f077a9081a1e973586dde8870e7116873b9b84
+      - uses: ExodusMovement/actions/setup/lerna@fe42bdd64ab283db272fdc3305f736f2c16c71b0
         with:
           npm-token: ${{ secrets.NPM_TOKEN }}
           disable-nx-cache: ${{ env.DISABLE_NX_CACHE }}
@@ -46,7 +46,7 @@ jobs:
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-      - uses: ExodusMovement/actions/setup/lerna@06f077a9081a1e973586dde8870e7116873b9b84
+      - uses: ExodusMovement/actions/setup/lerna@fe42bdd64ab283db272fdc3305f736f2c16c71b0
         with:
           npm-token: ${{ secrets.NPM_TOKEN }}
           disable-nx-cache: ${{ env.DISABLE_NX_CACHE }}
@@ -62,7 +62,7 @@ jobs:
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-      - uses: ExodusMovement/actions/setup/lerna@06f077a9081a1e973586dde8870e7116873b9b84
+      - uses: ExodusMovement/actions/setup/lerna@fe42bdd64ab283db272fdc3305f736f2c16c71b0
         with:
           npm-token: ${{ secrets.NPM_TOKEN }}
           disable-nx-cache: ${{ env.DISABLE_NX_CACHE }}

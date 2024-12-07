@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: ExodusMovement/actions/setup/lerna@65b395a82884455e8dc0cbc32355d8864f1ec30c
+      - uses: ExodusMovement/actions/setup/lerna@fe42bdd64ab283db272fdc3305f736f2c16c71b0
         with:
           npm-token: ${{ secrets.NPM_TOKEN }}
       - name: Install dependencies
