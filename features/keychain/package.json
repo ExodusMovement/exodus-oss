@@ -1,6 +1,6 @@
 {
   "name": "@exodus/keychain",
-  "version": "7.4.2",
+  "version": "7.4.3",
   "type": "module",
   "description": "A module designed to work more securely with private key material",
   "author": "Exodus Movement, Inc.",
