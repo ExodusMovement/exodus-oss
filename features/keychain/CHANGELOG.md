@@ -43,6 +43,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - bump slip10 to remove dependance on elliptic fork ([#166](https://github.com/ExodusMovement/exodus-oss/issues/166)) ([29ca457](https://github.com/ExodusMovement/exodus-oss/commit/29ca4571382f3cd0829f5729b9011a2ba0560915))
 
+## [7.4.3](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.4.2...@exodus/keychain@7.4.3) (2024-12-10)
+
+## [7.4.2](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.4.1...@exodus/keychain@7.4.2) (2024-11-15)
+
+### Features
+
+- expose sodium encrypt/decrypt box in keychain api ([#175](https://github.com/ExodusMovement/exodus-oss/issues/175)) ([2d18ba2](https://github.com/ExodusMovement/exodus-oss/commit/2d18ba2a87261b8d54dc5ebddec77f08c7fd26b7))
+
 ## [7.4.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.3.0...@exodus/keychain@7.4.0) (2024-10-17)
 
 ### Features

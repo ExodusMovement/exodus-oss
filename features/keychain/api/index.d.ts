@@ -40,6 +40,7 @@ export interface KeychainApi {
     signSchnorr(
       params: { data: Buffer; extraEntropy?: Buffer; tweak?: Buffer } & KeySource
     ): Promise<Buffer>
+    signSchnorrZ(params: { data: Buffer } & KeySource): Promise<Buffer>
   }
 }
 

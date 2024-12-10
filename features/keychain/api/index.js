@@ -19,6 +19,7 @@ const createKeychainApi = ({ keychain }) => {
       secp256k1: {
         signBuffer: keychain.secp256k1.signBuffer,
         signSchnorr: keychain.secp256k1.signSchnorr,
+        signSchnorrZ: keychain.secp256k1.signSchnorrZ,
       },
     },
   }
