@@ -3,7 +3,9 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [7.4.3](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.4.2...@exodus/keychain@7.4.3) (2024-12-10)
+## [7.4.4](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.4.3...@exodus/keychain@7.4.4) (2024-12-10)
+
+## [7.4.3](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.4.2...@exodus/keychain@7.4.3) (2024-12-09)
 
 ## [7.4.2](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.4.1...@exodus/keychain@7.4.2) (2024-11-15)
 
