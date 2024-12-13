@@ -142,20 +142,7 @@ export class Keychain {
     return this.#masters[seedId][derivationAlgorithm].derive(derivationPath)
   }
 
-  async exportKey({ seedId, keyId, exportPrivate }) {
-    assert(typeof seedId === 'string', 'seedId must be a string')
-
-    if (exportPrivate) {
-      this.#assertPrivateKeysUnlocked([seedId])
-    }
-
-    keyId = new KeyIdentifier(keyId)
-
-    const hdkey = this.#getPrivateHDKey({
-      seedId,
-      keyId,
-      getPrivateHDKeySymbol: this.#getPrivateHDKeySymbol,
-    })
+  #getPublicKeyFromHDKey = async (hdkey) => {
     const privateKey = hdkey.privateKey
     let publicKey = hdkey.publicKey
 
@@ -172,16 +159,81 @@ export class Keychain {
       publicKey = await sodium.privToPub(privateKey)
     }
 
+    return publicKey
+  }
+
+  async exportKey({ seedId, keyId, exportPrivate }) {
+    assert(typeof seedId === 'string', 'seedId must be a string')
+
+    if (exportPrivate) {
+      this.#assertPrivateKeysUnlocked([seedId])
+    }
+
+    const hdkey = this.#getPrivateHDKey({
+      seedId,
+      keyId: new KeyIdentifier(keyId),
+      getPrivateHDKeySymbol: this.#getPrivateHDKeySymbol,
+    })
+    const publicKey = await this.#getPublicKeyFromHDKey(hdkey)
+
     const { xpriv, xpub } = hdkey.toJSON()
     return {
       xpub,
       xpriv: exportPrivate ? xpriv : null,
       publicKey,
-      privateKey: exportPrivate ? privateKey : null,
+      privateKey: exportPrivate ? hdkey.privateKey : null,
     }
   }
 
-  // @deprecated use keychain.(secp256k1|ed25519|sodium).sign* instead
+  async getPublicKey({ seedId, keyId }) {
+    assert(typeof seedId === 'string', 'seedId must be a string')
+
+    const hdkey = this.#getPrivateHDKey({
+      seedId,
+      keyId: new KeyIdentifier(keyId),
+      getPrivateHDKeySymbol: this.#getPrivateHDKeySymbol,
+    })
+
+    return this.#getPublicKeyFromHDKey(hdkey)
+  }
+
+  async signBuffer({ seedId, keyId, data, signatureType, enc, tweak, extraEntropy }) {
+    const noTweak = tweak === undefined
+    const noEnc = enc === undefined
+    const noOpts = noEnc && noTweak && extraEntropy === undefined
+
+    assert(data instanceof Uint8Array, `expected "data" to be a Uint8Array, got: ${typeof data}`)
+    assert(
+      !signatureType ||
+        (['ecdsa', 'schnorr', 'schnorrZ'].includes(signatureType) &&
+          keyId.keyType === 'secp256k1') ||
+        (signatureType === 'ed25519' && keyId.keyType === 'nacl'),
+      `"keyId.keyType" ${keyId.keyType} does not support "signatureType" ${signatureType}`
+    )
+
+    if (keyId.keyType === 'nacl') {
+      assert(noOpts, 'unsupported options supplied for ed25519 signature')
+      return this.ed25519.signBuffer({ seedId, keyId, data })
+    }
+
+    if (signatureType === 'schnorrZ') {
+      assert(noOpts, 'unsupported options supplied for schnorrZ signature')
+      return this.secp256k1.signSchnorrZ({ seedId, keyId, data })
+    }
+
+    // only accept 32 byte buffers for ecdsa
+    assert(data.length === 32, `expected "data" to have 32 bytes, got: ${data.length}`)
+
+    if (signatureType === 'schnorr') {
+      assert(noEnc, 'unsupported options supplied for schnorr signature')
+      return this.secp256k1.signSchnorr({ seedId, keyId, data, tweak, extraEntropy })
+    }
+
+    assert(noTweak, 'unsupported options supplied for ecdsa signature')
+    return this.secp256k1.signBuffer({ seedId, keyId, data, enc, extraEntropy })
+  }
+
+  // @deprecated use keychain.signBuffer() instead
   async signTx({ seedId, keyIds, signTxCallback, unsignedTx }) {
     this.#assertPrivateKeysUnlocked(seedId ? [seedId] : undefined)
     assert(typeof signTxCallback === 'function', 'signTxCallback must be a function')
