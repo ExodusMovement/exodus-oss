@@ -204,14 +204,12 @@ export class Keychain {
 
     assert(data instanceof Uint8Array, `expected "data" to be a Uint8Array, got: ${typeof data}`)
     assert(
-      !signatureType ||
-        (['ecdsa', 'schnorr', 'schnorrZ'].includes(signatureType) &&
-          keyId.keyType === 'secp256k1') ||
+      (['ecdsa', 'schnorr', 'schnorrZ'].includes(signatureType) && keyId.keyType === 'secp256k1') ||
         (signatureType === 'ed25519' && keyId.keyType === 'nacl'),
       `"keyId.keyType" ${keyId.keyType} does not support "signatureType" ${signatureType}`
     )
 
-    if (keyId.keyType === 'nacl') {
+    if (signatureType === 'ed25519') {
       assert(noOpts, 'unsupported options supplied for ed25519 signature')
       return this.ed25519.signBuffer({ seedId, keyId, data })
     }
@@ -229,6 +227,7 @@ export class Keychain {
       return this.secp256k1.signSchnorr({ seedId, keyId, data, tweak, extraEntropy })
     }
 
+    // signatureType === 'ecdsa'
     assert(noTweak, 'unsupported options supplied for ecdsa signature')
     return this.secp256k1.signBuffer({ seedId, keyId, data, enc, extraEntropy })
   }
