@@ -142,7 +142,7 @@ export class Keychain {
     return this.#masters[seedId][derivationAlgorithm].derive(derivationPath)
   }
 
-  #getPublicKeyFromHDKey = async (hdkey) => {
+  #getPublicKeyFromHDKey = async ({ hdkey, keyId }) => {
     const privateKey = hdkey.privateKey
     let publicKey = hdkey.publicKey
 
@@ -174,7 +174,7 @@ export class Keychain {
       keyId: new KeyIdentifier(keyId),
       getPrivateHDKeySymbol: this.#getPrivateHDKeySymbol,
     })
-    const publicKey = await this.#getPublicKeyFromHDKey(hdkey)
+    const publicKey = await this.#getPublicKeyFromHDKey({ hdkey, keyId })
 
     const { xpriv, xpub } = hdkey.toJSON()
     return {
@@ -186,15 +186,13 @@ export class Keychain {
   }
 
   async getPublicKey({ seedId, keyId }) {
-    assert(typeof seedId === 'string', 'seedId must be a string')
-
     const hdkey = this.#getPrivateHDKey({
       seedId,
       keyId: new KeyIdentifier(keyId),
       getPrivateHDKeySymbol: this.#getPrivateHDKeySymbol,
     })
 
-    return this.#getPublicKeyFromHDKey(hdkey)
+    return this.#getPublicKeyFromHDKey({ hdkey, keyId })
   }
 
   async signBuffer({ seedId, keyId, data, signatureType, enc, tweak, extraEntropy }) {
