@@ -195,11 +195,13 @@ export class Keychain {
     return this.#getPublicKeyFromHDKey({ hdkey, keyId })
   }
 
-  async signBuffer({ seedId, keyId, data, signatureType, enc, tweak, extraEntropy }) {
+  async signBuffer({ seedId, keyId, data, signatureType, enc, tweak, extraEntropy, ...rest }) {
     const noTweak = tweak === undefined
     const noEnc = enc === undefined
     const noOpts = noEnc && noTweak && extraEntropy === undefined
+    const invalidOptions = Object.keys(rest).filter((key) => key !== 'ecOptions') // ignore legacy option `ecOptions`
 
+    assert(invalidOptions.length === 0, `unsupported options supplied to signBuffer()`)
     assert(data instanceof Uint8Array, `expected "data" to be a Uint8Array, got: ${typeof data}`)
     assert(
       (['ecdsa', 'schnorr', 'schnorrZ'].includes(signatureType) && keyId.keyType === 'secp256k1') ||
