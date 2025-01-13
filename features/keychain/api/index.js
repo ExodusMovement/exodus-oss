@@ -2,6 +2,8 @@ const createKeychainApi = ({ keychain }) => {
   return {
     keychain: {
       exportKey: (...args) => keychain.exportKey(...args),
+      getPublicKey: (...args) => keychain.getPublicKey(...args),
+      signBuffer: (...args) => keychain.signBuffer(...args),
       arePrivateKeysLocked: (seeds) => keychain.arePrivateKeysLocked(seeds),
       sodium: {
         sign: keychain.sodium.sign,
