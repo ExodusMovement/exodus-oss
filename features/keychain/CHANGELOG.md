@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.8.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.7.0...@exodus/keychain@7.8.0) (2025-01-14)
+
+### Features
+
+- feat: add signBuffer function (#194)
+
 ## [7.7.0](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/keychain@7.6.1...@exodus/keychain@7.7.0) (2024-12-04)
 
 ### Features
