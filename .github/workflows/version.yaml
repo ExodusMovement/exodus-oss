@@ -38,7 +38,7 @@ jobs:
       - name: Prepare
         run: yarn prepare
       - name: Version
-        uses: ExodusMovement/lerna-release-action/version@6dc016246588346b8181638a1c093d8c8e14c7f8
+        uses: ExodusMovement/lerna-release-action/version@894ece0b0af21a5d4d1ed12d0a637142ced675ab
         with:
           github-token: ${{ secrets.GH_AUTOMATION_PAT }}
           packages: ${{ inputs.packages }}
