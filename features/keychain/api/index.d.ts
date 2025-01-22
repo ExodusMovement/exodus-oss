@@ -34,7 +34,7 @@ export interface KeychainApi {
     sign(params: { data: Buffer } & KeySource): Promise<Buffer>
     signDetached(params: { data: Buffer } & KeySource): Promise<Buffer>
     getKeysFromSeed(
-      params: KeySource
+      params: { exportPrivate?: boolean } & KeySource
     ): Promise<{ box: { publicKey: Buffer }; sign: { publicKey: Buffer } }>
     encryptSecretBox(params: { data: Buffer } & KeySource): Promise<Buffer>
     decryptSecretBox(params: { data: Buffer } & KeySource): Promise<Buffer>
