@@ -1,8 +1,17 @@
 import { mnemonicToSeed } from 'bip39'
 
 import KeyIdentifier from '@exodus/key-identifier'
-import createKeychain from './create-keychain.js'
 import { getSeedId } from '../crypto/seed-id.js'
+import { getSodiumKeysFromSeed } from '@exodus/crypto/sodium'
+
+const sodiumKeysFromSeedMock = jest.fn(getSodiumKeysFromSeed)
+
+jest.mock('@exodus/crypto/sodium', () => ({
+  __esModule: true,
+  getSodiumKeysFromSeed: sodiumKeysFromSeedMock,
+}))
+
+const { default: createKeychain } = await import('./create-keychain.js')
 
 const seed = mnemonicToSeed(
   'menu memory fury language physical wonder dog valid smart edge decrease worth'
@@ -23,6 +32,27 @@ const BOB_KEY = new KeyIdentifier({
 })
 
 describe('libsodium', () => {
+  it('should cache sodium keys', async () => {
+    const keychain = createKeychain({ seed })
+
+    await keychain.sodium.getSodiumKeysFromSeed({
+      seedId,
+      keyId: BOB_KEY,
+    })
+
+    await keychain.sodium.getSodiumKeysFromSeed({
+      seedId,
+      keyId: BOB_KEY,
+    })
+
+    await keychain.sodium.getSodiumKeysFromSeed({
+      seedId,
+      keyId: BOB_KEY,
+    })
+
+    expect(sodiumKeysFromSeedMock).toHaveBeenCalledOnce()
+  })
+
   it('should have sign keys compatibility with SLIP10', async () => {
     const keychain = createKeychain({ seed })
     const exportedKeys = await keychain.exportKey({ seedId, keyId: ALICE_KEY })

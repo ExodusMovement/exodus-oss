@@ -1,5 +1,5 @@
 import sodium from '@exodus/sodium-crypto'
-import { mapValues } from '@exodus/basic-utils'
+import { mapValues, memoize } from '@exodus/basic-utils'
 import * as curve25519 from '@exodus/crypto/curve25519'
 import { getSodiumKeysFromSeed } from '@exodus/crypto/sodium'
 
@@ -16,13 +16,18 @@ const cloneKeypair = ({ keys, exportPrivate }) => {
   }
 }
 
+export const getMemoizedSodiumKeysFromSeed = memoize(getSodiumKeysFromSeed, (seed) =>
+  seed.toString('hex')
+)
+
 export const create = ({ getPrivateHDKey }) => {
   // Sodium encryptor caches the private key and the return value holds
   // not refences to keychain internals, allowing the seed to be safely
   // garbage collected, clearing it from memory.
+
   const getSodiumKeysFromIdentifier = async ({ seedId, keyId }) => {
     const { privateKey: sodiumSeed } = getPrivateHDKey({ seedId, keyId })
-    return getSodiumKeysFromSeed(sodiumSeed)
+    return getMemoizedSodiumKeysFromSeed(sodiumSeed)
   }
 
   const getKeysFromSeed = async ({ seedId, keyId, exportPrivate }) => {
