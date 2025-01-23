@@ -1,9 +1,11 @@
-import { mnemonicToSeed } from 'bip39'
 import { mock } from 'node:test'
+import crypto from 'node:crypto'
 
+import { mnemonicToSeed } from 'bip39'
 import KeyIdentifier from '@exodus/key-identifier'
-import { getSeedId } from '../crypto/seed-id.js'
 import { getSodiumKeysFromSeed } from '@exodus/crypto/sodium'
+
+import { getSeedId } from '../crypto/seed-id.js'
 
 const getSodiumKeysFromSeedMock = jest.fn(getSodiumKeysFromSeed)
 
@@ -36,21 +38,19 @@ const BOB_KEY = new KeyIdentifier({
 describe('libsodium', () => {
   it('should cache sodium keys', async () => {
     const keychain = createKeychain({ seed })
+    const toPublicKey = crypto.randomBytes(32)
 
-    await keychain.sodium.getSodiumKeysFromSeed({
-      seedId,
-      keyId: BOB_KEY,
-    })
+    const encrypt = () =>
+      keychain.sodium.encryptBox({
+        seedId,
+        keyId: BOB_KEY,
+        data: Buffer.from('Batman is Bruce Wayne - or is he Harvey Dent?', 'utf8'),
+        toPublicKey,
+      })
 
-    await keychain.sodium.getSodiumKeysFromSeed({
-      seedId,
-      keyId: BOB_KEY,
-    })
-
-    await keychain.sodium.getSodiumKeysFromSeed({
-      seedId,
-      keyId: BOB_KEY,
-    })
+    await encrypt()
+    await encrypt()
+    await encrypt()
 
     expect(getSodiumKeysFromSeedMock).toHaveBeenCalledOnce()
   })
