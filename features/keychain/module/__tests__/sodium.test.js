@@ -1,4 +1,5 @@
 import { mnemonicToSeed } from 'bip39'
+import { mock } from 'node:test'
 
 import KeyIdentifier from '@exodus/key-identifier'
 import { getSeedId } from '../crypto/seed-id.js'
@@ -6,10 +7,11 @@ import { getSodiumKeysFromSeed } from '@exodus/crypto/sodium'
 
 const getSodiumKeysFromSeedMock = jest.fn(getSodiumKeysFromSeed)
 
-jest.mock('@exodus/crypto/sodium', () => ({
-  __esModule: true,
-  getSodiumKeysFromSeed: getSodiumKeysFromSeedMock,
-}))
+mock.module('@exodus/crypto/sodium', {
+  namedExports: {
+    getSodiumKeysFromSeed: getSodiumKeysFromSeedMock,
+  },
+})
 
 const { default: createKeychain } = await import('./create-keychain.js')
 
