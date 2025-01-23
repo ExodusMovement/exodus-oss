@@ -4,11 +4,11 @@ import KeyIdentifier from '@exodus/key-identifier'
 import { getSeedId } from '../crypto/seed-id.js'
 import { getSodiumKeysFromSeed } from '@exodus/crypto/sodium'
 
-const sodiumKeysFromSeedMock = jest.fn(getSodiumKeysFromSeed)
+const getSodiumKeysFromSeedMock = jest.fn(getSodiumKeysFromSeed)
 
 jest.mock('@exodus/crypto/sodium', () => ({
   __esModule: true,
-  getSodiumKeysFromSeed: sodiumKeysFromSeedMock,
+  getSodiumKeysFromSeed: getSodiumKeysFromSeedMock,
 }))
 
 const { default: createKeychain } = await import('./create-keychain.js')
@@ -50,7 +50,7 @@ describe('libsodium', () => {
       keyId: BOB_KEY,
     })
 
-    expect(sodiumKeysFromSeedMock).toHaveBeenCalledOnce()
+    expect(getSodiumKeysFromSeedMock).toHaveBeenCalledOnce()
   })
 
   it('should have sign keys compatibility with SLIP10', async () => {
