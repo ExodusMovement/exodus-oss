@@ -234,7 +234,7 @@ describe('keychain api', () => {
     test('getKeysFromSeed returns public keys', async () => {
       const keys = await api.sodium.getKeysFromSeed({ seedId, keyId })
 
-      expect(keys.secret).toBeUndefined()
+      expect(keys.secret).toBeNull()
       expect(keys.sign.publicKey.toString('hex')).toBe(
         '5960b9980b740a241dea0d44fe304b196484eab1427ee9e7999b5eeff21cdac9'
       )
