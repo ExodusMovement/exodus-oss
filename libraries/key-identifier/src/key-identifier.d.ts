@@ -37,6 +37,8 @@ export default class KeyIdentifier {
     derivationPath: string
   }
 
+  toString(): string
+
   static validate(potentialKeyIdentifier: KeyIdentifierLike): boolean
   static compare(a: KeyIdentifierLike, b: KeyIdentifierLike): boolean
 }
