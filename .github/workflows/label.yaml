@@ -20,4 +20,4 @@ jobs:
         with:
           github-token: '${{ secrets.GITHUB_TOKEN }}'
       - name: Categories
-        uses: actions/labeler@v4
+        uses: actions/labeler@v5
