@@ -1,5 +1,5 @@
 import assert from 'minimalistic-assert'
-import { DerivationPath } from '@exodus/key-utils'
+import { DerivationPath } from '@exodus/key-utils/src/derivation-path.js'
 
 const SUPPORTED_KDFS = new Set(['BIP32', 'SLIP10'])
 const SUPPORTED_KEY_TYPES = new Set(['legacy', 'nacl', 'secp256k1'])
