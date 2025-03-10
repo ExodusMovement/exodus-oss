@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.2](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/key-identifier@1.3.1...@exodus/key-identifier@1.3.2) (2025-03-10)
+
+### Bug Fixes
+
+- fix: add missing types (#198)
+
+- fix: import derivation-path directly instead of all key-utils (#203)
+
 ## [1.3.1](https://github.com/ExodusMovement/exodus-oss/compare/@exodus/key-identifier@1.3.0...@exodus/key-identifier@1.3.1) (2024-11-25)
 
 ### Bug Fixes
