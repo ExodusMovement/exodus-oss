@@ -5,7 +5,7 @@ import { Keychain } from './keychain.js'
 
 const keyIdToCacheKey = stableStringify
 
-const CACHE_KEY = 'data'
+export const CACHE_KEY = 'data'
 
 const getPublicKeyData = ({ xpub, publicKey }) => ({ xpub, publicKey })
 
@@ -52,6 +52,7 @@ class MemoizedKeychain extends Keychain {
 
   clear = async () => {
     await super.clear()
+    this.#publicKeys = Object.create(null)
     await this.#storage.delete(CACHE_KEY)
   }
 }
