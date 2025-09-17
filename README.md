@@ -1,9 +1,11 @@
+> [!WARNING]
+> This repo has moved to https://github.com/ExodusOSS/hydra
+
+---
+
 [![Checks](https://github.com/ExodusMovement/exodus-oss/actions/workflows/checks.yaml/badge.svg?branch=master)](https://github.com/ExodusMovement/exodus-oss/actions/workflows/checks.yaml) [![Version](https://github.com/ExodusMovement/exodus-oss/actions/workflows/version.yaml/badge.svg)](https://github.com/ExodusMovement/exodus-oss/actions/workflows/version.yaml) [![Publish](https://github.com/ExodusMovement/exodus-oss/actions/workflows/publish.yaml/badge.svg)](https://github.com/ExodusMovement/exodus-oss/actions/workflows/publish.yaml) [![CodeQL](https://github.com/ExodusMovement/exodus-oss/actions/workflows/codeql.yml/badge.svg)](https://github.com/ExodusMovement/exodus-oss/actions/workflows/codeql.yml)
 
 # exodus-oss
-
-> [!WARNING]
-> This repo still links out to private documentation. We're working on making those public, but it will take time.
 
 This is the mono repo that is home to the open source modules of the Exodus eco-system.
 
