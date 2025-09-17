@@ -10,7 +10,7 @@ jobs:
     name: Invoke version workflow
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ExodusMovement/lerna-release-action/version-dispatch@6dc016246588346b8181638a1c093d8c8e14c7f8
         with:
           version-workflow-id: version.yaml
